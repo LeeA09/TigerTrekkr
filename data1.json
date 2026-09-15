@@ -753,7 +753,9 @@
         "longitude": "92.32941",
         "time": "2026:05:14 10:50:07",
         "description": "",
-        "potentialimgmatches": ["IMG_20260514_104903_00_090.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260514_104903_00_090.jpg"
+        ]
     },
     {
         "imgname": "IMG_6082.JPEG",
@@ -781,7 +783,9 @@
         "longitude": "92.32922",
         "time": "2026:05:14 11:06:27",
         "description": "",
-        "potentialimgmatches": ["IMG_20260514_110503_00_093.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260514_110503_00_093.jpg"
+        ]
     },
     {
         "imgname": "IMG_6085.JPEG",
@@ -789,7 +793,9 @@
         "longitude": "92.32896",
         "time": "2026:05:14 11:11:11",
         "description": "",
-        "potentialimgmatches": ["IMG_20260514_111556_00_094.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260514_111556_00_094.jpg"
+        ]
     },
     {
         "imgname": "IMG_6086.JPEG",
@@ -807,7 +813,9 @@
         "longitude": "92.32754",
         "time": "2026:05:14 11:24:37",
         "description": "",
-        "potentialimgmatches": ["IMG_20260514_112620_00_097.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260514_112620_00_097.jpg"
+        ]
     },
     {
         "imgname": "IMG_6088.JPEG",
@@ -865,7 +873,9 @@
         "longitude": "92.32780",
         "time": "2026:05:14 11:49:41",
         "description": "",
-        "potentialimgmatches": ["IMG_20260514_114805_00_103.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260514_114805_00_103.jpg"
+        ]
     },
     {
         "imgname": "IMG_7253.JPEG",
@@ -1273,7 +1283,9 @@
         "longitude": "92.32786",
         "time": "2026:07:25 11:02:26",
         "description": "",
-        "potentialimgmatches": ["IMG_20260725_105934_00_merged.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260725_105934_00_merged.jpg"
+        ]
     },
     {
         "imgname": "IMG_8511.JPG",
@@ -1471,7 +1483,9 @@
         "longitude": "92.32600",
         "time": "2026:07:26 08:30:10",
         "description": "",
-        "potentialimgmatches": ["IMG_20260726_082745_00_170.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260726_082745_00_170.jpg"
+        ]
     },
     {
         "imgname": "IMG_8544.JPG",
@@ -1689,7 +1703,9 @@
         "longitude": "92.32279",
         "time": "2026:07:26 09:28:34",
         "description": "",
-        "potentialimgmatches": ["IMG_20260726_092731_00_196.jpg"]
+        "potentialimgmatches": [
+            "IMG_20260726_092731_00_196.jpg"
+        ]
     },
     {
         "imgname": "IMG_8575.JPG",
@@ -1826,7 +1842,7 @@
         "latitude": "38.94040",
         "longitude": "92.32472",
         "time": "2026:07:26 10:08:18",
-        "description": "",
+        "description": "Virginia Avenue Parking Garage is a 6-story graage built in 2002. ",
         "potentialimgmatches": [
             "IMG_20260726_100806_00_209.jpg"
         ]
@@ -1856,7 +1872,7 @@
         "latitude": "38.94358",
         "longitude": "92.33351",
         "time": "2026:07:26 10:29:34",
-        "description": "",
+        "description": "Clark Hall. Originally constructed in 1964 as part of Lewis anc Clark Residence Center. Now it is the College of Health Science complex. ",
         "potentialimgmatches": [
             "IMG_20260726_102925_00_212.jpg"
         ]
@@ -1876,7 +1892,7 @@
         "latitude": "38.94088",
         "longitude": "92.31788",
         "time": "2026:07:26 10:42:08",
-        "description": "",
+        "description": "MIZZOU College of Veterinary Medicine officially opened in 1946.",
         "potentialimgmatches": [
             "IMG_20260726_104157_00_214.jpg"
         ]
@@ -1886,7 +1902,7 @@
         "latitude": "38.93920",
         "longitude": "92.31767",
         "time": "2026:07:26 10:47:25",
-        "description": "",
+        "description": "Mizzou Department of Veterinary Medicine and Surgery (VMS) traces its root back to 1872 when early veterinary coursework began at Mizzou, evolving into an official professional curriculum and teaching hopsital after World War II. ",
         "potentialimgmatches": [
             "IMG_20260726_104713_00_215.jpg"
         ]
@@ -1896,7 +1912,7 @@
         "latitude": "38.93881",
         "longitude": "92.31734",
         "time": "2026:07:26 10:49:03",
-        "description": "",
+        "description": "Animal Science Research Center. College of Agriculture, Food and Natural Resources officialy formed in 1989.",
         "potentialimgmatches": [
             "IMG_20260726_104851_00_216.jpg"
         ]
