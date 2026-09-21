@@ -18,3 +18,10 @@ export default defineConfig({
 		})
 	]
 });
+
+export default defineConfig({
+  plugins: [sveltekit()],
+  server: {
+    allowedHosts: ['.ts.net'] // Allows any incoming traffic coming from your Tailscale network domain
+  }
+});
