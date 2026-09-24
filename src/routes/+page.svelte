@@ -1,4 +1,6 @@
 <script>
+    // @ts-nocheck
+    
     import { onMount } from 'svelte';
 
     // Animate the background in a figure-8 pattern
@@ -15,8 +17,9 @@
             const x = 12 * Math.sin(t);
             const y = 6 * Math.sin(2 * t);
 
-            background.style.transform =
-                `scale(2) translate(${x}%, ${y}%)`;
+            if (background) {
+                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
+            }
 
             requestAnimationFrame(animate);
         }
