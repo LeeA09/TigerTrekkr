@@ -138,7 +138,7 @@
 			<p style="color: red;">Passwords do not match.</p>
 		    {/if}
 			
-                    <button type="submit" diabled={!passwordsMatch} class="home-button">Sign Up</button>
+                    <button type="submit" disabled={!passwordsMatch} class="home-button">Sign Up</button>
                 </form>
             </div>
         </div>
