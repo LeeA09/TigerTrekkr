@@ -101,7 +101,7 @@
                         <label for="password">Password</label>
                         <div class="fill-in-eye">
                             <input name="password" type={signup_show_password ? 'text' : 'password'} bind:value={password} autocomplete="new-password" placeholder="Enter password" required />
-                            <button class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
+                            <button type="button" class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -119,7 +119,7 @@
                         <label for="confirm-password">Confirm password</label>
                         <div class="fill-in-eye">
                             <input type={signup_show_confirm_password ? 'text' : 'password'} bind:value={confirmPassword} placeholder="Confirm password" required />
-                            <button class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
+                            <button type="button" class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_confirm_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
