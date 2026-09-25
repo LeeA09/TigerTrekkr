@@ -1,7 +1,9 @@
 <script>
 
     import { goto } from '\$app/navigation';
-    
+    import { enhance } from '$app/forms';
+    let { form } = $props();    
+
     import { onMount } from 'svelte';
 
     // Animate the background in a figure-8 pattern
@@ -40,6 +42,12 @@
     function toggle_signup_show_confirm_password() {
         signup_show_confirm_password = !signup_show_confirm_password;
     }
+
+    // checks passwords match before adding user
+    let password = $state('');
+    let confirmPassword = $state('');
+
+    let passwordsMatch = $derived(password.length > 0 && password === confirmPassword);
 
 </script>
 
@@ -80,19 +88,19 @@
                 <p class="page-body-card-description">
                     Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
                 </p>
-                <form>
+                <form method="POST" use:enhance>
                     <div class="fill-in">
-                        <label for="signup-username">Username</label>
-                        <input type="text" placeholder="Enter username" required />
+                        <label for="username">Username</label>
+                        <input name="username" type="text" placeholder="Enter username" required />
                     </div>
                     <div class="fill-in">
-                        <label for="signup-email">Email</label>
-                        <input type="email" placeholder="Enter email" required />
+                        <label for="email">Email</label>
+                        <input name="email" type="email" autocomplete="email" placeholder="Enter email" required />
                     </div>
                     <div class="fill-in">
-                        <label for="signup-password">Password</label>
+                        <label for="password">Password</label>
                         <div class="fill-in-eye">
-                            <input type={signup_show_password ? 'text' : 'password'} placeholder="Enter password" required />
+                            <input name="password" type={signup_show_password ? 'text' : 'password'} bind:value={password} autocomplete="new-password" placeholder="Enter password" required />
                             <button class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_password}
@@ -108,9 +116,9 @@
                         </div>
                     </div>
                     <div class="fill-in">
-                        <label for="signup-confirm-password">Confirm password</label>
+                        <label for="confirm-password">Confirm password</label>
                         <div class="fill-in-eye">
-                            <input type={signup_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
+                            <input type={signup_show_confirm_password ? 'text' : 'password'} bind:value={confirmPassword} placeholder="Confirm password" required />
                             <button class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_confirm_password}
@@ -125,7 +133,12 @@
                             </button>
                         </div>
                     </div>
-                    <button type="submit" class="home-button">Submit</button>
+
+		    {#if confirmPassword.length > 0 && !passwordsMatch}
+			<p style="color: red;">Passwords do not match.</p>
+		    {/if}
+			
+                    <button type="submit" diabled={!passwordsMatch} class="home-button">Sign Up</button>
                 </form>
             </div>
         </div>
