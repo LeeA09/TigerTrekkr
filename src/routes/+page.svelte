@@ -1,5 +1,5 @@
 <script>
-
+    
     import { goto } from '\$app/navigation';
 
     import { onMount } from 'svelte';
@@ -10,7 +10,8 @@
 
         const duration = 80000;
         const startTime = performance.now();
-
+        
+        // @ts-ignore
         function animate(currentTime) {
             const elapsed = (currentTime - startTime) % duration;
             const t = (elapsed / duration) * Math.PI * 2;
@@ -19,6 +20,7 @@
             const y = 6 * Math.sin(2 * t);
 
             if (background) {
+                // @ts-ignore
                 background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
             }
 

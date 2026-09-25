@@ -11,6 +11,7 @@
         const duration = 80000;
         const startTime = performance.now();
 
+        // @ts-ignore
         function animate(currentTime) {
             const elapsed = (currentTime - startTime) % duration;
             const t = (elapsed / duration) * Math.PI * 2;
@@ -19,6 +20,7 @@
             const y = 6 * Math.sin(2 * t);
 
             if (background) {
+                // @ts-ignore
                 background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
             }
 
@@ -39,7 +41,7 @@
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
