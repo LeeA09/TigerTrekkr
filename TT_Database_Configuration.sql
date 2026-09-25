@@ -1,41 +1,42 @@
-CREATE TABLE public.User (
-  userId uuid NOT NULL DEFAULT gen_random_uuid(),
+CREATE TABLE public.user (
+  userid uuid NOT NULL DEFAULT gen_random_uuid(),
   username character varying NOT NULL DEFAULT 'Guest'::character varying UNIQUE,
-  totalScore bigint NOT NULL DEFAULT '0'::bigint,
-  createdAt timestamp without time zone NOT NULL DEFAULT now(),
-  CONSTRAINT User_pkey PRIMARY KEY (userId)
+  totalscore bigint NOT NULL DEFAULT '0'::bigint,
+  createdat timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT user_pkey PRIMARY KEY (userid)
 );
-CREATE TABLE public.Location (
-  locationId numeric NOT NULL,
-  name character varying NOT NULL UNIQUE,
-  latitude double precision NOT NULL UNIQUE,
-  longitude double precision NOT NULL UNIQUE,
+CREATE TABLE public.Location_Image_Info (
+  latitude double precision NOT NULL,
+  longitude double precision NOT NULL,
   description text NOT NULL,
-  imageURL text NOT NULL UNIQUE,
-  CONSTRAINT Location_pkey PRIMARY KEY (locationId)
+  imageName text,
+  imageURL text NOT NULL,
+  locationId bigint NOT NULL,
+  LocationName text,
+  CONSTRAINT Location_Image_Info_pkey PRIMARY KEY (locationId)
 );
-CREATE TABLE public.Round (
-  roundID uuid NOT NULL DEFAULT gen_random_uuid(),
-  userID uuid NOT NULL,
-  locationID numeric NOT NULL,
-  guessedLat double precision NOT NULL,
-  guessedLong double precision NOT NULL,
+CREATE TABLE public.round (
+  userid uuid NOT NULL,
+  guessedlat double precision NOT NULL,
+  guessedlong double precision NOT NULL,
   distance double precision NOT NULL,
-  timeTaken integer NOT NULL,
+  timetaken integer NOT NULL,
   difficulty character varying NOT NULL,
+  roundid uuid NOT NULL DEFAULT gen_random_uuid(),
   score integer NOT NULL DEFAULT 0,
-  createdAt timestamp without time zone NOT NULL DEFAULT now(),
-  CONSTRAINT Round_pkey PRIMARY KEY (roundID),
-  CONSTRAINT Round_userID_fkey FOREIGN KEY (userID) REFERENCES public.User(userId),
-  CONSTRAINT Round_locationID_fkey FOREIGN KEY (locationID) REFERENCES public.Location(locationId)
+  createdat timestamp without time zone NOT NULL DEFAULT now(),
+  locationid bigint NOT NULL,
+  CONSTRAINT round_pkey PRIMARY KEY (roundid),
+  CONSTRAINT round_userid_fkey FOREIGN KEY (userid) REFERENCES public.user(userid),
+  CONSTRAINT round_locationid_fkey FOREIGN KEY (locationid) REFERENCES public.Location_Image_Info(locationId)
 );
-CREATE TABLE public.Session (
-  sessionId uuid NOT NULL DEFAULT gen_random_uuid(),
-  userID uuid NOT NULL DEFAULT gen_random_uuid(),
-  startTime timestamp without time zone NOT NULL DEFAULT now(),
-  endTime timestamp without time zone,
-  CONSTRAINT Session_pkey PRIMARY KEY (sessionId),
-  CONSTRAINT Session_userID_fkey FOREIGN KEY (userID) REFERENCES public.User(userId)
+CREATE TABLE public.session (
+  endtime timestamp without time zone,
+  sessionid uuid NOT NULL DEFAULT gen_random_uuid(),
+  userid uuid NOT NULL DEFAULT gen_random_uuid(),
+  starttime timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT session_pkey PRIMARY KEY (sessionid),
+  CONSTRAINT session_userid_fkey FOREIGN KEY (userid) REFERENCES public.user(userid)
 );
 
--- some Unique and Not Null specifications may need to be altered when importing data for location table
+-- some Unique and Not Null specifications were altered when importing data for location table from csv of (data1.json)
