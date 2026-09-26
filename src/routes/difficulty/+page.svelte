@@ -1,13 +1,12 @@
 <script>
-
     import { goto } from '\$app/navigation';
 
-    import { font_size } from '$lib/stores/settings';
+    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/settings.svelte';
+    import Settings from '$lib/modals/Settings.svelte';
     import Help from '$lib/modals/Help.svelte';
     import Info from '$lib/modals/Info.svelte';
-    
+
     import { onMount } from 'svelte';
 
     // Animate the background in a figure-8 pattern
@@ -17,7 +16,6 @@
         const duration = 80000;
         const startTime = performance.now();
 
-        // @ts-ignore
         function animate(currentTime) {
             const elapsed = (currentTime - startTime) % duration;
             const t = (elapsed / duration) * Math.PI * 2;
@@ -26,7 +24,6 @@
             const y = 6 * Math.sin(2 * t);
 
             if (background) {
-                // @ts-ignore
                 background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
             }
 
@@ -35,10 +32,6 @@
 
         requestAnimationFrame(animate);
     });
-
-    // for password eye icon
-    let login_show_password = $state(false);
-    function toggle_login_show_password() { login_show_password = !login_show_password; }
 
     // utility modals
     let is_settings_open = $state(false);
@@ -61,7 +54,7 @@
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
@@ -90,36 +83,43 @@
         <div class="page-body">
             <div class="background-animation"></div>
             <div class="background-overlay"></div>
-            <div class="page-body-card">
-                <h2 class="page-body-card-title">Log In</h2>
+            <div class="difficulty-card page-body-card">
+                <h2 class="page-body-card-title">Select Difficulty</h2>
                 <p class="page-body-card-description">
-                    Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
+                {#if $is_guest}
+                    Playing as <span class="page-body-card-link">Guest</span>.
+                {:else}
+                    Playing as <span class="page-body-card-link">Username</span>.
+                {/if}
                 </p>
-                <form>
-                    <div class="fill-in">
-                        <label for="login-username">Username</label>
-                        <input type="text" placeholder="Enter username" required />
-                    </div>
-                    <div class="fill-in">
-                        <label for="login-password">Password</label>
-                        <div class="fill-in-eye">
-                            <input type={login_show_password ? 'text' : 'password'} placeholder="Enter password" required />
-                            <button class="button-eye" onclick={toggle_login_show_password} aria-label={login_show_password ? 'Hide Password' : 'Show Password'}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if login_show_password}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <line x1="3" y1="3" x2="21" y2="21"></line>
-                                    {:else}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    {/if}
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <button type="submit" class="home-button">Submit</button>
-                </form>
+                <div class="difficulty-grid">
+                    <button class="difficulty-option" class:selected={$selected_difficulty === 'easy'} onclick={ $selected_difficulty = 'easy' }>
+                        <span class="difficulty-option-title">Easy</span>
+                        <span class="difficulty-option-description">
+                            360&deg
+                        </span>
+                    </button>
+                        <button class="difficulty-option" class:selected={$selected_difficulty === 'medium'} onclick={ $selected_difficulty = 'medium' }>
+                        <span class="difficulty-option-title">Medium</span>
+                        <span class="difficulty-option-description">
+                            180&deg
+                        </span>
+                    </button>
+                    <button class="difficulty-option" class:selected={$selected_difficulty === 'hard'} onclick={ $selected_difficulty = 'hard' }>
+                        <span class="difficulty-option-title">Hard</span>
+                        <span class="difficulty-option-description">
+                            0&deg
+                        </span>
+                    </button>
+                </div>
+                <div class="difficulty-buttons">
+                    <button class="home-button" onclick={() => goto('/play')} disabled={!$selected_difficulty}>
+                        Play
+                    </button>
+                    <button class="button-secondary" onclick={goto('/')}>
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>

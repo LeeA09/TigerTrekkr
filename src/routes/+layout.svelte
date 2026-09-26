@@ -2,6 +2,7 @@
 	let { children } = $props();
 
     import '../app.css'
+    import { font_size } from '$lib/stores/settings';
 </script>
 
 <svelte:head>
@@ -16,4 +17,13 @@
 	
 </svelte:head>
 
-{@render children()}
+<div class="app" style={`--font-size: ${$font_size}px`}>
+    {@render children()}
+</div>
+
+<style>
+    .app {
+        width: 100%;
+        height: 100%;
+    }
+</style>
