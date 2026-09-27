@@ -19,19 +19,27 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background opaque-backdrop" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="modal-card">
         <div class="modal-confirm-header">
             <div class="modal-confirm-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="5 4 15 12 5 20 5 4"></polygon>
-                    <line x1="19" y1="5" x2="19" y2="19"></line>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="
+                    M 3 5.5 
+                    Q 3 2.5 5.8 4.7 
+                    L 12.2 9.8 
+                    Q 15 12 12.2 14.2 
+                    L 5.8 19.3 
+                    Q 3 21.5 3 18.5 
+                    Z
+                " />
+                <rect x="17" y="2.5" width="4" height="19" rx="2" ry="2" />
                 </svg>
             </div>
             <h3>Skip Round?</h3>
         </div>
         <p class="modal-confirm-body">
-            Are you sure you want to skip this round? You will recieve 0 points.
+            Are you sure you want to skip? You will recieve 0 points.
         </p>
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={goto('/answer')}>

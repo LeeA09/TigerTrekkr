@@ -1,7 +1,7 @@
 <script>
     import { font_size } from '$lib/stores/settings';
 
-    let { onClose } = $props();
+    let { onClose, opaque = false } = $props();
 
     // close via esc and click out
     function handle_key_down(event) {
@@ -18,7 +18,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="info-card page-body-card modal-card">
         <h2>Information</h2>
         <div class="info-grid">
