@@ -27,7 +27,7 @@
                 <p>Team Rubber Ducky</p>
                 <p>Anna</p>
                 <p>Gina</p>
-                <p>Isiaiah</p>
+                <p>Isaiah</p>
                 <p>Jenaya</p>
                 <p>LeaAnn</p>
                 <p>Tessa</p>
