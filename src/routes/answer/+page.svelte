@@ -3,7 +3,7 @@
 
     import { font_size } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/settings.svelte';
+    import Settings from '$lib/modals/Settings.svelte';
     import Help from '$lib/modals/Help.svelte';
     import Info from '$lib/modals/Info.svelte';
 
