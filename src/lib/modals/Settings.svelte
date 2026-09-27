@@ -1,20 +1,38 @@
 <script>
-    import { is_music_on, is_sound_on, font_size, is_guest } from '$lib/stores/settings';
-
+    import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings';
     import DeleteAccount from '$lib/modals/DeleteAccount.svelte';
-    import { goto } from '$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
+
+    import { page } from '$app/state';
 
     let { onClose, opaque = false } = $props();
 
+    let user = $derived(page.data?.user);
+    let supabase = $derived(page.data?.supabase);
+
     // music and sound
     function toggle_music() { is_music_on.update(value => !value); }
-	function toggle_sound() { is_sound_on.update(value => !value); }
+    function toggle_sound() { is_sound_on.update(value => !value); }
 
     // font size
     const MIN_FONT_SIZE = 12;
     const MAX_FONT_SIZE = 20;
     function decrease_text_size() { font_size.update(size => Math.max(MIN_FONT_SIZE, size - 1)); }
     function increase_text_size() { font_size.update(size => Math.min(MAX_FONT_SIZE, size + 1)); }
+
+    async function logout() {
+	if(!supabase) return;
+	const { error } = await supabase.auth.signOut();
+	if (error) {
+	    console.error('Error logging out:', error.message);
+	    return;
+	}
+	await invalidateAll();
+
+	onClose();
+	goto('/');
+    }
+
 
     // delete account confirmation
     let is_delete_account_open = $state(false);
@@ -68,7 +86,7 @@
             </div>
             <div class="settings-section">
                 <h3>Account Information</h3>
-                {#if $is_guest}
+		{#if !user}
                     <div class="settings-item settings-account-info">
                         <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                         <div class="settings-account-buttons">
@@ -80,14 +98,14 @@
                     <div class="settings-item settings-account-info">
                         <div class="settings-account-info-row">
                             <span class="settings-label">Username</span>
-                            <span class="settings-account-value">your_username</span>
+                            <span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
                             <button class="settings-account-edit-button" onclick={edit_username} aria-label="Edit Username">
                                 ✎
                             </button>
                         </div>
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
-                            <span class="settings-account-value">your@email.com</span>
+                            <span class="settings-account-value">{user.email ?? '-'}</span>
                             <button class="settings-account-edit-button" onclick={edit_email} aria-label="Edit Email">
                                 ✎
                             </button>
