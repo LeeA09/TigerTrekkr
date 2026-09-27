@@ -1,12 +1,16 @@
 <script>
-    import { goto } from '\$app/navigation';
-
+    import { goto, invalidateAll } from '\$app/navigation';
+    import { page } from '$app/state'
     import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/settings.svelte';
+    import Settings from '$lib/modals/Settings.svelte';
     import Help from '$lib/modals/Help.svelte';
     import Info from '$lib/modals/Info.svelte';
     import PlayAsGuest from '$lib/modals/PlayAsGuest.svelte';
+
+    let { data } = $props();
+
+    let user = $derived(page.data?.user);
 
     import { onMount } from 'svelte';
 
@@ -64,6 +68,14 @@
         $selected_difficulty = '';
         goto('/difficulty'); 
     }
+
+    async function logout() {
+	if (data.supabase) {
+	    await data.supabase.auth.signOut();
+	    await invalidateAll();
+	}
+    }
+
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
@@ -75,7 +87,7 @@
                 TigerTrekkr
             </h1>
             <div class="button-main">
-                {#if is_guest}
+                {#if !user}
                 <button class="home-button" onclick={() => goto('/login')}>
                     Log in
                 </button>
@@ -86,9 +98,13 @@
                     Play as Guest
                 </button>
                 {:else}
+		<p>Welcome back, {user.email}!</p>
                 <button class="home-button" onclick={move_on}>
                     Play
                 </button>
+		<button class="home-button" onclick={logout}>
+		    Logout
+		</button>
                 {/if}
             </div>
         </div>
@@ -123,7 +139,7 @@
             <div class="leaderboard-player">
                 <div class="leaderboard-player-info">
                     <span class="leaderboard-player-rank">1</span>
-                    <span class="leaderboard-player-name">Usernameeeeeeeeeeeeeeeeeeeeeeeeeee</span>
+                    <span class="leaderboard-player-name">Username</span>
                 </div>
                 <span class="leaderboard-player-score">100000</span>
             </div>

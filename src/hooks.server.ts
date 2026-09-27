@@ -9,7 +9,8 @@ export const handle: Handle = async ({ event, resolve }) => {
       getAll: () => event.cookies.getAll(),
       setAll: (cookiesToSet) => {
         cookiesToSet.forEach(({ name, value, options }) => {
-          event.cookies.set(name, value, { ...options, path: '/' })
+          event.cookies.set(name, value, { ...options, path: '/',
+		secure: process.env.NODE_ENV === 'production' })
         })
       },
     },
@@ -17,14 +18,20 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   // Helper method to easily fetch the logged-in user on the backend
   event.locals.safeGetSession = async () => {
-    const { data: { session } } = await event.locals.supabase.auth.getSession()
-    if (!session) return { session: null, user: null }
+    //const { data: { session } } = await event.locals.supabase.auth.getSession()
+    //if (!session) return { session: null, user: null }
     
     const { data: { user }, error } = await event.locals.supabase.auth.getUser()
-    if (error) return { session: null, user: null }
+    if (error || !user) return { session: null, user: null }
     
+    const { data: { session } } = await event.locals.supabase.auth.getSession()
+
     return { session, user }
   }
 
-  return resolve(event)
+  return resolve(event, {
+	filterSerializedResponseHeaders(name) {
+		return name === 'content-range' || name === 'x-supabase-api-version'
+	}
+  })
 }

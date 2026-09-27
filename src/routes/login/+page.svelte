@@ -4,7 +4,9 @@
 
     import { font_size } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/settings.svelte';
+    let { form } = $props();
+
+    import Settings from '$lib/modals/Settings.svelte';
     import Help from '$lib/modals/Help.svelte';
     import Info from '$lib/modals/Info.svelte';
     
@@ -95,16 +97,16 @@
                 <p class="page-body-card-description">
                     Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
                 </p>
-                <form>
+                <form method="POST" use:enhance>
                     <div class="fill-in">
-                        <label for="login-username">Username</label>
-                        <input type="text" placeholder="Enter username" required />
+                        <label for="email">Email</label>
+                        <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />
                     </div>
                     <div class="fill-in">
-                        <label for="login-password">Password</label>
+                        <label for="password">Password</label>
                         <div class="fill-in-eye">
-                            <input type={login_show_password ? 'text' : 'password'} placeholder="Enter password" required />
-                            <button class="button-eye" onclick={toggle_login_show_password} aria-label={login_show_password ? 'Hide Password' : 'Show Password'}>
+                            <input name="password" type={login_show_password ? 'text' : 'password'} placeholder="Enter password" autocomplete="current-password" required />
+                            <button type="button" class="button-eye" onclick={toggle_login_show_password} aria-label={login_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if login_show_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>

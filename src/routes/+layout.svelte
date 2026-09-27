@@ -1,8 +1,27 @@
-<script>
-	let { children } = $props();
+<script lang="ts">
 
     import '../app.css'
     import { font_size } from '$lib/stores/settings';
+
+    import { invalidate } from '$app/navigation'
+    import { onMount } from 'svelte'
+
+//    import type { LayoutData } from './types'
+    import type { Snippet } from 'svelte'
+
+    let { data, children } = $props();
+
+    onMount(() => {
+	const { data: { subscription } } = data.supabase.auth.onAuthStateChange((event, newSession) => {
+	    if (newSession?.expires_at !== data.session?.expires_at) {
+		invalidate('supabase:auth')
+	    }
+	})
+	
+	return () => subscription.unsubscribe()
+
+    })
+
 </script>
 
 <svelte:head>
