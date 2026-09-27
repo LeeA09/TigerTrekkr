@@ -1,8 +1,5 @@
 <script>
-
     import { goto } from '\$app/navigation';
-    import { enhance } from '$app/forms';
-    let { form } = $props();
 
     import { font_size } from '$lib/stores/settings';
 
@@ -54,46 +51,62 @@
 	function close_help() { is_help_open = false; }
 	function open_info() { is_info_open = true; }
 	function close_info() { is_info_open = false; }
-
-    // settings
-    let is_sound_on = $state(true);
-    let is_music_on = $state(true);
-    function toggle_music() { is_music_on = !is_music_on; }
-	function toggle_sound() { is_sound_on = !is_sound_on; }
-
-    // checks passwords match before adding user
-    let password = $state('');
-    let confirmPassword = $state('');
-
-    let passwordsMatch = $derived(password.length > 0 && password === confirmPassword);
-
 </script>
 
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
                 <button class="utility-button" title="Settings" aria-label="Settings" onclick={open_settings}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        <path d="
+                            M 12 2.5
+                            C 14.66 2.5, 13.13 5.66, 14.69 6.41 
+                            C 16.25 7.17, 17.77 4, 19.43 6.08 
+                            C 21.09 8.16, 17.66 8.93, 18.04 10.62 
+                            C 18.43 12.31, 21.85 11.52, 21.26 14.11 
+                            C 20.67 16.71, 17.93 14.51, 16.85 15.87 
+                            C 15.76 17.22, 18.52 19.41, 16.12 20.56 
+                            C 13.73 21.71, 13.74 18.2, 12 18.2 
+                            C 10.26 18.2, 10.27 21.71, 7.88 20.56 
+                            C 5.48 19.41, 8.24 17.22, 7.15 15.87 
+                            C 6.07 14.51, 3.33 16.71, 2.74 14.11 
+                            C 2.15 11.52, 5.57 12.31, 5.96 10.62 
+                            C 6.34 8.93, 2.91 8.16, 4.57 6.08 
+                            C 6.23 4, 7.75 7.17, 9.31 6.41 
+                            C 10.87 5.66, 9.34 2.5, 12 2.5 
+                            Z
+                        "></path>
                     </svg>
                 </button>
                 <button class="utility-button" title="Help" aria-label="Help" onclick={open_help}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="
+                            M 6.5 8.5
+                            C 6.5 4.7, 8.9 2, 12 2
+                            C 15.5 2, 18.5 4.7, 18.5 8
+                            C 18.5 11.2, 16.7 13, 14.5 14.5
+                            C 13.5 15.2, 12.8 15.5, 12 15.5
+                            C 11.2 15.5, 10.5 15.0, 10.5 14.2
+                            C 10.5 13.3, 11.2 12.6, 12.8 12
+                            C 14.5 10.9, 15.5 9.8, 15.5 8
+                            C 15.5 6.2, 14.1 5, 12.2 5
+                            C 10.3 5, 9.5 6.4, 9.5 8.5
+                            C 9.5 9.1, 9 9.5, 8 9.5
+                            C 7 9.5, 6.5 9.1, 6.5 8.5
+                            Z
+                        " />
+                        <circle cx="12" cy="20" r="1.8" />
                     </svg>
                 </button>
                 <button class="utility-button" title="Info" aria-label="Info" onclick={open_info}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="4.5" r="2" />
+                        <rect x="10" y="9.5" width="4" height="12" rx="2" ry="2" />
                     </svg>
                 </button>
             </div>
@@ -106,20 +119,20 @@
                 <p class="page-body-card-description">
                     Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
                 </p>
-                <form method="POST" use:enhance>
+                <form>
                     <div class="fill-in">
-                        <label for="username">Username</label>
-                        <input name="username" type="text" placeholder="Enter username" required />
+                        <label for="signup-username">Username</label>
+                        <input type="text" placeholder="Enter username" required />
                     </div>
                     <div class="fill-in">
-                        <label for="email">Email</label>
-                        <input name="email" type="email" autocomplete="email" placeholder="Enter email" required />
+                        <label for="signup-email">Email</label>
+                        <input type="email" placeholder="Enter email" required />
                     </div>
                     <div class="fill-in">
-                        <label for="password">Password</label>
+                        <label for="signup-password">Password</label>
                         <div class="fill-in-eye">
-                            <input name="password" type={signup_show_password ? 'text' : 'password'} bind:value={password} autocomplete="new-password" placeholder="Enter password" required />
-                            <button type="button" class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
+                            <input type={signup_show_password ? 'text' : 'password'} placeholder="Enter password" required />
+                            <button class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -134,10 +147,10 @@
                         </div>
                     </div>
                     <div class="fill-in">
-                        <label for="confirm-password">Confirm password</label>
+                        <label for="signup-confirm-password">Confirm password</label>
                         <div class="fill-in-eye">
-                            <input type={signup_show_confirm_password ? 'text' : 'password'} bind:value={confirmPassword} placeholder="Confirm password" required />
-                            <button type="button" class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
+                            <input type={signup_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
+                            <button class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_confirm_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -151,12 +164,7 @@
                             </button>
                         </div>
                     </div>
-
-		    {#if confirmPassword.length > 0 && !passwordsMatch}
-			<p style="color: red;">Passwords do not match.</p>
-		    {/if}
-			
-                    <button type="submit" disabled={!passwordsMatch} class="home-button">Sign Up</button>
+                    <button type="submit" class="home-button">Submit</button>
                 </form>
             </div>
         </div>

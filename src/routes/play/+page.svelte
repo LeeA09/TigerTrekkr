@@ -95,11 +95,6 @@
             });
             marzipano_scene.switchTo();
         }
-        // if (current_view !== 'play' && marzipano_viewer) {
-        //     marzipano_viewer.destroy();
-        //     marzipano_viewer = null;
-        //     marzipano_scene = null;
-        // }
     });
 
     // Initialize / tear down map display
@@ -107,8 +102,8 @@
         if (leaflet_loaded && map_container && !leaflet_map) {
             // Define Mizzou campus boundary (Southwest to Northeast lat/lng)
             const mizzouBounds = window.L.latLngBounds(
-                [38.9320, -92.3420], // Southwest corner (Mizzou Sports Park / Providence)
-                [38.9580, -92.3150]  // Northeast corner (College Ave / East Campus)
+                [38.949697, -92.314951], // Southwest corner (Mizzou Sports Park / Providence)
+                [38.927023, -92.346998]  // Northeast corner (College Ave / East Campus)
             );
             leaflet_map = window.L.map(map_container, {
                 zoomControl: false,
@@ -152,13 +147,6 @@
                 resizeObserver.disconnect();
             };
         }
-        // if (current_view !== 'play' && leaflet_map) {
-        //     leaflet_map.remove();
-        //     leaflet_map = null;
-        //     guess_marker = null;
-        //     guess_placed = false;
-        //     is_map_expanded = false;
-        // }
     });
 
     // Render Leaflet tiles smoothly when map expand size
@@ -173,16 +161,21 @@
 
     // Game timer
     let time_remaining = $state(300);
+    let is_timer_paused = $state(false);
+
     let formatted_time = $derived(
         `${Math.floor(time_remaining / 60).toString().padStart(2, '0')}:${(time_remaining % 60).toString().padStart(2, '0')}`
     );
+
+    // Timer runs only while no pause/skip/end modal is open
     $effect(() => {
-        if (time_remaining > 0) {
+        if (time_remaining > 0 && !is_timer_paused) {
             const timer = setInterval(() => {
-                if (time_remaining > 0) {
+                if (time_remaining > 0 && !is_timer_paused) {
                     time_remaining -= 1;
                 }
             }, 1000);
+
             return () => clearInterval(timer);
         }
     });
@@ -208,33 +201,118 @@
 
     function submit_guess() { goto('/answer'); }
 
-    // utility modals
+     // utility modals
     let is_settings_open = $state(false);
     let is_help_open = $state(false);
     let is_info_open = $state(false);
-    function open_settings() { is_settings_open = true; }
-	function close_settings() { is_settings_open = false; }
-	function open_help() { is_help_open = true; }
-	function close_help() { is_help_open = false; }
-	function open_info() { is_info_open = true; }
-	function close_info() { is_info_open = false; }
+
+    function update_timer_pause_state() {
+        is_timer_paused =
+            is_pause_open ||
+            is_skip_open ||
+            is_end_open ||
+            is_settings_open ||
+            is_help_open ||
+            is_info_open;
+    }
+
+    function open_settings() {
+        is_settings_open = true;
+        update_timer_pause_state();
+    }
+
+    function close_settings() {
+        is_settings_open = false;
+        update_timer_pause_state();
+    }
+
+    function open_help() {
+        is_help_open = true;
+        update_timer_pause_state();
+    }
+
+    function close_help() {
+        is_help_open = false;
+        update_timer_pause_state();
+    }
+
+    function open_info() {
+        is_info_open = true;
+        update_timer_pause_state();
+    }
+
+    function close_info() {
+        is_info_open = false;
+        update_timer_pause_state();
+    }
 
     // confirmation modals
     let is_pause_open = $state(false);
     let is_skip_open = $state(false);
     let is_end_open = $state(false);
-    function open_pause() { is_pause_open = true; }
-    function close_pause() { is_pause_open = false; }
-    function open_skip() { is_skip_open = true; }
-    function close_skip() { is_skip_open = false; }
-    function open_end() { is_end_open = true; }
-    function close_end() { is_end_open = false; }
 
-    // settings
-    let is_sound_on = $state(true);
-    let is_music_on = $state(true);
-    function toggle_music() { is_music_on = !is_music_on; }
-	function toggle_sound() { is_sound_on = !is_sound_on; }
+    function open_pause() {
+        if (is_pause_open) {
+            is_pause_open = false;
+        } else {
+            is_skip_open = false;
+            is_end_open = false;
+            is_settings_open = false;
+            is_help_open = false;
+            is_info_open = false;
+
+            is_pause_open = true;
+        }
+
+        update_timer_pause_state();
+    }
+
+    function open_skip() {
+        if (is_skip_open) {
+            is_skip_open = false;
+        } else {
+            is_pause_open = false;
+            is_end_open = false;
+            is_settings_open = false;
+            is_help_open = false;
+            is_info_open = false;
+
+            is_skip_open = true;
+        }
+
+        update_timer_pause_state();
+    }
+
+    function open_end() {
+        if (is_end_open) {
+            is_end_open = false;
+        } else {
+            is_pause_open = false;
+            is_skip_open = false;
+            is_settings_open = false;
+            is_help_open = false;
+            is_info_open = false;
+
+            is_end_open = true;
+        }
+
+        update_timer_pause_state();
+    }
+
+    function close_pause() {
+        is_pause_open = false;
+        update_timer_pause_state();
+    }
+
+    function close_skip() {
+        is_skip_open = false;
+        update_timer_pause_state();
+    }
+
+    function close_end() {
+        is_end_open = false;
+        update_timer_pause_state();
+    }
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
@@ -243,19 +321,26 @@
             <button class="top-bar-home-link" onclick={open_end} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
-
             <div class="top-bar-center">
                 <button class="utility-button button-pause" onclick={open_pause} title="Pause" aria-label="Pause">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-                        <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                        <rect x="6" y="2.5" width="4" height="19" rx="2" ry="2" />
+                        <rect x="14" y="2.5" width="4" height="19" rx="2" ry="2" />
                     </svg>
                 </button>
                 <button class="utility-button button-skip" onclick={open_skip} title="Skip" aria-label="Skip">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="5 4 15 12 5 20 5 4"></polygon>
-                        <line x1="19" y1="5" x2="19" y2="19"></line>
-                    </svg>
+                        <path d="
+                            M 3 5.5 
+                            Q 3 2.5 5.8 4.7 
+                            L 12.2 9.8 
+                            Q 15 12 12.2 14.2 
+                            L 5.8 19.3 
+                            Q 3 21.5 3 18.5 
+                            Z
+                        " />
+                        <rect x="17" y="2.5" width="4" height="19" rx="2" ry="2" />
+                        </svg>
                 </button>
                 <div class="timer-display">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="timer-icon">
@@ -270,26 +355,54 @@
                     </span>
                 {/if}
             </div>
-
             <div class="button-circle-top">
                 <button class="utility-button" title="Settings" aria-label="Settings" onclick={open_settings}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        <path d="
+                            M 12 2.5
+                            C 14.66 2.5, 13.13 5.66, 14.69 6.41 
+                            C 16.25 7.17, 17.77 4, 19.43 6.08 
+                            C 21.09 8.16, 17.66 8.93, 18.04 10.62 
+                            C 18.43 12.31, 21.85 11.52, 21.26 14.11 
+                            C 20.67 16.71, 17.93 14.51, 16.85 15.87 
+                            C 15.76 17.22, 18.52 19.41, 16.12 20.56 
+                            C 13.73 21.71, 13.74 18.2, 12 18.2 
+                            C 10.26 18.2, 10.27 21.71, 7.88 20.56 
+                            C 5.48 19.41, 8.24 17.22, 7.15 15.87 
+                            C 6.07 14.51, 3.33 16.71, 2.74 14.11 
+                            C 2.15 11.52, 5.57 12.31, 5.96 10.62 
+                            C 6.34 8.93, 2.91 8.16, 4.57 6.08 
+                            C 6.23 4, 7.75 7.17, 9.31 6.41 
+                            C 10.87 5.66, 9.34 2.5, 12 2.5 
+                            Z
+                        "></path>
                     </svg>
                 </button>
                 <button class="utility-button" title="Help" aria-label="Help" onclick={open_help}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="
+                            M 6.5 8.5
+                            C 6.5 4.7, 8.9 2, 12 2
+                            C 15.5 2, 18.5 4.7, 18.5 8
+                            C 18.5 11.2, 16.7 13, 14.5 14.5
+                            C 13.5 15.2, 12.8 15.5, 12 15.5
+                            C 11.2 15.5, 10.5 15.0, 10.5 14.2
+                            C 10.5 13.3, 11.2 12.6, 12.8 12
+                            C 14.5 10.9, 15.5 9.8, 15.5 8
+                            C 15.5 6.2, 14.1 5, 12.2 5
+                            C 10.3 5, 9.5 6.4, 9.5 8.5
+                            C 9.5 9.1, 9 9.5, 8 9.5
+                            C 7 9.5, 6.5 9.1, 6.5 8.5
+                            Z
+                        " />
+                        <circle cx="12" cy="20" r="1.8" />
                     </svg>
                 </button>
                 <button class="utility-button" title="Info" aria-label="Info" onclick={open_info}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="4.5" r="2" />
+                        <rect x="10" y="9.5" width="4" height="12" rx="2" ry="2" />
                     </svg>
                 </button>
             </div>
@@ -318,13 +431,13 @@
         </div>
     </div>
     {#if is_settings_open}
-        <Settings onClose={close_settings} />
+        <Settings onClose={close_settings} opaque={true} />
     {/if}
     {#if is_help_open}
-        <Help onClose={close_help} />
+        <Help onClose={close_help} opaque={true} />
     {/if}
     {#if is_info_open}
-        <Info onClose={close_info} />
+        <Info onClose={close_info} opaque={true} />
     {/if}
     {#if is_pause_open}
         <Pause onClose={close_pause} />

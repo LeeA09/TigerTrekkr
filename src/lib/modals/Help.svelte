@@ -1,7 +1,7 @@
 <script>
     import { font_size } from '$lib/stores/settings';
 
-    let { onClose } = $props();
+    let { onClose, opaque = false } = $props();
 
     // faq controls
     let open_faq = $state(0);
@@ -28,7 +28,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="help-card page-body-card modal-card">
         <h2>Help</h2>
         <div class="help-grid">
@@ -40,17 +40,17 @@
                 <h3>How to Play</h3>
                 <p>make an account or play as a guest. choose a difficulty. look around by panning and zooming and try to guess where you are. place a duck on the map where you think you are. learn a bit more about mizzou's campus.</p>
             </div>
-            <div class="help-item help-faq-item">
-                <h3>FAQ</h3>
+            <div class="help-item">
+                <h3 class="need-padding">FAQ</h3>
                 <button type="button" class="help-faq-question" onclick={() => toggle_faq(1)} aria-expanded={open_faq === 1}>
-                    <p>What color's my underwear?</p>
+                    <p>how does scoring work</p>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:faq-open={open_faq === 1}>
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </button>
                 {#if open_faq === 1}
                     <p class="help-faq-answer">
-                        *slap*
+                        haversine formula
                     </p>
                 {/if}
                 <button type="button" class="help-faq-question" onclick={() => toggle_faq(2)} aria-expanded={open_faq === 2}>

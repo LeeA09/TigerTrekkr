@@ -1,15 +1,14 @@
 <script>
-    import { font_size, is_guest } from '$lib/stores/settings';
+    import { is_music_on, is_sound_on, font_size, is_guest } from '$lib/stores/settings';
 
     import DeleteAccount from '$lib/modals/DeleteAccount.svelte';
+    import { goto } from '$app/navigation';
 
-    let { onClose } = $props();
+    let { onClose, opaque = false } = $props();
 
     // music and sound
-    let is_sound_on = $state(true);
-    let is_music_on = $state(true);
-    function toggle_music() { is_music_on = !is_music_on; }
-	function toggle_sound() { is_sound_on = !is_sound_on; }
+    function toggle_music() { is_music_on.update(value => !value); }
+	function toggle_sound() { is_sound_on.update(value => !value); }
 
     // font size
     const MIN_FONT_SIZE = 12;
@@ -37,7 +36,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="settings-card page-body-card modal-card">
         <h2>Settings</h2>
         <div class="settings-grid">
@@ -45,14 +44,14 @@
                 <h3>Audio & Display</h3>
                 <div class="settings-item">
                     <span class="settings-label">Music</span>
-                    <button class="button-toggle" class:active={is_music_on} onclick={toggle_music}>
-                        {is_music_on ? 'ON' : 'OFF'}
+                    <button class="button-toggle" class:active={$is_music_on} onclick={toggle_music}>
+                        {$is_music_on ? 'ON' : 'OFF'}
                     </button>
                 </div>
                 <div class="settings-item">
                     <span class="settings-label">Sound</span>
-                    <button class="button-toggle" class:active={is_sound_on} onclick={toggle_sound}>
-                        {is_sound_on ? 'ON' : 'OFF'}
+                    <button class="button-toggle" class:active={$is_sound_on} onclick={toggle_sound}>
+                        {$is_sound_on ? 'ON' : 'OFF'}
                     </button>
                 </div>
                 <div class="settings-item">
@@ -69,7 +68,43 @@
             </div>
             <div class="settings-section">
                 <h3>Account Information</h3>
-
+                {#if $is_guest}
+                    <div class="settings-item settings-account-info">
+                        <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
+                        <div class="settings-account-buttons">
+                            <button class="home-button settings-button" onclick={() => goto('/login')}>Log In</button>
+                            <button class="home-button settings-button" onclick={() => goto('/signup')}>Sign Up</button>
+                        </div>
+                    </div>
+                {:else}
+                    <div class="settings-item settings-account-info">
+                        <div class="settings-account-info-row">
+                            <span class="settings-label">Username</span>
+                            <span class="settings-account-value">your_username</span>
+                            <button class="settings-account-edit-button" onclick={edit_username} aria-label="Edit Username">
+                                ✎
+                            </button>
+                        </div>
+                        <div class="settings-account-info-row">
+                            <span class="settings-label">Email</span>
+                            <span class="settings-account-value">your@email.com</span>
+                            <button class="settings-account-edit-button" onclick={edit_email} aria-label="Edit Email">
+                                ✎
+                            </button>
+                        </div>
+                        <div class="settings-account-info-row">
+                            <span class="settings-label">Password</span>
+                            <span class="settings-account-value">••••••••</span>
+                            <button class="settings-account-edit-button" onclick={edit_password} aria-label="Change Password">
+                                ✎
+                            </button>
+                        </div>
+                        <div class="settings-account-buttons">
+                            <button class="button-secondary settings-button" onclick={open_delete_account}>Delete Account</button>
+                            <button class="button-secondary settings-button" onclick={logout}>Log Out</button>
+                        </div>
+                    </div>
+                {/if}
             </div>
         </div>
         <button class="button-secondary" onclick={onClose}>
