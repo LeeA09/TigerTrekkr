@@ -13,19 +13,6 @@ export const actions: Actions = {
 
     const { data, error } = await locals.supabase.auth.signInWithPassword({ email, password})
 
-
-    
-
-//    console.log(error)
-
-    if (error) {
-      // Failed: Could be wrong password, unregistered email, or unconfirmed email
-      console.error("Login failed:", error.message) 
-    } else if (data.session) {
-      // Success: Valid user and active session
-      console.log("Logged in user:", data.user)
-    }
-
     if (error) {
 	return fail(400, { message: error.message })
     }

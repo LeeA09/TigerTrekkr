@@ -119,20 +119,20 @@
                 <p class="page-body-card-description">
                     Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
                 </p>
-                <form>
+                <form method="POST" use:enhance>
                     <div class="fill-in">
                         <label for="signup-username">Username</label>
-                        <input type="text" placeholder="Enter username" required />
+                        <input name="username" type="text" placeholder="Enter username" required />
                     </div>
                     <div class="fill-in">
                         <label for="signup-email">Email</label>
-                        <input type="email" placeholder="Enter email" required />
+                        <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />
                     </div>
                     <div class="fill-in">
                         <label for="signup-password">Password</label>
                         <div class="fill-in-eye">
-                            <input type={signup_show_password ? 'text' : 'password'} placeholder="Enter password" required />
-                            <button class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
+                            <input name="password" type={signup_show_password ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
+                            <button type="button" class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -150,7 +150,7 @@
                         <label for="signup-confirm-password">Confirm password</label>
                         <div class="fill-in-eye">
                             <input type={signup_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
-                            <button class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
+                            <button type="button" class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if signup_show_confirm_password}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>

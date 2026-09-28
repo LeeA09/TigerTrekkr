@@ -1,8 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
-import { type Handle } from '@sveltejs/kit'
+import { createClient } from '@supabase/supabase-js'
+import { type Handle, redirect } from '@sveltejs/kit'
+import { sequence } from '@sveltejs/kit/hooks'
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$env/static/public'
+import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private'
 
-export const handle: Handle = async ({ event, resolve }) => {
+
+const handleSupabase: Handle = async ({ event, resolve }) => {
   // Initialize the Supabase backend server client
   event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
     cookies: {
@@ -16,11 +20,15 @@ export const handle: Handle = async ({ event, resolve }) => {
     },
   })
 
+  event.locals.supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+	autoRefreshToken: false,
+	persistSession: false
+    }
+  })
+
   // Helper method to easily fetch the logged-in user on the backend
   event.locals.safeGetSession = async () => {
-    //const { data: { session } } = await event.locals.supabase.auth.getSession()
-    //if (!session) return { session: null, user: null }
-    
     const { data: { user }, error } = await event.locals.supabase.auth.getUser()
     if (error || !user) return { session: null, user: null }
     
@@ -35,3 +43,5 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
   })
 }
+
+export const handle = sequence(handleSupabase)
