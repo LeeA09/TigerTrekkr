@@ -52,11 +52,11 @@ export const actions: Actions = {
 		</div>
 	    `
 	})
-
-	return { success: true }
     } catch (mailError) {
 	console.error('Mail Error:', mailError)
 	return fail(500, { error: 'Account initialized, but Gmail deliver failed.' })
     }
+    throw redirect(303, `/check-email?email=${encodeURIComponent(email)}`)
+
   }
 }

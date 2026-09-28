@@ -89,7 +89,7 @@
                     Play as Guest
                 </button>
                 {:else}
-		<p>Welcome back, {user.email}!</p>
+		<h2 style="color: #FFFFFF">Welcome back, <span style="color: #FFC300">{user.user_metadata?.display_name ?? 'Guest User'}</span>!</h2>
                 <button class="home-button" onclick={move_on}>
                     Play
                 </button>
