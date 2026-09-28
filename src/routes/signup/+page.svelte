@@ -46,17 +46,18 @@
     let is_help_open = $state(false);
     let is_info_open = $state(false);
     function open_settings() { is_settings_open = true; }
-	function close_settings() { is_settings_open = false; }
-	function open_help() { is_help_open = true; }
-	function close_help() { is_help_open = false; }
-	function open_info() { is_info_open = true; }
-	function close_info() { is_info_open = false; }
+    function close_settings() { is_settings_open = false; }
+    function open_help() { is_help_open = true; }
+    function close_help() { is_help_open = false; }
+    function open_info() { is_info_open = true; }
+    function close_info() { is_info_open = false; }
+
 </script>
 
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">

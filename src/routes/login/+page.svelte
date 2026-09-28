@@ -51,6 +51,7 @@
 	function close_help() { is_help_open = false; }
 	function open_info() { is_info_open = true; }
 	function close_info() { is_info_open = false; }
+
 </script>
 
 <div class="page">
