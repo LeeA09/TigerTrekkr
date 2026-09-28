@@ -34,7 +34,7 @@
             Are you sure you want to delete your account? This action cannot be undone.
         </p>
         <div class="modal-confirm-buttons">
-            <button class="home-button" onclick={() => goto('/')}>
+            <button class="button-secondary confirm-delete-button" onclick={() => goto('/')}>
                 Delete
             </button>
             <button class="button-secondary" onclick={onClose}>

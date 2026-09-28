@@ -118,7 +118,7 @@
                             </button>
                         </div>
                         <div class="settings-account-buttons">
-                            <button class="button-secondary settings-button" onclick={open_delete_account}>Delete Account</button>
+                            <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
                             <button class="button-secondary settings-button" onclick={logout}>Log Out</button>
                         </div>
                     </div>
