@@ -25,12 +25,12 @@
             <div class="info-item">
                 <h3>Creators</h3>
                 <p>Team Rubber Ducky</p>
-                <p>Anna</p>
-                <p>Gina</p>
-                <p>Isaiah</p>
-                <p>Jenaya</p>
-                <p>LeaAnn</p>
-                <p>Tessa</p>
+                <p>Anna Mori</p>
+                <p>Gina Hua</p>
+                <p>Isaiah Korte</p>
+                <p>Jenaya Monroe</p>
+                <p>LeeAnn Lin</p>
+                <p>Tessa Mitchell</p>
             </div>
             <div class="info-item">
                 <h3>Credits</h3>
@@ -38,11 +38,12 @@
                 <p>Marzipano</p>
                 <p>Leaflet</p>
                 <p>OpenStreetMap</p>
-                <p>others...</p>
+                <p>Supabase</p>
+                <p>PostgreSQL</p>
             </div>
         </div>
         <button type="button" class="button-secondary" onclick={onClose}>
-            Close
+            X
         </button>
     </div>
 </div>
