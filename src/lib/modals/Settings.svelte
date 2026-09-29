@@ -177,7 +177,7 @@
             </div>
         </div>
         <button class="button-secondary" onclick={onClose}>
-            Close
+            X
         </button>
     </div>
     {#if is_delete_account_open}
