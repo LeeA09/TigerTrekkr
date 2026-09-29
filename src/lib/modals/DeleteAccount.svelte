@@ -4,6 +4,10 @@
 
     let { onClose } = $props();
 
+    let isDeleting = $state(false);
+    let errorMessage = $state('');
+
+
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') {
@@ -14,6 +18,30 @@
         if (event.target === event.currentTarget) {
             onClose();
         }
+    }
+
+
+    async function handleDelete() {
+	isDeleting = true
+	errorMessage = ''
+
+	try {
+	    const response = await fetch('/api/delete-account', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' }
+	    })
+
+	    if (!response.ok) {
+		const data = await response.json()
+		throw new Error(data.message || 'Failed to delete account.')
+	    }
+	    await goto('/', { invalidateAll: true })
+	    onClose()
+	} catch (err) {
+	    errorMessage = err.message
+	} finally {
+	    isDeleting = false
+	}
     }
 </script>
 
@@ -33,11 +61,12 @@
         <p class="modal-confirm-body">
             Are you sure you want to delete your account? This action cannot be undone.
         </p>
+
         <div class="modal-confirm-buttons">
-            <button class="button-secondary confirm-delete-button" onclick={() => goto('/')}>
+            <button class="button-secondary confirm-delete-button" onclick={handleDelete} disabled={isDeleting}>
                 Delete
             </button>
-            <button class="button-secondary" onclick={onClose}>
+            <button class="button-secondary" onclick={onClose} disabled={isDeleting}>
                 Cancel
             </button>
         </div>
