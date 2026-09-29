@@ -2,13 +2,12 @@
     import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings';
     import DeleteAccount from '$lib/modals/DeleteAccount.svelte';
     import { goto, invalidateAll } from '$app/navigation';
-
+    import { enhance } from '$app/forms'
     import { page } from '$app/state';
 
     let { onClose, opaque = false } = $props();
 
     let user = $derived(page.data?.user);
-    let supabase = $derived(page.data?.supabase);
 
     // music and sound
     function toggle_music() { is_music_on.update(value => !value); }
@@ -19,6 +18,42 @@
     const MAX_FONT_SIZE = 20;
     function decrease_text_size() { font_size.update(size => Math.max(MIN_FONT_SIZE, size - 1)); }
     function increase_text_size() { font_size.update(size => Math.min(MAX_FONT_SIZE, size + 1)); }
+
+    let is_editing_username = $state(false)
+    let new_username = $state('')
+    let is_saving_username = $state(false)
+    let username_error = $state('')
+
+    function edit_email() { return }
+    function edit_password() { return }
+
+    function start_editing_username() {
+	new_username = user?.user_metadata?.display_name ?? ''
+	username_error = ''
+	is_editing_username = true
+    }
+
+    function cancel_editing_username() {
+	is_editing_username = false
+    }
+
+    function handle_username_submit() {
+	is_saving_username = true
+	username_error = ''
+
+	return async ({ result, update }) => {
+	    is_saving_username = false
+
+	    const data = result.data ?? result;
+	    if (data?.success){
+		is_editing_username = false
+		await invalidateAll()
+	    } else {
+		username_error = result.data?.error ?? 'An error occurred'
+		console.log(username_error)
+	    }
+	}
+    }
 
     async function logout() {
 	if(!supabase) return;
@@ -41,7 +76,11 @@
 
     // close via esc and click out
     function handle_key_down(event) {
-        if (event.key === 'Escape') {
+        if (event.target.tagName === 'INPUT') {
+	    return;
+	}
+
+	if (event.key === 'Escape') {
             onClose();
         }
     }
@@ -98,11 +137,23 @@
                     <div class="settings-item settings-account-info">
                         <div class="settings-account-info-row">
                             <span class="settings-label">Username</span>
-                            <span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
-                            <button class="settings-account-edit-button" onclick={edit_username} aria-label="Edit Username">
-                                ✎
-                            </button>
+			    {#if is_editing_username}
+				<form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
+				    <input type="text" name="new_username" bind:value={new_username} disabled={is_saving_username} class="settings-input-form input-box"/>
+				    <button type="submit" class="settings-account-edit-info-button" disabled={is_saving_username} aria-label="Save Username">🖫</button>
+				    <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={is_saving_username} aria-label="Cancel Editing">✖</button>
+				</form>
+		 	    {:else}                            
+				<span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
+                            	<button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
+                                    ✎
+                            	</button>
+			    {/if}
                         </div>
+			{#if username_error}
+			    <p class="settings-error">{username_error}</p>
+			{/if}
+			
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>

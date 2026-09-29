@@ -427,8 +427,47 @@ h3 {
     transform: all 0.2s ease;
 }
 
+.settings-account-edit-info-button {
+    width: calc(var(--font-size) * 1);
+    height: calv(var(--font-size) * 1);
+    margin-left: calc(var(--font-size) * 0.25);
+    padding: 0;
+    border: none;
+    background: none;
+    color: white;
+    font-size: calc(var(--font-size) * 1);
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: all 0.2s ease;
+}
+
+.settings-account-edit-info-button:hover,
 .settings-account-edit-button:hover {
     color: #DC562E;
+}
+
+.settings-input-form {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    max-width: 500px;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.settings-input-form.input-box{
+    width: calc(var(--font-size) * 7.5);
+    height: calc(var(--font-size) * 1.5);
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: calc(var(--font-size) * 1);
 }
 
 .settings-account-buttons {
