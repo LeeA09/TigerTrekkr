@@ -1,5 +1,6 @@
 <script>
     import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings';
+    import UpdatePassword from '$lib/modals/UpdatePassword.svelte';
     import DeleteAccount from '$lib/modals/DeleteAccount.svelte';
     import { goto, invalidateAll } from '$app/navigation';
     import { enhance } from '$app/forms'
@@ -73,6 +74,10 @@
     let is_delete_account_open = $state(false);
     function open_delete_account() { is_delete_account_open = true; }
     function close_delete_account() { is_delete_account_open = false; }
+
+    let is_update_password_open = $state(false);
+    function open_update_password() { is_update_password_open = true; }
+    function close_update_password() { is_update_password_open = false; }
 
     // close via esc and click out
     function handle_key_down(event) {
@@ -164,7 +169,7 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
                             <span class="settings-account-value">••••••••</span>
-                            <button class="settings-account-edit-button" onclick={edit_password} aria-label="Change Password">
+                            <button class="settings-account-edit-button" onclick={open_update_password} aria-label="Change Password">
                                 ✎
                             </button>
                         </div>
@@ -183,4 +188,8 @@
     {#if is_delete_account_open}
         <DeleteAccount onClose={close_delete_account} />
     {/if}
+    {#if is_update_password_open}
+	<UpdatePassword onClose={close_update_password} />
+    {/if}
 </div>
+
