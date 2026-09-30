@@ -30,7 +30,8 @@
 
 <div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="help-card page-body-card modal-card">
-        <h2>Help</h2>
+        <button type="button" class="modal-close-button" onclick={onClose} aria-label="Close help">✖</button>
+	<h2>Help</h2>
         <div class="help-grid">
             <div class="help-item">
                 <h3>Goal</h3>
@@ -84,8 +85,5 @@
                 {/if}
             </div>
         </div>
-        <button type="button" class="button-secondary" onclick={onClose}>
-            X
-        </button>
     </div>
 </div>

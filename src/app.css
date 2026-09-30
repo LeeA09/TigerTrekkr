@@ -273,6 +273,29 @@ h3 {
     -ms-overflow-style: none;
 }
 
+.modal-close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: calc(var(--font-size) * 1.5);
+    transition: color 0.2s ease;
+}
+
+.modal-close-button:hover {
+    color: #dc562e;
+}
+
 .modal-confirm-header {
     display: flex; 
     flex-direction: column; 

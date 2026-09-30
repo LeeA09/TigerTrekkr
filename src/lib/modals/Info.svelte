@@ -20,11 +20,11 @@
 
 <div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="info-card page-body-card modal-card">
+	<button type="button" class="modal-close-button" onclick={onClose} aria-label="Close help">✖</button>
         <h2>Information</h2>
         <div class="info-grid">
             <div class="info-item">
-                <h3>Creators</h3>
-                <p>Team Rubber Ducky</p>
+                <h3>Creators -- Team Rubber Ducky</h3>
                 <p>Anna Mori</p>
                 <p>Gina Hua</p>
                 <p>Isaiah Korte</p>
@@ -42,8 +42,5 @@
                 <p>PostgreSQL</p>
             </div>
         </div>
-        <button type="button" class="button-secondary" onclick={onClose}>
-            X
-        </button>
     </div>
 </div>

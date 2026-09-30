@@ -26,7 +26,6 @@
     let username_error = $state('')
 
     function edit_email() { return }
-    function edit_password() { return }
 
     function start_editing_username() {
 	new_username = user?.user_metadata?.display_name ?? ''
@@ -100,7 +99,8 @@
 
 <div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="settings-card page-body-card modal-card">
-        <h2>Settings</h2>
+        <button type="button" class="modal-close-button" onclick={onClose} aria-label="Close settings">✖</button>
+	<h2>Settings</h2>
         <div class="settings-grid">
             <div class="settings-section">
                 <h3>Audio & Display</h3>
@@ -162,9 +162,6 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>
-                            <button class="settings-account-edit-button" onclick={edit_email} aria-label="Edit Email">
-                                ✎
-                            </button>
                         </div>
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
@@ -181,9 +178,6 @@
                 {/if}
             </div>
         </div>
-        <button class="button-secondary" onclick={onClose}>
-            X
-        </button>
     </div>
     {#if is_delete_account_open}
         <DeleteAccount onClose={close_delete_account} />
