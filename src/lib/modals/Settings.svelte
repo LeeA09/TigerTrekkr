@@ -55,17 +55,21 @@
 	}
     }
 
-    async function logout() {
-	if(!supabase) return;
-	const { error } = await supabase.auth.signOut();
-	if (error) {
-	    console.error('Error logging out:', error.message);
-	    return;
-	}
-	await invalidateAll();
+    async function handle_logout() {
+	try {
+		const response = await fetch('/api/logout', {
+		    method: 'POST',
+		    headers: { 'Content-Type': 'application/json' }
+		})
 
-	onClose();
-	goto('/');
+		const result = await response.json()
+
+		if(response.ok) {
+			await invalidateAll();
+			onClose();
+			goto('/')
+		}
+	} catch (error) { console.error('Action failed:', error) }
     }
 
 
@@ -172,8 +176,8 @@
                         </div>
                         <div class="settings-account-buttons">
                             <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
-                            <button class="button-secondary settings-button" onclick={logout}>Log Out</button>
-                        </div>
+			    <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
+			</div>
                     </div>
                 {/if}
             </div>
@@ -186,4 +190,3 @@
 	<UpdatePassword onClose={close_update_password} />
     {/if}
 </div>
-

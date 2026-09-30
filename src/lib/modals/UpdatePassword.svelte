@@ -1,5 +1,5 @@
 <script>
-    import { goto } from '$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
     import { enhance } from '$app/forms'
     let { onClose } = $props();
@@ -37,7 +37,7 @@
 		await invalidateAll()
 		onClose()
 	    } else {
-		errorMessage = result.data?.error ?? 'An error occurred'
+		errorMessage = data?.error ?? 'An error occurred'
 		console.log(errorMessage)
 	    }
 	}
@@ -61,7 +61,7 @@
 	        <div class="fill-in">
                         <label for="new-password">New password</label>
                         <div class="fill-in-eye">
-                            <input name="new-password" type={new_show_password ? 'text' : 'password'} placeholder="Enter new password" autocomplete="new-password" required />
+                            <input name="new_password" type={new_show_password ? 'text' : 'password'} placeholder="Enter new password" autocomplete="new-password" required />
                             <button type="button" class="button-eye" onclick={toggle_new_show_password} aria-label={new_show_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if new_show_password}
@@ -79,7 +79,7 @@
                     <div class="fill-in">
                         <label for="new-confirm-password">Confirm new password</label>
                         <div class="fill-in-eye">
-                            <input name="new-confirm-password" type={new_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
+                            <input name="new_confirm_password" type={new_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
                             <button type="button" class="button-eye" onclick={toggle_new_show_confirm_password} aria-label={new_show_confirm_password ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     {#if new_show_confirm_password}

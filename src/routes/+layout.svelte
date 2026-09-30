@@ -26,7 +26,7 @@
 
 <svelte:head>
 
-	<link rel="icon" href=/tiger-trekkr-logo.ico/>
+	<link rel="icon" href=/mascot.png/>
 
 	<title>TigerTrekkr</title>
 

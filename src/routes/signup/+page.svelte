@@ -1,6 +1,6 @@
 <script>
     import { goto } from '\$app/navigation';
-
+    import { enhance } from '$app/forms'
     import { font_size } from '$lib/stores/settings';
 
     import Settings from '$lib/modals/Settings.svelte';
