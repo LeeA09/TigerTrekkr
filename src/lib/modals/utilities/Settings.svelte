@@ -1,7 +1,7 @@
 <script>
     import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings';
-    import UpdatePassword from '$lib/modals/UpdatePassword.svelte';
-    import DeleteAccount from '$lib/modals/DeleteAccount.svelte';
+    import UpdatePassword from '$lib/modals/account/UpdatePassword.svelte';
+    import DeleteAccount from '$lib/modals/account/DeleteAccount.svelte';
     import { goto, invalidateAll } from '$app/navigation';
     import { enhance } from '$app/forms'
     import { page } from '$app/state';

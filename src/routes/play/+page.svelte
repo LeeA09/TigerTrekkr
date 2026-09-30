@@ -3,12 +3,12 @@
 
     import { font_size, selected_difficulty } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/Settings.svelte';
-    import Help from '$lib/modals/Help.svelte';
-    import Info from '$lib/modals/Info.svelte';
-    import Pause from '$lib/modals/Pause.svelte';
-    import Skip from '$lib/modals/Skip.svelte';
-    import End from '$lib/modals/End.svelte';
+    import Settings from '$lib/modals/utilities/Settings.svelte';
+    import Help from '$lib/modals/utilities/Help.svelte';
+    import Info from '$lib/modals/utilities/Info.svelte';
+    import Pause from '$lib/modals/game/Pause.svelte';
+    import Skip from '$lib/modals/game/Skip.svelte';
+    import End from '$lib/modals/game/End.svelte';
 
     import { onMount } from 'svelte';
 

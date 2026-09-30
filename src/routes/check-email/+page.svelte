@@ -5,9 +5,9 @@
 
     import { font_size } from '$lib/stores/settings';
 
-    import Settings from '$lib/modals/Settings.svelte';
-    import Help from '$lib/modals/Help.svelte';
-    import Info from '$lib/modals/Info.svelte';
+    import Settings from '$lib/modals/utilities/Settings.svelte';
+    import Help from '$lib/modals/utilities/Help.svelte';
+    import Info from '$lib/modals/utilities/Info.svelte';
 
     import { onMount } from 'svelte';
 
