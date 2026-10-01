@@ -1,41 +1,19 @@
 <script lang="ts">
     import { page } from '$app/state'
-    import { goto } from '\$app/navigation';
-    import { font_size } from '$lib/stores/settings';
-    import { modal, Settings, Help, Info } from '$lib/modals';
-    import { onMount } from 'svelte';
+    import { goto } from '\$app/navigation'
+    //import { font_size } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info } from '$lib/modals'
+    import { onMount } from 'svelte'
+    import { animateBackground } from '$lib/utils/background-animation'
 
     // Animate the background in a figure-8 pattern
-    onMount(() => {
-        const background = document.querySelector('.background-animation');
-
-        const duration = 80000;
-        const startTime = performance.now();
-
-        // @ts-ignore
-        function animate(currentTime) {
-            const elapsed = (currentTime - startTime) % duration;
-            const t = (elapsed / duration) * Math.PI * 2;
-
-            const x = 12 * Math.sin(t);
-            const y = 6 * Math.sin(2 * t);
-
-            if (background) {
-                // @ts-ignore
-                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        requestAnimationFrame(animate);
-    });
+    onMount(() => { animateBackground() })
 
     // for password eye icon
-    let signup_show_password = $state(false);
-    let signup_show_confirm_password = $state(false);
-    function toggle_signup_show_password() { signup_show_password = !signup_show_password; }
-    function toggle_signup_show_confirm_password() { signup_show_confirm_password = !signup_show_confirm_password; }
+    let showPassword = $state(false);
+    let showConfirmPassword = $state(false);
+    function toggle_show_password() { showPassword = !showPassword; }
+    function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword; }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -46,7 +24,7 @@
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
@@ -105,18 +83,18 @@
             <div class="background-animation"></div>
             <div class="background-overlay"></div>
             <div class="page-body-card">
-		<h2 class="page-body-card-title">Verification Link Sent</h2>
-		<div class="page-body-card-description">
-			<p>We sent a verification link to</p>
-			{#if page.url.searchParams.get('email')}
-	    		    <h3 style="color: #FFC300">{page.url.searchParams.get('email')}</h3>
-			{:else}
-	    		    <p>your email address.</p>
-			{/if}
-    			<p class="page-body-card-description">Please check your inbox and click the link to activate your account.</p>
-	    	</div>
-	    </div>
-	</div>
+                <h2 class="page-body-card-title">Verification Link Sent</h2>
+                <div class="page-body-card-description">
+                    <p>We sent a verification link to</p>
+                    {#if page.url.searchParams.get('email')}
+                            <h3 style="color: #FFC300">{page.url.searchParams.get('email')}</h3>
+                    {:else}
+                            <p>your email address.</p>
+                    {/if}
+                        <p class="page-body-card-description">Please check your inbox and click the link to activate your account.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

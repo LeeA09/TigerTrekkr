@@ -1,46 +1,42 @@
 <script>
-    import { goto, invalidateAll } from '$app/navigation';
-    import { font_size } from '$lib/stores/settings';
+    import { goto, invalidateAll } from '$app/navigation'
+    import { font_size } from '$lib/stores/settings'
     import { enhance } from '$app/forms'
     import { modal } from '$lib/modals'
 
     let isSubmitting = $state(false);
     let errorMessage = $state('');
 
-    let new_show_password = $state(false);
-    let new_show_confirm_password = $state(false);
+    let showNewPassword = $state(false);
+    let showConfirmPassword = $state(false);
 
-    function toggle_new_show_password() { new_show_password = !new_show_password; }
-    function toggle_new_show_confirm_password() { new_show_confirm_password = !new_show_confirm_password; }
+    function toggle_new_show_password() { showNewPassword = !showNewPassword; }
+    function toggle_new_show_confirm_password() { showConfirmPassword = !showConfirmPassword; }
 
     // close via esc and click out
     function handle_key_down(event) {
-        if (event.key === 'Escape') {
-            modal.close()
-        }
+        if (event.key === 'Escape') { modal.close() }
     }
     function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            modal.close()
-        }
+        if (event.target === event.currentTarget) { modal.close() }
     }
 
     async function handle_update_password() { 
-	isSubmitting = true
-	errorMessage = ''
+        isSubmitting = true
+        errorMessage = ''
 
-	return async ({ result, update }) => {
-	    isSubmitting = false
-	    const data = result.data ?? result;
- 
-	    if (data?.success){
-		await invalidateAll()
-		modal.close()
-	    } else {
-		errorMessage = data?.error ?? 'An error occurred'
-		console.log(errorMessage)
-	    }
-	}
+        return async ({ result, update }) => {
+            isSubmitting = false
+            const data = result.data ?? result;
+    
+            if (data?.success){
+                await invalidateAll()
+                modal.close()
+            } else {
+                errorMessage = data?.error ?? 'An error occurred'
+                console.log(errorMessage)
+            }
+        }
     }
 
 </script>
@@ -59,41 +55,41 @@
 		    <input type="password" name="password" placeholder="Enter current password" required />
 		</div>		
 	        <div class="fill-in">
-                        <label for="new-password">New password</label>
-                        <div class="fill-in-eye">
-                            <input name="new_password" type={new_show_password ? 'text' : 'password'} placeholder="Enter new password" autocomplete="new-password" required />
-                            <button type="button" class="button-eye" onclick={toggle_new_show_password} aria-label={new_show_password ? 'Hide Password' : 'Show Password'}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if new_show_password}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <line x1="3" y1="3" x2="21" y2="21"></line>
-                                    {:else}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    {/if}
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="fill-in">
-                        <label for="new-confirm-password">Confirm new password</label>
-                        <div class="fill-in-eye">
-                            <input name="new_confirm_password" type={new_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
-                            <button type="button" class="button-eye" onclick={toggle_new_show_confirm_password} aria-label={new_show_confirm_password ? 'Hide Password' : 'Show Password'}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if new_show_confirm_password}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <line x1="3" y1="3" x2="21" y2="21"></line>
-                                    {:else}
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    {/if}
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                <label for="new-password">New password</label>
+                <div class="fill-in-eye">
+                    <input name="newPassword" type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password" autocomplete="new-password" required />
+                    <button type="button" class="button-eye" onclick={toggle_new_show_password} aria-label={showNewPassword ? 'Hide Password' : 'Show Password'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            {#if showNewPassword}
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <line x1="3" y1="3" x2="21" y2="21"></line>
+                            {:else}
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            {/if}
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="fill-in">
+                <label for="new-confirm-password">Confirm new password</label>
+                <div class="fill-in-eye">
+                    <input name="confirmNewPassword" type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm password" required />
+                    <button type="button" class="button-eye" onclick={toggle_new_show_confirm_password} aria-label={showConfirmPassword ? 'Hide Password' : 'Show Password'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            {#if showConfirmPassword}
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <line x1="3" y1="3" x2="21" y2="21"></line>
+                            {:else}
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            {/if}
+                        </svg>
+                    </button>
+                </div>
+            </div>
 		    <button type="submit" class="home-button">Save</button>
 		</form>
         </div>

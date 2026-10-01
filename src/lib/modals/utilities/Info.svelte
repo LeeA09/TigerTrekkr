@@ -1,15 +1,15 @@
 <script>
-    import { font_size } from '$lib/stores/settings';
-    import { modal } from '$lib/modals';
+    import { font_size } from '$lib/stores/settings'
+    import { modal } from '$lib/modals'
 
     let { opaque = false } = $props();
 
     // close via esc and click out
-    function handle_key_down(event) { if (event.key === 'Escape') { modal.close() } }
+    function handle_key_down(event) { 
+        if (event.key === 'Escape') { modal.close() } 
+    }
     function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            modal.close()
-        }
+        if (event.target === event.currentTarget) { modal.close() }
     }
 </script>
 

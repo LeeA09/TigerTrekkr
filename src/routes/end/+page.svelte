@@ -1,32 +1,12 @@
 <script>
     import { goto } from '\$app/navigation';
-    import { font_size } from '$lib/stores/settings';
+    //import { font_size } from '$lib/stores/settings';
     import { modal, Settings, Help, Info } from '$lib/modals';
     import { onMount } from 'svelte';
+    import { animateBackground } from '$lib/utils/background-animation';
 
     // Animate the background in a figure-8 pattern
-    onMount(() => {
-        const background = document.querySelector('.background-animation');
-
-        const duration = 80000;
-        const startTime = performance.now();
-
-        function animate(currentTime) {
-            const elapsed = (currentTime - startTime) % duration;
-            const t = (elapsed / duration) * Math.PI * 2;
-
-            const x = 12 * Math.sin(t);
-            const y = 6 * Math.sin(2 * t);
-
-            if (background) {
-                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        requestAnimationFrame(animate);
-    });
+    onMount(() => { animateBackground() })
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -37,7 +17,7 @@
 <div class="page">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={goto('/')} title="Return to Home" aria-label="Return to Home">
+            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">

@@ -1,41 +1,19 @@
 <script>
     import { goto } from '\$app/navigation';
     import { enhance } from '$app/forms'
-    import { font_size } from '$lib/stores/settings';
+    //import { font_size } from '$lib/stores/settings';
     import { modal, Settings, Help, Info } from '$lib/modals';
     import { onMount } from 'svelte';
+    import { animateBackground } from '$lib/utils/background';
 
     // Animate the background in a figure-8 pattern
-    onMount(() => {
-        const background = document.querySelector('.background-animation');
-
-        const duration = 80000;
-        const startTime = performance.now();
-
-        // @ts-ignore
-        function animate(currentTime) {
-            const elapsed = (currentTime - startTime) % duration;
-            const t = (elapsed / duration) * Math.PI * 2;
-
-            const x = 12 * Math.sin(t);
-            const y = 6 * Math.sin(2 * t);
-
-            if (background) {
-                // @ts-ignore
-                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        requestAnimationFrame(animate);
-    });
+    onMount(() => { animateBackground() })
 
     // for password eye icon
-    let signup_show_password = $state(false);
-    let signup_show_confirm_password = $state(false);
-    function toggle_signup_show_password() { signup_show_password = !signup_show_password; }
-    function toggle_signup_show_confirm_password() { signup_show_confirm_password = !signup_show_confirm_password; }
+    let showPassword = $state(false);
+    let showConfirmPassword = $state(false);
+    function toggle_show_password() { showPassword = !showPassword; }
+    function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword; }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -121,10 +99,10 @@
                     <div class="fill-in">
                         <label for="signup-password">Password</label>
                         <div class="fill-in-eye">
-                            <input name="password" type={signup_show_password ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
-                            <button type="button" class="button-eye" onclick={toggle_signup_show_password} aria-label={signup_show_password ? 'Hide Password' : 'Show Password'}>
+                            <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
+                            <button type="button" class="button-eye" onclick={toggle_show_password} aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if signup_show_password}
+                                    {#if showPassword}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle cx="12" cy="12" r="3"></circle>
                                         <line x1="3" y1="3" x2="21" y2="21"></line>
@@ -139,10 +117,10 @@
                     <div class="fill-in">
                         <label for="signup-confirm-password">Confirm password</label>
                         <div class="fill-in-eye">
-                            <input type={signup_show_confirm_password ? 'text' : 'password'} placeholder="Confirm password" required />
-                            <button type="button" class="button-eye" onclick={toggle_signup_show_confirm_password} aria-label={signup_show_confirm_password ? 'Hide Password' : 'Show Password'}>
+                            <input name="confirmPassword"type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm password" required />
+                            <button type="button" class="button-eye" onclick={toggle_show_confirm_password} aria-label={showConfirmPassword ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if signup_show_confirm_password}
+                                    {#if showConfirmPassword}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle cx="12" cy="12" r="3"></circle>
                                         <line x1="3" y1="3" x2="21" y2="21"></line>

@@ -1,40 +1,19 @@
 <script>
-    import { goto } from '\$app/navigation';
-    import { font_size } from '$lib/stores/settings';
-    import { modal, Settings, Help, Info } from '$lib/modals';
-    import { enhance } from '$app/forms';
+    import { goto } from '\$app/navigation'
+    //import { font_size } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info } from '$lib/modals'
+    import { enhance } from '$app/forms'
+    import { animateBackground } from '$lib/utils/background-animation'
+    import { onMount } from 'svelte'
+
     let { form } = $props();
-    import { onMount } from 'svelte';
 
     // Animate the background in a figure-8 pattern
-    onMount(() => {
-        const background = document.querySelector('.background-animation');
-
-        const duration = 80000;
-        const startTime = performance.now();
-
-        // @ts-ignore
-        function animate(currentTime) {
-            const elapsed = (currentTime - startTime) % duration;
-            const t = (elapsed / duration) * Math.PI * 2;
-
-            const x = 12 * Math.sin(t);
-            const y = 6 * Math.sin(2 * t);
-
-            if (background) {
-                // @ts-ignore
-                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        requestAnimationFrame(animate);
-    });
+    onMount(() => { animateBackground() })
 
     // for password eye icon
-    let login_show_password = $state(false);
-    function toggle_login_show_password() { login_show_password = !login_show_password; }
+    let showPassword = $state(false);
+    function toggle_show_password() { showPassword = !showPassword; }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -117,10 +96,10 @@
                     <div class="fill-in">
                         <label for="password">Password</label>
                         <div class="fill-in-eye">
-                            <input name="password" type={login_show_password ? 'text' : 'password'} placeholder="Enter password" autocomplete="current-password" required />
-                            <button type="button" class="button-eye" onclick={toggle_login_show_password} aria-label={login_show_password ? 'Hide Password' : 'Show Password'}>
+                            <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter password" autocomplete="current-password" required />
+                            <button type="button" class="button-eye" onclick={toggle_show_password} aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    {#if login_show_password}
+                                    {#if showPassword}
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle cx="12" cy="12" r="3"></circle>
                                         <line x1="3" y1="3" x2="21" y2="21"></line>

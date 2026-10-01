@@ -14,19 +14,19 @@ const transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         user: SMTP_USER,
-	pass: SMTP_PASS,
+	    pass: SMTP_PASS,
     },
 })
 
 
 export async function sendEmail({ to, subject, text, html }: SendEmailOptions) {
     const mailOptions = {
-	from: `"TigerTrekkr" <${SMTP_USER}>`,
-	to,
-	replyTo: SMTP_USER,
-	subject,
-	text,
-	html,
+        from: `"TigerTrekkr" <${SMTP_USER}>`,
+        to,
+        replyTo: SMTP_USER,
+        subject,
+        text,
+        html,
     }
 
     return await transporter.sendMail(mailOptions)

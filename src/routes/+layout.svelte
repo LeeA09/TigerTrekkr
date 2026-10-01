@@ -1,30 +1,26 @@
 <script lang="ts">
-
     import '../app.css'
     import { font_size } from '$lib/stores/settings'
     import ModalHost from '$lib/modals/ModalHost.svelte'
     import { invalidate } from '$app/navigation'
     import { onMount } from 'svelte'
-    import type { Snippet } from 'svelte'
 
     let { data, children } = $props();
 
     onMount(() => {
-	const { data: { subscription } } = data.supabase.auth.onAuthStateChange((event, newSession) => {
-	    if (newSession?.expires_at !== data.session?.expires_at) {
-		invalidate('supabase:auth')
-	    }
-	})
-	
-	return () => subscription.unsubscribe()
-
+        const { data: { subscription } } = data.supabase.auth.onAuthStateChange((event, newSession) => {
+            if (newSession?.expires_at !== data.session?.expires_at) {
+            invalidate('supabase:auth')
+            }
+        })
+        
+        return () => subscription.unsubscribe()
     })
-
 </script>
 
 <svelte:head>
 
-	<link rel="icon" href=/mascot.png/>
+    <link rel="icon" href=/mascot.png/>
 
 	<title>TigerTrekkr</title>
 

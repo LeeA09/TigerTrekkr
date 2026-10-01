@@ -14,7 +14,7 @@ const handleSupabase: Handle = async ({ event, resolve }) => {
       setAll: (cookiesToSet) => {
         cookiesToSet.forEach(({ name, value, options }) => {
           event.cookies.set(name, value, { ...options, path: '/',
-		secure: process.env.NODE_ENV === 'production' })
+		      secure: process.env.NODE_ENV === 'production' })
         })
       },
     },
@@ -22,8 +22,8 @@ const handleSupabase: Handle = async ({ event, resolve }) => {
 
   event.locals.supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     auth: {
-	autoRefreshToken: false,
-	persistSession: false
+      autoRefreshToken: false,
+      persistSession: false
     }
   })
 
@@ -37,10 +37,8 @@ const handleSupabase: Handle = async ({ event, resolve }) => {
     return { session, user }
   }
 
-  return resolve(event, {
-	filterSerializedResponseHeaders(name) {
-		return name === 'content-range' || name === 'x-supabase-api-version'
-	}
+  return resolve(event, { filterSerializedResponseHeaders(name) {
+		  return name === 'content-range' || name === 'x-supabase-api-version' }
   })
 }
 

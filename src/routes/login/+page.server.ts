@@ -7,15 +7,11 @@ export const actions: Actions = {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    if (!email || !password) {
-	return fail(400, { message: 'All fields are required.' })
-    }
+    if (!email || !password) { return fail(400, { message: 'All fields are required.' }) }
 
     const { data, error } = await locals.supabase.auth.signInWithPassword({ email, password})
 
-    if (error) {
-	return fail(400, { message: error.message })
-    }
+    if (error) { return fail(400, { message: error.message }) }
 
     redirect(303, '/')
   }

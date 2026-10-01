@@ -1,25 +1,21 @@
 <script>
-    import { goto } from '$app/navigation';
-    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
+    import { goto } from '$app/navigation'
+    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
     
     // close via esc and click out
     function handle_key_down(event) {
-        if (event.key === 'Escape') {
-            modal.close()
-        }
+        if (event.key === 'Escape') { modal.close() }
     }
     function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            modal.close()
-        }
+        if (event.target === event.currentTarget) { modal.close() }
     }
 
     // go to difficulty screen
     function move_on() {
         $is_guest = true;
         $selected_difficulty = '';
-	modal.close();
+	    modal.close();
         goto('/difficulty');
     }
 </script>

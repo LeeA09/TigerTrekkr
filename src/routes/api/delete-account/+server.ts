@@ -8,17 +8,13 @@ const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KE
 export async function POST({ locals }) {
     const session = await locals.getSession?.() || (await locals.safeGetSession?.())?.session;
     
-    if (!session) {
-        throw error(401, 'Unauthorized');
-    }
+    if (!session) { throw error(401, 'Unauthorized'); }
 
     const userId = session.user.id;
 
     const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
-    if (deleteError) {
-        throw error(500, deleteError.message);
-    }
+    if (deleteError) { throw error(500, deleteError.message); }
 
     await locals.supabase.auth.signOut();
 

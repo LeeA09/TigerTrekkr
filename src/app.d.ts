@@ -7,9 +7,6 @@ declare global {
       supabaseAdmin: SupabaseClient
       safeGetSession: () => Promise<{ session: Session | null; user: User | null }>
     }
-    // interface PageData {}
-    // interface Error {}
-    // interface Platform {}
   }
 }
 

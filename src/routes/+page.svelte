@@ -1,37 +1,16 @@
 <script>
     import { goto, invalidateAll } from '\$app/navigation';
     import { page } from '$app/state'
-    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
-    import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals';
+    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
+    import { onMount } from 'svelte';
+    import { animateBackground } from '$lib/utils/animations'
 
     let { data } = $props();
     let user = $derived(page.data?.user);
 
-    import { onMount } from 'svelte';
-
     // Animate the background in a figure-8 pattern
-    onMount(() => {
-        const background = document.querySelector('.background-animation');
-
-        const duration = 80000;
-        const startTime = performance.now();
-
-        function animate(currentTime) {
-            const elapsed = (currentTime - startTime) % duration;
-            const t = (elapsed / duration) * Math.PI * 2;
-
-            const x = 12 * Math.sin(t);
-            const y = 6 * Math.sin(2 * t);
-
-            if (background) {
-                background.style.transform = `scale(2) translate(${x}%, ${y}%)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        requestAnimationFrame(animate);
-    });
+    onMount(() => { animateBackground() })
 
     // go to difficulty
     function move_on() {
@@ -40,10 +19,10 @@
     }
 
     async function logout() {
-	if (data.supabase) {
-	    await data.supabase.auth.signOut();
-	    await invalidateAll();
-	}
+        if (data.supabase) {
+            await data.supabase.auth.signOut();
+            await invalidateAll();
+        }
     }
 
     function openSettings() { modal.open(Settings, { data: data })}

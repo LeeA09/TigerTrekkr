@@ -1,5 +1,5 @@
 <script>
-	import { modal } from './modalState.svelte.ts'
+  import { modal } from './modalState.svelte.ts'
 </script>
 
 {#each modal.stack as item, index (item.id)}

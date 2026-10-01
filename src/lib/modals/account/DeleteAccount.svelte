@@ -1,45 +1,41 @@
 <script>
-    import { goto } from '$app/navigation';
-    import { font_size } from '$lib/stores/settings';
-    import { modal } from '$lib/modals';
+    import { goto } from '$app/navigation'
+    import { font_size } from '$lib/stores/settings'
+    import { modal } from '$lib/modals'
 
-    let isDeleting = $state(false);
-    let errorMessage = $state('');
+    let isDeleting = $state(false)
+    let errorMessage = $state('')
 
     // close via esc and click out
     function handle_key_down(event) {
-        if (event.key === 'Escape') {
-            modal.close()
-        }
+        if (event.key === 'Escape') { modal.close() }
     }
     function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            modal.close()
-        }
+        if (event.target === event.currentTarget) { modal.close() }
     }
 
+    async function handle_delete() {
+	    isDeleting = true
+	    errorMessage = ''
 
-    async function handleDelete() {
-	isDeleting = true
-	errorMessage = ''
+        try {
+            const response = await fetch('/api/delete-account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+                })
 
-	try {
-	    const response = await fetch('/api/delete-account', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' }
-	    })
+            if (!response.ok) {
+                const data = await response.json()
+                throw new Error(data.message || 'Failed to delete account.')
+            }
 
-	    if (!response.ok) {
-		const data = await response.json()
-		throw new Error(data.message || 'Failed to delete account.')
-	    }
-	    await goto('/', { invalidateAll: true })
-	    modal.close()
-	} catch (err) {
-	    errorMessage = err.message
-	} finally {
-	    isDeleting = false
-	}
+            await goto('/', { invalidateAll: true })
+            modal.close()
+        } catch (err) {
+            errorMessage = err.message
+        } finally {
+            isDeleting = false
+        }
     }
 </script>
 
@@ -59,9 +55,8 @@
         <p class="modal-confirm-body">
             Are you sure you want to delete your account? This action cannot be undone.
         </p>
-
         <div class="modal-confirm-buttons">
-            <button class="button-secondary confirm-delete-button" onclick={handleDelete} disabled={isDeleting}>
+            <button class="button-secondary confirm-delete-button" onclick={handle_delete} disabled={isDeleting}>
                 Delete
             </button>
             <button class="button-secondary" onclick={() => modal.close()} disabled={isDeleting}>

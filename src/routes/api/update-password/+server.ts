@@ -1,27 +1,25 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit';
+import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '\$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
-	const session = await locals.getSession?.() || (await locals.sadeGetSession?.())?.session
+	const session = await locals.getSession?.() || (await locals.safeGetSession?.())?.session
 
-	if (!session) {
-		//throw error(401, 'Unauthorized')
-	}
+	if (!session) { throw error(401, 'Unauthorized') }
 
-    	const formData = await request.formData()
-	const current_password = formData.get('password')?.toString().trim()
-	const new_password = formData.get('new_password')?.toString().trim()
-	const confirm_new_password = formData.get('new_confirm_password')?.toString().trim()
+    const formData = await request.formData()
+	const currentPassword = formData.get('password')?.toString().trim()
+	const newPassword = formData.get('newPassword')?.toString().trim()
+	const confirmNewPassword = formData.get('confirmNewPassword')?.toString().trim()
 
-	if (!current_password || !new_password || !confirm_new_password) {
+	if (!currentPassword || !newPassword || !confirmNewPassword) {
 		return json({ error: 'Username cannot be empty' }, { status: 400 });
 	}
 
-	if (new_password !== confirm_new_password){
+	if (newPassword !== confirmNewPassword){
 		return json({ error: 'New passwords do not match' }, { status: 400 })
 	}
 	
-	if (new_password.length < 6) {
+	if (newPassword.length < 6) {
 		return json({ success: false, error: 'New password must be 6 characters long' }, { status: 400 })
 	}
 
@@ -30,12 +28,12 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 		return json({ success: false, error: 'Unauthorized user session.' }, { status: 401 })
 	}
 
-	const { error: signInError } = await locals.supabase.auth.signInWithPassword({ email: user.email, password: current_password })
+	const { error: signInError } = await locals.supabase.auth.signInWithPassword({ email: user.email, password: currentPassword })
 	if (signInError) {
 		return json({ success: false, error: 'Incorrect current password.' }, { status: 400 })
 	}
 
-	const { error: updateError } = await locals.supabase.auth.updateUser({ password: new_password })
+	const { error: updateError } = await locals.supabase.auth.updateUser({ password: newPassword })
 	if (updateError) {
 		return json({ success: false, error: updateError.message }, { status: 400 })
 	}
@@ -48,11 +46,11 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 		    subject: '⚠ Account password changed ⚠',
 		    text: `Password has changed for ${username}.`,
 		    html: `
-			<div style="font-family: sans-serif; max-width 600px; margin: 0 auto;">
-			    <h2>Account password changed!</h2>
-			    <p>The password has been changed for user <strong>${username}</strong>. If you did not do this, please contact us immediately.</p>
-			</div>
-		    `
+				<div style="font-family: sans-serif; max-width 600px; margin: 0 auto;">
+			   		<h2>Account password changed!</h2>
+			    	<p>The password has been changed for user <strong>${username}</strong>. If you did not do this, please contact us immediately.</p>
+				</div>
+		    	`
 		})
 	} catch (mailError) {
 		console.error('Mail error:', mailError)

@@ -1,22 +1,23 @@
 <script>
-    import { font_size } from '$lib/stores/settings';
-    import { modal } from '$lib/modals';
+    import { font_size } from '$lib/stores/settings'
+    import { modal } from '$lib/modals'
 
     let { opaque = false } = $props();
 
     // faq controls
     let open_faq = $state(0);
     function toggle_faq(faq_number) {
-        if (open_faq === faq_number) {
-            open_faq = 0;
-        } else {
-            open_faq = faq_number;
-        }
+        if (open_faq === faq_number) { open_faq = 0; }
+        else { open_faq = faq_number; }
     }
 
     // close via esc and click out
-    function handle_key_down(event) { if (event.key === 'Escape') { modal.close() } }
-    function handle_backdrop_click(event) { if (event.target === event.currentTarget) { modal.close() } }
+    function handle_key_down(event) { 
+        if (event.key === 'Escape') { modal.close() } 
+    }
+    function handle_backdrop_click(event) { 
+        if (event.target === event.currentTarget) { modal.close() } 
+    }
 </script>
 
 <svelte:window onkeydown={handle_key_down} />
