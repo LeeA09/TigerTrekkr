@@ -1,12 +1,10 @@
 <script lang="ts">
 
     import '../app.css'
-    import { font_size } from '$lib/stores/settings';
-
+    import { font_size } from '$lib/stores/settings'
+    import ModalHost from '$lib/modals/ModalHost.svelte'
     import { invalidate } from '$app/navigation'
     import { onMount } from 'svelte'
-
-//    import type { LayoutData } from './types'
     import type { Snippet } from 'svelte'
 
     let { data, children } = $props();
@@ -38,6 +36,7 @@
 
 <div class="app" style={`--font-size: ${$font_size}px`}>
     {@render children()}
+    <ModalHost />
 </div>
 
 <style>

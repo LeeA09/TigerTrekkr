@@ -2,7 +2,7 @@
     import { goto, invalidateAll } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
     import { enhance } from '$app/forms'
-    let { onClose } = $props();
+    import { modal } from '$lib/modals'
 
     let isSubmitting = $state(false);
     let errorMessage = $state('');
@@ -16,12 +16,12 @@
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') {
-            onClose();
+            modal.close()
         }
     }
     function handle_backdrop_click(event) {
         if (event.target === event.currentTarget) {
-            onClose();
+            modal.close()
         }
     }
 
@@ -35,7 +35,7 @@
  
 	    if (data?.success){
 		await invalidateAll()
-		onClose()
+		modal.close()
 	    } else {
 		errorMessage = data?.error ?? 'An error occurred'
 		console.log(errorMessage)
@@ -50,7 +50,7 @@
 <div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="page-body-card modal-card">
         <div class="modal-confirm-header">
-	    <button type="button" class="modal-close-button" onclick={onClose} aria-label="Close help">✖</button>
+	    <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close help">✖</button>
             <div class="modal-confirm-icon" style="font-size: 38px;">✎</div>
             <h3>Change Password</h3>
 	    <form method="POST" action="/api/update-password" use:enhance={handle_update_password}>

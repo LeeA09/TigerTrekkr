@@ -1,13 +1,13 @@
 <script>
     import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings';
-    import UpdatePassword from '$lib/modals/account/UpdatePassword.svelte';
-    import DeleteAccount from '$lib/modals/account/DeleteAccount.svelte';
     import { goto, invalidateAll } from '$app/navigation';
     import { enhance } from '$app/forms'
     import { page } from '$app/state';
+    import { modal } from '$lib/modals';
+    import DeleteAccount from '../account/DeleteAccount.svelte';
+    import UpdatePassword from '../account/UpdatePassword.svelte';
 
-    let { onClose, opaque = false } = $props();
-
+    let { opaque = false } = $props();
     let user = $derived(page.data?.user);
 
     // music and sound
@@ -25,17 +25,13 @@
     let is_saving_username = $state(false)
     let username_error = $state('')
 
-    function edit_email() { return }
-
     function start_editing_username() {
 	new_username = user?.user_metadata?.display_name ?? ''
 	username_error = ''
 	is_editing_username = true
     }
 
-    function cancel_editing_username() {
-	is_editing_username = false
-    }
+    function cancel_editing_username() { is_editing_username = false }
 
     function handle_username_submit() {
 	is_saving_username = true
@@ -72,30 +68,25 @@
 	} catch (error) { console.error('Action failed:', error) }
     }
 
+    function openDeleteAccount() { modal.open(DeleteAccount, { }) }
+    function openChangePassword() { modal.open(UpdatePassword, { }) }
 
-    // delete account confirmation
-    let is_delete_account_open = $state(false);
-    function open_delete_account() { is_delete_account_open = true; }
-    function close_delete_account() { is_delete_account_open = false; }
+    function loginRedirect() {
+	modal.close();
+	goto('/login');
+    }
 
-    let is_update_password_open = $state(false);
-    function open_update_password() { is_update_password_open = true; }
-    function close_update_password() { is_update_password_open = false; }
+    function signUpRedirect() {
+	modal.close();
+	goto('/signup');
+    }
 
-    // close via esc and click out
     function handle_key_down(event) {
-        if (event.target.tagName === 'INPUT') {
-	    return;
-	}
-
-	if (event.key === 'Escape') {
-            onClose();
-        }
+	if (event.target.tagName === 'INPUT') { return; }
+	if (event.key === 'Escape') { modal.close(); }
     }
     function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            onClose();
-        }
+	if (event.target === event.currentTarget) { modal.close(); }
     }
 </script>
 
@@ -103,7 +94,7 @@
 
 <div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="settings-card page-body-card modal-card">
-        <button type="button" class="modal-close-button" onclick={onClose} aria-label="Close settings">✖</button>
+        <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close settings">✖</button>
 	<h2>Settings</h2>
         <div class="settings-grid">
             <div class="settings-section">
@@ -138,8 +129,8 @@
                     <div class="settings-item settings-account-info">
                         <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                         <div class="settings-account-buttons">
-                            <button class="home-button settings-button" onclick={() => goto('/login')}>Log In</button>
-                            <button class="home-button settings-button" onclick={() => goto('/signup')}>Sign Up</button>
+                            <button class="home-button settings-button" onclick={loginRedirect}>Log In</button>
+                            <button class="home-button settings-button" onclick={signUpRedirect}>Sign Up</button>
                         </div>
                     </div>
                 {:else}
@@ -170,12 +161,12 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
                             <span class="settings-account-value">••••••••</span>
-                            <button class="settings-account-edit-button" onclick={open_update_password} aria-label="Change Password">
+                            <button class="settings-account-edit-button" onclick={openChangePassword} aria-label="Change Password">
                                 ✎
                             </button>
                         </div>
                         <div class="settings-account-buttons">
-                            <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
+                            <button class="button-secondary settings-delete-button" onclick={openDeleteAccount}>Delete Account</button>
 			    <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
 			</div>
                     </div>
@@ -183,10 +174,4 @@
             </div>
         </div>
     </div>
-    {#if is_delete_account_open}
-        <DeleteAccount onClose={close_delete_account} />
-    {/if}
-    {#if is_update_password_open}
-	<UpdatePassword onClose={close_update_password} />
-    {/if}
 </div>

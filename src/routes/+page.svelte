@@ -2,14 +2,9 @@
     import { goto, invalidateAll } from '\$app/navigation';
     import { page } from '$app/state'
     import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
-
-    import Settings from '$lib/modals/utilities/Settings.svelte';
-    import Help from '$lib/modals/utilities/Help.svelte';
-    import Info from '$lib/modals/utilities/Info.svelte';
-    import PlayAsGuest from '$lib/modals/game/PlayAsGuest.svelte';
+    import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals';
 
     let { data } = $props();
-
     let user = $derived(page.data?.user);
 
     import { onMount } from 'svelte';
@@ -38,22 +33,6 @@
         requestAnimationFrame(animate);
     });
 
-    // utility modals
-    let is_settings_open = $state(false);
-    let is_help_open = $state(false);
-    let is_info_open = $state(false);
-    function open_settings() { is_settings_open = true; }
-	function close_settings() { is_settings_open = false; }
-	function open_help() { is_help_open = true; }
-	function close_help() { is_help_open = false; }
-	function open_info() { is_info_open = true; }
-	function close_info() { is_info_open = false; }
-
-    // confirmation modals
-    let is_play_as_guest_open = $state(false);
-    function open_play_as_guest() { is_play_as_guest_open = true; }
-    function close_play_as_guest() { is_play_as_guest_open = false; }
-
     // go to difficulty
     function move_on() {
         $selected_difficulty = '';
@@ -66,6 +45,11 @@
 	    await invalidateAll();
 	}
     }
+
+    function openSettings() { modal.open(Settings, { data: data })}
+    function openHelp() { modal.open(Help, { data: data })}
+    function openInfo() { modal.open(Info, { data: data })}
+    function openPlayAsGuest() { modal.open(PlayAsGuest, {})}
 
 </script>
 
@@ -85,7 +69,7 @@
                 <button class="home-button" onclick={() => goto('/signup')}>
                     Sign up
                 </button>
-                <button class="home-button" onclick={open_play_as_guest}>
+                <button class="home-button" onclick={openPlayAsGuest}>
                     Play as Guest
                 </button>
                 {:else}
@@ -100,7 +84,7 @@
             </div>
         </div>
         <div class="button-circle">
-            <button class="utility-button" title="Settings" aria-label="Settings" onclick={open_settings}>
+            <button class="utility-button" title="Settings" aria-label="Settings" onclick={openSettings}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="
@@ -123,7 +107,7 @@
                     "></path>
                 </svg>
             </button>
-            <button class="utility-button" title="Help" aria-label="Help" onclick={open_help}>
+            <button class="utility-button" title="Help" aria-label="Help" onclick={openHelp}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="
                         M 6.5 8.5
@@ -143,7 +127,7 @@
                     <circle cx="12" cy="20" r="1.8" />
                 </svg>
             </button>
-            <button class="utility-button" title="Info" aria-label="Info" onclick={open_info}>
+            <button class="utility-button" title="Info" aria-label="Info" onclick={openInfo}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="4.5" r="2" />
                     <rect x="10" y="9.5" width="4" height="12" rx="2" ry="2" />
@@ -249,18 +233,6 @@
             </div>
         </div>
     </aside>
-    {#if is_settings_open}
-        <Settings onClose={close_settings} />
-    {/if}
-    {#if is_help_open}
-        <Help onClose={close_help} />
-    {/if}
-    {#if is_info_open}
-        <Info onClose={close_info} />
-    {/if}
-    {#if is_play_as_guest_open}
-        <PlayAsGuest onClose={close_play_as_guest} />
-    {/if}
 </div>
 
 <style>

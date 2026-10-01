@@ -1,15 +1,7 @@
 <script>
     import { goto } from '\$app/navigation';
-
     import { font_size, selected_difficulty } from '$lib/stores/settings';
-
-    import Settings from '$lib/modals/utilities/Settings.svelte';
-    import Help from '$lib/modals/utilities/Help.svelte';
-    import Info from '$lib/modals/utilities/Info.svelte';
-    import Pause from '$lib/modals/game/Pause.svelte';
-    import Skip from '$lib/modals/game/Skip.svelte';
-    import End from '$lib/modals/game/End.svelte';
-
+    import { modal, Settings, Help, Info, Pause, Skip, End } from '$lib/modals';
     import { onMount } from 'svelte';
 
     // Load Leaflet and OpenStreetMap tiles

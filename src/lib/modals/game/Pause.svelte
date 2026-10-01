@@ -1,18 +1,17 @@
 <script>
     import { goto } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
-
-    let { onClose } = $props();
-
+    import { modal } from '$lib/modals'
+    
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') {
-            onClose();
+            modal.close()
         }
     }
     function handle_backdrop_click(event) {
         if (event.target === event.currentTarget) {
-            onClose();
+            modal.close()
         }
     }
 </script>
@@ -34,7 +33,7 @@
             have a break, have a kit-kat
         </p>
         <div class="modal-confirm-buttons">
-            <button class="home-button" onclick={onClose}>
+            <button class="home-button" onclick={() => modal.close()}>
                 Resume
             </button>
         </div>

@@ -1,18 +1,17 @@
 <script>
     import { goto } from '$app/navigation';
     import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
-
-    let { onClose } = $props();
-
+    import { modal } from '$lib/modals'
+    
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') {
-            onClose();
+            modal.close()
         }
     }
     function handle_backdrop_click(event) {
         if (event.target === event.currentTarget) {
-            onClose();
+            modal.close()
         }
     }
 
@@ -20,7 +19,8 @@
     function move_on() {
         $is_guest = true;
         $selected_difficulty = '';
-        goto('/difficulty'); 
+	modal.close();
+        goto('/difficulty');
     }
 </script>
 
@@ -45,7 +45,7 @@
             <button class="home-button" onclick={move_on}>
                 Continue as Guest
             </button>
-            <button class="button-secondary" onclick={onClose}>
+            <button class="button-secondary" onclick={() => modal.close()}>
                 Cancel
             </button>
         </div>

@@ -1,12 +1,7 @@
 <script>
     import { goto } from '\$app/navigation';
-
     import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
-
-    import Settings from '$lib/modals/utilities/Settings.svelte';
-    import Help from '$lib/modals/utilities/Help.svelte';
-    import Info from '$lib/modals/utilities/Info.svelte';
-
+    import { modal, Settings, Help, Info } from '$lib/modals';
     import { onMount } from 'svelte';
 
     // Animate the background in a figure-8 pattern
@@ -34,15 +29,9 @@
     });
 
     // utility modals
-    let is_settings_open = $state(false);
-    let is_help_open = $state(false);
-    let is_info_open = $state(false);
-    function open_settings() { is_settings_open = true; }
-	function close_settings() { is_settings_open = false; }
-	function open_help() { is_help_open = true; }
-	function close_help() { is_help_open = false; }
-	function open_info() { is_info_open = true; }
-	function close_info() { is_info_open = false; }
+    function openSettings() { modal.open(Settings, { form: form }) }
+    function openHelp() { modal.open(Help, { form: form }) }
+    function openInfo() { modal.open(Info, { form: form }) }
 </script>
 
 <div class="page">
@@ -52,7 +41,7 @@
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
-                <button class="utility-button" title="Settings" aria-label="Settings" onclick={open_settings}>
+                <button class="utility-button" title="Settings" aria-label="Settings" onclick={openSettings}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="
@@ -75,7 +64,7 @@
                         "></path>
                     </svg>
                 </button>
-                <button class="utility-button" title="Help" aria-label="Help" onclick={open_help}>
+                <button class="utility-button" title="Help" aria-label="Help" onclick={openHelp}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="
                             M 6.5 8.5
@@ -95,7 +84,7 @@
                         <circle cx="12" cy="20" r="1.8" />
                     </svg>
                 </button>
-                <button class="utility-button" title="Info" aria-label="Info" onclick={open_info}>
+                <button class="utility-button" title="Info" aria-label="Info" onclick={openInfo}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="4.5" r="2" />
                         <rect x="10" y="9.5" width="4" height="12" rx="2" ry="2" />
@@ -116,19 +105,19 @@
                 {/if}
                 </p>
                 <div class="difficulty-grid">
-                    <button class="difficulty-option" class:selected={$selected_difficulty === 'easy'} onclick={ $selected_difficulty = 'easy' }>
+                    <button class="difficulty-option" class:selected={$selected_difficulty === 'easy'} onclick={() => ($selected_difficulty = 'easy') }>
                         <span class="difficulty-option-title">Easy</span>
                         <span class="difficulty-option-description">
                             360&deg
                         </span>
                     </button>
-                        <button class="difficulty-option" class:selected={$selected_difficulty === 'medium'} onclick={ $selected_difficulty = 'medium' }>
+                        <button class="difficulty-option" class:selected={$selected_difficulty === 'medium'} onclick={ () => ($selected_difficulty = 'medium') }>
                         <span class="difficulty-option-title">Medium</span>
                         <span class="difficulty-option-description">
                             180&deg
                         </span>
                     </button>
-                    <button class="difficulty-option" class:selected={$selected_difficulty === 'hard'} onclick={ $selected_difficulty = 'hard' }>
+                    <button class="difficulty-option" class:selected={$selected_difficulty === 'hard'} onclick={ () => ($selected_difficulty = 'hard') }>
                         <span class="difficulty-option-title">Hard</span>
                         <span class="difficulty-option-description">
                             0&deg
@@ -139,22 +128,13 @@
                     <button class="home-button" onclick={() => goto('/play')} disabled={!$selected_difficulty}>
                         Play
                     </button>
-                    <button class="button-secondary" onclick={goto('/')}>
+                    <button class="button-secondary" onclick={() => goto('/')}>
                         Cancel
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    {#if is_settings_open}
-        <Settings onClose={close_settings} />
-    {/if}
-    {#if is_help_open}
-        <Help onClose={close_help} />
-    {/if}
-    {#if is_info_open}
-        <Info onClose={close_info} />
-    {/if}
 </div>
 
 <style>

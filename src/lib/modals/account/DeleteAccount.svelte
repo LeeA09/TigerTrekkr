@@ -1,22 +1,20 @@
 <script>
     import { goto } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
-
-    let { onClose } = $props();
+    import { modal } from '$lib/modals';
 
     let isDeleting = $state(false);
     let errorMessage = $state('');
 
-
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') {
-            onClose();
+            modal.close()
         }
     }
     function handle_backdrop_click(event) {
         if (event.target === event.currentTarget) {
-            onClose();
+            modal.close()
         }
     }
 
@@ -36,7 +34,7 @@
 		throw new Error(data.message || 'Failed to delete account.')
 	    }
 	    await goto('/', { invalidateAll: true })
-	    onClose()
+	    modal.close()
 	} catch (err) {
 	    errorMessage = err.message
 	} finally {
@@ -66,7 +64,7 @@
             <button class="button-secondary confirm-delete-button" onclick={handleDelete} disabled={isDeleting}>
                 Delete
             </button>
-            <button class="button-secondary" onclick={onClose} disabled={isDeleting}>
+            <button class="button-secondary" onclick={() => modal.close()} disabled={isDeleting}>
                 Cancel
             </button>
         </div>

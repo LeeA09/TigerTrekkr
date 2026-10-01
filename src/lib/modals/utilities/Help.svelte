@@ -1,7 +1,8 @@
 <script>
     import { font_size } from '$lib/stores/settings';
+    import { modal } from '$lib/modals';
 
-    let { onClose, opaque = false } = $props();
+    let { opaque = false } = $props();
 
     // faq controls
     let open_faq = $state(0);
@@ -14,23 +15,15 @@
     }
 
     // close via esc and click out
-    function handle_key_down(event) {
-        if (event.key === 'Escape') {
-            onClose();
-        }
-    }
-    function handle_backdrop_click(event) {
-        if (event.target === event.currentTarget) {
-            onClose();
-        }
-    }
+    function handle_key_down(event) { if (event.key === 'Escape') { modal.close() } }
+    function handle_backdrop_click(event) { if (event.target === event.currentTarget) { modal.close() } }
 </script>
 
 <svelte:window onkeydown={handle_key_down} />
 
 <div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="help-card page-body-card modal-card">
-        <button type="button" class="modal-close-button" onclick={onClose} aria-label="Close help">✖</button>
+        <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close help">✖</button>
 	<h2>Help</h2>
         <div class="help-grid">
             <div class="help-item">
