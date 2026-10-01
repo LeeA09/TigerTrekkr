@@ -4,7 +4,7 @@
     //import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info } from '$lib/modals'
     import { onMount } from 'svelte'
-    import { animateBackground } from '$lib/utils/background-animation'
+    import { animateBackground } from '$lib/shared/backgroundAnimation'
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })

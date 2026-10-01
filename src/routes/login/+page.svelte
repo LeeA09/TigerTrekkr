@@ -3,7 +3,7 @@
     //import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info } from '$lib/modals'
     import { enhance } from '$app/forms'
-    import { animateBackground } from '$lib/utils/background-animation'
+    import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { onMount } from 'svelte'
 
     let { form } = $props();

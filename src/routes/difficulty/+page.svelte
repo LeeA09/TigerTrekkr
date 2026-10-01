@@ -1,9 +1,9 @@
 <script>
-    import { goto } from '\$app/navigation';
-    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings';
-    import { modal, Settings, Help, Info } from '$lib/modals';
-    import { onMount } from 'svelte';
-    import { animateBackground } from '$lib/utils/background';
+    import { goto } from '\$app/navigation'
+    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info } from '$lib/modals'
+    import { onMount } from 'svelte'
+    import { animateBackground } from '$lib/shared/backgroundAnimation'
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })

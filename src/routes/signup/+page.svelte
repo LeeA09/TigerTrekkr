@@ -1,19 +1,19 @@
 <script>
-    import { goto } from '\$app/navigation';
+    import { goto } from '\$app/navigation'
     import { enhance } from '$app/forms'
-    //import { font_size } from '$lib/stores/settings';
-    import { modal, Settings, Help, Info } from '$lib/modals';
-    import { onMount } from 'svelte';
-    import { animateBackground } from '$lib/utils/background';
+    //import { font_size } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info } from '$lib/modals'
+    import { onMount } from 'svelte'
+    import { animateBackground } from '$lib/shared/backgroundAnimation'
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })
 
     // for password eye icon
-    let showPassword = $state(false);
-    let showConfirmPassword = $state(false);
-    function toggle_show_password() { showPassword = !showPassword; }
-    function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword; }
+    let showPassword = $state(false)
+    let showConfirmPassword = $state(false)
+    function toggle_show_password() { showPassword = !showPassword }
+    function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
