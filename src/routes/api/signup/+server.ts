@@ -2,11 +2,11 @@ import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '\$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
-    const formData = await request.json()
-    const email = formData.email.toString()
-    const password = formData.password.toString()
-    const confirmPassword = formData.confirmPassword.toString()
-    const username = formData.username.toString()
+    const formData = await request.formData()
+    const email = formData.get('email')?.toString().trim()
+    const password = formData.get('password')?.toString().trim()
+    const confirmPassword = formData.get('confirmPassword')?.toString().trim()
+    const username = formData.get('username')?.toString().trim()
 
     if (!email || !password || !confirmPassword || !username) { return json({ success: false, error: 'All fields are required.' }, { status: 400 }) }
 

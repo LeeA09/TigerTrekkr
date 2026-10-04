@@ -22,34 +22,18 @@
         isSubmitting = true
         errorMessage = ''
 
-	document.getElementById('signupForm').addEventListener('submit', async (event) => {
-		event.preventDefault()
+	return async ({ result, update }) => {
+		isSubmitting = false
+		const data = result.data ?? result
 
-		const form = event.target
-		const formData = new FormData(form)
-		const data = Object.fromEntries(formData.entries())
-
-        	try {
-            		const response = await fetch('/api/signup', {
-                		method: 'POST',
-				headers: { 'Content-Type': 'application/json'},
-                		body: JSON.stringify(data),
-            		})
-
-            		if (!response.ok) {
-                		const errorData = await response.json()
-                		throw new Error(errorData.message || 'Failed to update password')
-            		}
-
-			const returnData = await response.json()
-			const email = returnData.email.toString()
-            		await goto(`/check-email?email=${encodeURIComponent(email)}`);
-        	} catch (error) {
-            		errorMessage = error.message
-        	} finally {
-            		isSubmitting = false;
-        	}
-    	})
+		if (data?.success){
+			const email = data?.email
+			await goto(`/check-email?email=${encodeURIComponent(email)}`)
+		} else {
+			errorMessage = result.data?.error ?? 'An error occurred'
+			console.log(errorMessage)
+		}
+	}
     }
 
     // utility modals
@@ -124,7 +108,7 @@
                 <p class="page-body-card-description">
                     Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
                 </p>
-                <form id="signupForm">
+                <form method="POST" action="/api/signup" use:enhance={handle_signup}>
                     <div class="fill-in">
                         <label for="signup-username">Username</label>
                         <input name="username" type="text" placeholder="Enter username" required />
@@ -169,7 +153,7 @@
                             </button>
                         </div>
                     </div>
-                    <button type="submit" class="home-button" onclick={handle_signup}>Submit</button>
+                    <button type="submit" class="home-button" disabled={isSubmitting}>Submit</button>
                 </form>
             </div>
         </div>

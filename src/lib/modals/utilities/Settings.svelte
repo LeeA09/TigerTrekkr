@@ -39,7 +39,7 @@
 
         return async ({ result, update }) => {
             isSavingUsername = false
-            const data = result.data ?? result;
+            const data = result.data ?? result
 
             if (data?.success){
                 isEditingUsername = false

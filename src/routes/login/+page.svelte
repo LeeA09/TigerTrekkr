@@ -14,37 +14,22 @@
     let isSubmitting = $state(false)
     let errorMessage = $state('')
 
-    async function handle_submit() { 
+    async function handle_login() { 
         isSubmitting = true
         errorMessage = ''
 
-	document.getElementById('loginForm').addEventListener('submit', async (event) => {
-		event.preventDefault()
+	return async ({ result, update }) => {
+		isSubmitting = false
+		const data = result.data ?? result
 
-		const form = event.target
-		const formData = new FormData(form)
-		const data = Object.fromEntries(formData.entries())
-
-        	try {
-            		const response = await fetch('/api/login', {
-                		method: 'POST',
-				headers: { 'Content-Type': 'application/json'},
-                		body: JSON.stringify(data),
-            		})
-
-            		if (!response.ok) {
-                		const errorData = await response.json()
-                		throw new Error(errorData.message || 'Failed to login')
-            		}
-			
+		if (data?.success){ 
 			await invalidateAll()
-            		await goto('/')
-        	} catch (error) {
-            		errorMessage = error.message
-        	} finally {
-            		isSubmitting = false;
-        	}
-    	})
+			goto('/')
+		} else {
+			errorMessage = result.data?.error ?? 'An error occurred'
+			console.log(errorMessage)
+		}
+	}
     }
 
     // for password eye icon
@@ -124,7 +109,7 @@
                 <p class="page-body-card-description">
                     Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
                 </p>
-                <form id="loginForm">
+                <form method="POST" action="/api/login" use:enhance={handle_login}>
                     <div class="fill-in">
                         <label for="email">Email</label>
                         <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />
@@ -147,7 +132,7 @@
                             </button>
                         </div>
                     </div>
-                    <button type="submit" class="home-button" onclick={handle_submit}>Submit</button>
+                    <button type="submit" class="home-button" disabled={isSubmitting}>Submit</button>
                 </form>
             </div>
         </div>

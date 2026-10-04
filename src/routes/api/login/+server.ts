@@ -1,9 +1,9 @@
 import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ request, locals }) => {
-    const formData = await request.json()
-    const email = formData.email.toString()
-    const password = formData.password.toString()
+    const formData = await request.formData()
+    const email = formData.get('email')?.toString().trim()
+    const password = formData.get('password')?.toString().trim()
 
     if (!email || !password) { return json({ success: false, error: 'All fields are required.' }, { status: 400 }) }
 
