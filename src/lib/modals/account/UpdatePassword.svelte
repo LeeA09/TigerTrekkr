@@ -25,17 +25,28 @@
         isSubmitting = true
         errorMessage = ''
 
-        return async ({ result, update }) => {
-            isSubmitting = false
-            const data = result.data ?? result;
-    
-            if (data?.success){
-                await invalidateAll()
-                modal.close()
-            } else {
-                errorMessage = data?.error ?? 'An error occurred'
-                console.log(errorMessage)
+        try {
+            const response = await fetch('/api/update-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    currentPassword: document.querySelector('input[name="password"]').value,
+                    newPassword: document.querySelector('input[name="newPassword"]').value,
+                    confirmNewPassword: document.querySelector('input[name="confirmNewPassword"]').value
+                })
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.message || 'Failed to update password')
             }
+
+            await invalidateAll()
+            modal.close()
+        } catch (error) {
+            errorMessage = error.message
+        } finally {
+            isSubmitting = false;
         }
     }
 
@@ -49,7 +60,7 @@
 	    <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close help">✖</button>
             <div class="modal-confirm-icon" style="font-size: 38px;">✎</div>
             <h3>Change Password</h3>
-	    <form method="POST" action="/api/update-password" use:enhance={handle_update_password}>
+	    <form use:enhance={handle_update_password}>
 		<div class="fill-in">
 		    <label for="current-password">Current password</label>
 		    <input type="password" name="password" placeholder="Enter current password" required />

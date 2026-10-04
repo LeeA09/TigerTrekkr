@@ -25,14 +25,14 @@
                 })
 
             if (!response.ok) {
-                const data = await response.json()
-                throw new Error(data.message || 'Failed to delete account.')
+                const errorData = await response.json()
+                throw new Error(errorData.message || 'Failed to delete account.')
             }
 
             await goto('/', { invalidateAll: true })
             modal.close()
-        } catch (err) {
-            errorMessage = err.message
+        } catch (error) {
+            errorMessage = error.message
         } finally {
             isDeleting = false
         }
