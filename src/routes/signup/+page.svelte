@@ -9,11 +9,48 @@
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })
 
+    let isSubmitting = $state(false)
+    let errorMessage = $state('')
+
     // for password eye icon
     let showPassword = $state(false)
     let showConfirmPassword = $state(false)
     function toggle_show_password() { showPassword = !showPassword }
     function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword }
+
+    async function handle_signup() { 
+        isSubmitting = true
+        errorMessage = ''
+
+	document.getElementById('signupForm').addEventListener('submit', async (event) => {
+		event.preventDefault()
+
+		const form = event.target
+		const formData = new FormData(form)
+		const data = Object.fromEntries(formData.entries())
+
+        	try {
+            		const response = await fetch('/api/signup', {
+                		method: 'POST',
+				headers: { 'Content-Type': 'application/json'},
+                		body: JSON.stringify(data),
+            		})
+
+            		if (!response.ok) {
+                		const errorData = await response.json()
+                		throw new Error(errorData.message || 'Failed to update password')
+            		}
+
+			const returnData = await response.json()
+			const email = returnData.email.toString()
+            		await goto(`/check-email?email=${encodeURIComponent(email)}`);
+        	} catch (error) {
+            		errorMessage = error.message
+        	} finally {
+            		isSubmitting = false;
+        	}
+    	})
+    }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -87,7 +124,7 @@
                 <p class="page-body-card-description">
                     Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
                 </p>
-                <form method="POST" use:enhance>
+                <form id="signupForm">
                     <div class="fill-in">
                         <label for="signup-username">Username</label>
                         <input name="username" type="text" placeholder="Enter username" required />
@@ -132,7 +169,7 @@
                             </button>
                         </div>
                     </div>
-                    <button type="submit" class="home-button">Submit</button>
+                    <button type="submit" class="home-button" onclick={handle_signup}>Submit</button>
                 </form>
             </div>
         </div>

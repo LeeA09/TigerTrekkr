@@ -4,11 +4,11 @@
     import { enhance } from '$app/forms'
     import { modal } from '$lib/modals'
 
-    let isSubmitting = $state(false);
-    let errorMessage = $state('');
+    let isSubmitting = $state(false)
+    let errorMessage = $state('')
 
-    let showNewPassword = $state(false);
-    let showConfirmPassword = $state(false);
+    let showNewPassword = $state(false)
+    let showConfirmPassword = $state(false)
 
     function toggle_new_show_password() { showNewPassword = !showNewPassword; }
     function toggle_new_show_confirm_password() { showConfirmPassword = !showConfirmPassword; }
@@ -46,10 +46,10 @@
 
             		await invalidateAll()
             		modal.close()
-        		} catch (error) {
-            			errorMessage = error.message
+        	} catch (error) {
+            		errorMessage = error.message
         	} finally {
-            	isSubmitting = false;
+            		isSubmitting = false
         	}
     	})
     }

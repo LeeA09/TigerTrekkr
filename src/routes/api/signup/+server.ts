@@ -1,21 +1,19 @@
-import { fail, redirect } from '@sveltejs/kit'
-import type { Actions } from './$types'
+import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '\$lib/server/mailer'
 
-export const actions: Actions = {
-  default: async ({ request, locals, url }) => {
-    const formData = await request.formData()
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const confirmPassword = formData.get('confirmPassword') as string
-    const username = formData.get('username') as string
+export const POST: RequestHandler = async ({ request, locals, url }) => {
+    const formData = await request.json()
+    const email = formData.email.toString()
+    const password = formData.password.toString()
+    const confirmPassword = formData.confirmPassword.toString()
+    const username = formData.username.toString()
 
-    if (!email || !password || !confirmPassword || !username) { return fail(400, { message: 'All fields are required.' }) }
+    if (!email || !password || !confirmPassword || !username) { return json({ success: false, error: 'All fields are required.' }, { status: 400 }) }
 
-    if (password !== confirmPassword) { return fail(400, { message: 'Passwords do not match.' }) }
+    if (password !== confirmPassword) { return json({ success: false, error: 'Passwords do not match.' }, { status: 400 }) }
 
     const { supabaseAdmin } = locals
-    if (!supabaseAdmin) { return fail(500, { error: "Server misconfiguration: Database client not found." }) }
+    if (!supabaseAdmin) { return json({ success: false, error: "Server misconfiguration: Database client not found." }, { status: 500 }) }
 
     // Call your local self-hosted Supabase Auth engine
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.generateLink({ 
@@ -28,7 +26,7 @@ export const actions: Actions = {
         }
     })	
 
-    if (authError || !authData.properties?.action_link) { return fail(400, { error: authError?.message || 'Failed to generate security token' }) }
+    if (authError || !authData.properties?.action_link) { return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 400 }) }
 
     const rawVerificationLink = authData.properties.action_link
 
@@ -51,9 +49,8 @@ export const actions: Actions = {
         })
     } catch (mailError) {
         console.error('Mail Error:', mailError)
-        return fail(500, { error: 'Account initialized, but Gmail deliver failed.' })
+        return json({ success: false, error: 'Account initialized, but Gmail deliver failed.' }, { status: 500 })
     }
 
-    throw redirect(303, `/check-email?email=${encodeURIComponent(email)}`)
+    return json({ success: true, message: '', email: email })
   }
-}

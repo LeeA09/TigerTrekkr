@@ -1,19 +1,55 @@
 <script>
-    import { goto } from '\$app/navigation'
+    import { goto, invalidateAll } from '\$app/navigation'
     //import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info } from '$lib/modals'
     import { enhance } from '$app/forms'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { onMount } from 'svelte'
 
-    let { form } = $props();
+    let { form } = $props()
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })
 
+    let isSubmitting = $state(false)
+    let errorMessage = $state('')
+
+    async function handle_submit() { 
+        isSubmitting = true
+        errorMessage = ''
+
+	document.getElementById('loginForm').addEventListener('submit', async (event) => {
+		event.preventDefault()
+
+		const form = event.target
+		const formData = new FormData(form)
+		const data = Object.fromEntries(formData.entries())
+
+        	try {
+            		const response = await fetch('/api/login', {
+                		method: 'POST',
+				headers: { 'Content-Type': 'application/json'},
+                		body: JSON.stringify(data),
+            		})
+
+            		if (!response.ok) {
+                		const errorData = await response.json()
+                		throw new Error(errorData.message || 'Failed to login')
+            		}
+			
+			await invalidateAll()
+            		await goto('/')
+        	} catch (error) {
+            		errorMessage = error.message
+        	} finally {
+            		isSubmitting = false;
+        	}
+    	})
+    }
+
     // for password eye icon
-    let showPassword = $state(false);
-    function toggle_show_password() { showPassword = !showPassword; }
+    let showPassword = $state(false)
+    function toggle_show_password() { showPassword = !showPassword }
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
@@ -88,7 +124,7 @@
                 <p class="page-body-card-description">
                     Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
                 </p>
-                <form method="POST" use:enhance>
+                <form id="loginForm">
                     <div class="fill-in">
                         <label for="email">Email</label>
                         <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />
@@ -111,7 +147,7 @@
                             </button>
                         </div>
                     </div>
-                    <button type="submit" class="home-button">Submit</button>
+                    <button type="submit" class="home-button" onclick={handle_submit}>Submit</button>
                 </form>
             </div>
         </div>
