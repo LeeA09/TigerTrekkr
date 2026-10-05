@@ -2,13 +2,18 @@
     import { goto } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
-
+    
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') { modal.close() }
     }
     function handle_backdrop_click(event) {
         if (event.target === event.currentTarget) { modal.close() }
+    }
+
+    function handle_quit() {
+	modal.close()
+	goto('/')
     }
 </script>
 
@@ -42,7 +47,7 @@
             Are you sure you want to quit? Your game progress will be lost.
         </p>
         <div class="modal-confirm-buttons">
-            <button class="home-button" onclick={() => goto('/')}>
+            <button class="home-button" onclick={handle_quit}>
                 Quit
             </button>
             <button class="button-secondary" onclick={() => modal.close()}>

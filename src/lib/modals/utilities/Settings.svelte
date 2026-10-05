@@ -7,7 +7,7 @@
     import DeleteAccount from '../account/DeleteAccount.svelte'
     import UpdatePassword from '../account/UpdatePassword.svelte'
 
-    let { opaque = false } = $props();
+    let { opaque = false } = $props()
     let user = $derived(page.data?.user);
 
     // music and sound

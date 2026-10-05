@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'    
-
+    
     function handle_skip() {
 	modal.close()
 	goto('/answer')

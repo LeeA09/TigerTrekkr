@@ -1,8 +1,8 @@
 <script>
     import { goto } from '\$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
-    import { modal, Settings, Help, Info, Pause, Skip, End } from '$lib/modals'
-    import { onMount, onDestroy } from 'svelte'
+    import { modal, Settings, Help, Info, Pause, Skip, Quit } from '$lib/modals'
+    import { onMount } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { page } from '$app/state'
     import { timerSeconds } from '$lib/stores/timer'
@@ -13,19 +13,9 @@
     // Animate the background in a figure-8 pattern
     onMount(() => { if(!isPlayPage){ animateBackground() } })
 
-    // utility modals
-    function openSettings() { modal.open(Settings, { form: form }) }
-    function openHelp() { modal.open(Help, { form: form }) }
-    function openInfo() { modal.open(Info, { form: form }) }
-
-    // utility modals for play
-    function open_pause() { modal.open(Pause, { form: form }); is_timer_paused = true; }
-    function open_skip() { modal.open(Skip, { form: form }); is_timer_paused = true; }
-    function open_end() { modal.open(End, { form: form }); is_timer_paused = true; }
-
     // Game timer
     timerSeconds.set(300);
-    let is_timer_paused = $state(false);
+    let is_timer_paused = $derived(modal.stack.length > 0);
 
     let formatted_time = $derived.by(() => {
 	const total = $timerSeconds
@@ -56,19 +46,25 @@
 <div class="page" style="--app-font-size: {font_size}px">
     <div class="page-background">
         <header class="top-bar">
-            <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
-                <span class="top-bar-home-title">TigerTrekkr</span>
-            </button>
+	    {#if isPlayPage}
+		<button class="top-bar-home-link" onclick={() => modal.open(Quit)} title="Return to Home" aria-label="Return to Home">
+		    <span class="top-bar-home-title">TigerTrekkr</span>
+		</button>
+	    {:else}
+            	<button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
+                    <span class="top-bar-home-title">TigerTrekkr</span>
+            	</button>
+	    {/if}
             <div class="button-circle-top">
                 {#if isPlayPage}
                     <div class="top-bar-center">
-        		<button class="utility-button button-pause" onclick={open_pause} title="Pause" aria-label="Pause">
+        		<button class="utility-button button-pause" onclick={() => modal.open(Pause)} title="Pause" aria-label="Pause">
             		    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 		<rect x="6" y="2.5" width="4" height="19" rx="2" ry="2" />
                 		<rect x="14" y="2.5" width="4" height="19" rx="2" ry="2" />
             		    </svg>
         		</button>
-        		<button class="utility-button button-skip" onclick={open_skip} title="Skip" aria-label="Skip">
+        		<button class="utility-button button-skip" onclick={() => modal.open(Skip)} title="Skip" aria-label="Skip">
             		    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 		<path d="M 3 5.5 Q 3 2.5 5.8 4.7 L 12.2 9.8 Q 15 12 12.2 14.2 L 5.8 19.3 Q 3 21.5 3 18.5 Z" />
                 		<rect x="17" y="2.5" width="4" height="19" rx="2" ry="2" />
@@ -88,7 +84,7 @@
         		{/if}
     		    </div>
                 {/if}
-                <button class="utility-button" title="Settings" aria-label="Settings" onclick={openSettings}>
+                <button class="utility-button" title="Settings" aria-label="Settings" onclick={() => modal.open(Settings)}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="
@@ -111,7 +107,7 @@
                         "></path>
                     </svg>
                 </button>
-                <button class="utility-button" title="Help" aria-label="Help" onclick={openHelp}>
+                <button class="utility-button" title="Help" aria-label="Help" onclick={() => modal.open(Help)}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="
                             M 6.5 8.5
@@ -131,7 +127,7 @@
                         <circle cx="12" cy="20" r="1.8" />
                     </svg>
                 </button>
-                <button class="utility-button" title="Info" aria-label="Info" onclick={openInfo}>
+                <button class="utility-button" title="Info" aria-label="Info" onclick={() => modal.open(Info)}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="4.5" r="2" />
                         <rect x="10" y="9.5" width="4" height="12" rx="2" ry="2" />

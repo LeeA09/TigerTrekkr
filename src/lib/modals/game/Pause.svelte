@@ -1,7 +1,7 @@
 <script>
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
-    
+        
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') { modal.close() }

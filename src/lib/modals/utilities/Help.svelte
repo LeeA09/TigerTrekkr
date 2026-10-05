@@ -2,8 +2,8 @@
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
     import { goto } from '$app/navigation'
-
-    let { opaque = false } = $props();
+    
+    let { opaque = false } = $props()
 
     function handleNavigate(event, path) {
 	event.preventDefault()

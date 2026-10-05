@@ -2,7 +2,7 @@
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
 
-    let { opaque = false } = $props();
+    let { opaque = false } = $props()
 
     // close via esc and click out
     function handle_key_down(event) { 
