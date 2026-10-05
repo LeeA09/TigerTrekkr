@@ -1,6 +1,6 @@
 <script>
     import { goto } from '\$app/navigation'
-    import { font_size } from '$lib/stores/settings';
+    import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info } from '$lib/modals'
     import { onMount } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
