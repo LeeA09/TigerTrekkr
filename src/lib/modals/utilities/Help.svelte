@@ -1,8 +1,15 @@
 <script>
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
+    import { goto } from '$app/navigation'
 
     let { opaque = false } = $props();
+
+    function handleNavigate(event, path) {
+	event.preventDefault()
+	modal.close()
+	goto(path)
+    }
 
     // faq controls
     let open_faq = $state(0);
@@ -44,14 +51,22 @@
                     </svg>
                 </button>
                 {#if open_faq === 1}
-                    <p class="help-faq-answer">
-                        Each round is worth up to 5,000 points, and your score depends on three things. The first is <strong>distance</strong>: 
-                        the closer your pin is to the real location, the more points you earn. Points drop off quickly as your guess 
-                        gets farther away, so precision matters on a campus-sized map. Next is <strong>time</strong>: the clock starts when the image 
-                        loads and stops when you confirm your guess. You lose a small amount of score for every second you take, so 
-                        quick guesses score a little higher. Last is <strong>difficulty</strong>: your result is multiplied by your difficulty bonus, 
-                        which is why a nearly perfect guess on Hard can still hit the 5,000 cap.
-                    </p>
+		    <div class="help-faq-answer">
+                        <p>Each round is worth up to 5,000 points, and your score depends on three things:</p>
+			<ol>
+				<li><strong style="color: #FFC300;">Distance</strong>: 
+					the closer your pin is to the real location, the more points you earn. Points drop off quickly as your guess 
+                        		gets farther away, so precision matters on a campus-sized map.
+				</li>
+				<li><strong style="color: #FFC300;">Time</strong>:
+					the clock starts when the image loads and stops when you confirm your guess. You lose a small amount of score
+					for every second you take, so quick guesses score a little higher.
+				</li>
+				<li><strong style="color: #FFC300;">Difficulty</strong>: your result is multiplied by your difficulty bonus, 
+                        		which is why a nearly perfect guess on Hard can still hit the 5,000 cap.
+				</li>
+			</ol>
+		    </div>
                 {/if}
                 <button type="button" class="help-faq-question" onclick={() => toggle_faq(2)} aria-expanded={open_faq === 2}>
                     <p>Do I need an account to play?</p>
@@ -62,7 +77,8 @@
                 {#if open_faq === 2}
                     <p class="help-faq-answer">
                         No, you can play as a guest and jump straight into a game. However, guest scores aren't saved or shown on the leaderboard. 
-                        Create an account if you want your scores tracked and a shot at the global top 20.
+                        <a href="/signup" onclick={(e) => handleNavigate(e, '/signup')} style="color: #FFC300">Create an account</a>
+			if you want your scores tracked and a shot at the global top 20.
                     </p>
                 {/if}
                 <button type="button" class="help-faq-question" onclick={() => toggle_faq(3)} aria-expanded={open_faq === 3}>
@@ -72,10 +88,30 @@
                     </svg>
                 </button>
                 {#if open_faq === 3}
-                    <p class="help-faq-answer">
-                        Difficulty controls how much you can look around in the 360° image. On <strong>Easy</strong> you get full 360° rotation and zoom. On 
-                        <strong>Medium</strong> you can rotate 180° and zoom. On <strong>Hard</strong> you get a still image with zoom only. Harder levels also multiply your score: 1.0× on Easy, 1.1× on Medium, and 1.2× on Hard. You pick a difficulty before the game starts, and it stays the same for the whole round.
-                    </p>
+		    <div class="help-faq-answer">
+                        <p>Difficulty controls how much you can look around in the 360° image.</p>
+			<ul>			
+				<li><strong style="color: #FFC300;">Easy</strong>: 
+					<ul>
+						<li>Full 360° rotation and zoom</li>
+						<li>1.0× score modifier</li>
+					</ul>
+				</li> 
+                        	<li><strong style="color: #FFC300;">Medium</strong>:
+					<ul>
+						<li>Rotate 180° and zoom</li>
+						<li>1.1× score modifier</li>
+					</ul>
+				</li>
+				<li><strong style="color: #FFC300;">Hard</strong>:
+					<ul>
+						<li>Still image (no rotation) with zoom only</li>
+						<li>1.2× score modifier</li>
+					</ul>
+				</li>
+			</ul>
+			<p>You pick a difficulty before the game starts, and it stays the same for the whole round.</p>
+                    </div>
                 {/if}
             </div>
         </div>

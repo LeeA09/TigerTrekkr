@@ -647,6 +647,8 @@ h3 {
     font-size: calc(var(--font-size) * 1.25);
 }
 
+.help-item li,
+.info-item li,
 .help-item p,
 .info-item p {
     margin-top: calc(var(--font-size) * 0.125); 

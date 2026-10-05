@@ -22,22 +22,37 @@
         <div class="info-grid">
             <div class="info-item">
                 <h3>Creators -- Team Rubber Ducky</h3>
-                <p>Anna Mori</p>
-                <p>Gina Hua</p>
-                <p>Isaiah Korte</p>
-                <p>Jenaya Monroe</p>
-                <p>LeeAnn Lin</p>
-                <p>Tessa Mitchell</p>
+		<ul>
+                	<li>Anna Mori</li>
+                	<li>Gina Hua</li>
+                	<li>Isaiah Korte</li>
+                	<li>Jenaya Monroe</li>
+                	<li>LeeAnn Lin</li>
+                	<li>Tessa Mitchell</li>
+		</ul>
             </div>
             <div class="info-item">
                 <h3>Credits</h3>
-                <p>Svelte</p>
-                <p>Marzipano</p>
-                <p>Leaflet</p>
-                <p>OpenStreetMap</p>
-                <p>Supabase</p>
-                <p>PostgreSQL</p>
+                <ul>
+			<li>Svelte</li>
+                	<li>Marzipano</li>
+                	<li>Leaflet</li>
+                	<li>OpenStreetMap</li>
+                	<li>Supabase</li>
+                	<li>PostgreSQL</li>
+		</ul>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+  ul {
+	list-style-type: none;
+	padding-left: 1rem;
+  }  
+
+  li::before {
+	content: "- ";
+  }
+</style>
