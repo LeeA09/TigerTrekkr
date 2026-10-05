@@ -24,15 +24,17 @@
 	return `${mins}:${secs}`
     });
 
-    // Timer runs only while no pause/skip/end modal is open
+    // Timer runs only while no modal is open, and only if is play page
     $effect(() => {
-        if ($timerSeconds > 0 && !is_timer_paused) {
-            const timer = setInterval(() => {
-                timerSeconds.update((s) => Math.max(0, s - 1))
-            }, 1000);
+	if(isPlayPage){
+            if ($timerSeconds > 0 && !is_timer_paused) {
+                const timer = setInterval(() => {
+                    timerSeconds.update((s) => Math.max(0, s - 1))
+                }, 1000);
 
-            return () => clearInterval(timer);
-        }
+                return () => clearInterval(timer);
+            }
+	}
     });
 
     // Go to answer screen when timer expires on play screen
