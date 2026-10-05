@@ -13,13 +13,17 @@
     // Animate the background in a figure-8 pattern
     onMount(() => { if(hasAnimation){ animateBackground() } })
 
+    $effect(() => {
+        initLocalStorageSettings();
+    });
+
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
     function openHelp() { modal.open(Help, { form: form }) }
     function openInfo() { modal.open(Info, { form: form }) }
 </script>
 
-<div class="page">
+<div class="page" style="--app-font-size: {font_size}px">
     <div class="page-background">
         <header class="top-bar">
             <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
@@ -102,5 +106,8 @@
         overflow: hidden;
         box-sizing: border-box;
         font-family: "Actor", sans-serif;
+    }
+    :global(body), .page {
+        font-size: var(--app-font-size) !important;
     }
 </style>
