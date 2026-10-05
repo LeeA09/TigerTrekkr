@@ -1,8 +1,8 @@
 <script>
     import { goto } from '\$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
-    import { modal, Pause, Skip, End } from '$lib/modals'
     import { onMount } from 'svelte'
+    import { timerSeconds } from '$lib/stores/timer'
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -151,34 +151,6 @@
         }
     });
 
-    // Game timer
-    let time_remaining = $state(300);
-    let is_timer_paused = $state(false);
-
-    let formatted_time = $derived(
-        `${Math.floor(time_remaining / 60).toString().padStart(2, '0')}:${(time_remaining % 60).toString().padStart(2, '0')}`
-    );
-
-    // Timer runs only while no pause/skip/end modal is open
-    $effect(() => {
-        if (time_remaining > 0 && !is_timer_paused) {
-            const timer = setInterval(() => {
-                if (time_remaining > 0 && !is_timer_paused) {
-                    time_remaining -= 1;
-                }
-            }, 1000);
-
-            return () => clearInterval(timer);
-        }
-    });
-
-    // Go to answer screen when timer expires on play screen
-    $effect(() => {
-        if (time_remaining === 0) {
-            goto('/answer');
-        }
-    });
-
     // play screen map (Leaflet + OpenStreetMap)
 	let map_container = $state();
 	let leaflet_loaded = $state(false);
@@ -189,51 +161,11 @@
     let guess_placed = $state(false);
     let guess_marker = null;
 
-	function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
+    function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
+
+    // GIVE TIMERSECONDS TO BACKEND HERE
     function submit_guess() { goto('/answer'); }
-
-     // utility modals
-    function open_pause() { modal.open(Pause, { form: form }); is_timer_paused = true; }
-    function open_skip() { modal.open(Skip, { form: form }); is_timer_paused = true; }
-    function open_end() { modal.open(End, { form: form }); is_timer_paused = true; }
 </script>
-
-{#snippet gameActions()}
-    <div class="top-bar-center">
-        <button class="utility-button button-pause" onclick={open_pause} title="Pause" aria-label="Pause">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="6" y="2.5" width="4" height="19" rx="2" ry="2" />
-                <rect x="14" y="2.5" width="4" height="19" rx="2" ry="2" />
-            </svg>
-        </button>
-        <button class="utility-button button-skip" onclick={open_skip} title="Skip" aria-label="Skip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="
-                    M 3 5.5 
-                    Q 3 2.5 5.8 4.7 
-                    L 12.2 9.8 
-                    Q 15 12 12.2 14.2 
-                    L 5.8 19.3 
-                    Q 3 21.5 3 18.5 
-                    Z
-                " />
-                <rect x="17" y="2.5" width="4" height="19" rx="2" ry="2" />
-                </svg>
-        </button>
-        <div class="timer-display">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="timer-icon">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            <span>{formatted_time}</span>
-        </div>
-        {#if $selected_difficulty}
-            <span class="difficulty-badge difficulty-{$selected_difficulty}">
-                {$selected_difficulty}
-            </span>
-        {/if}
-    </div>
-{/snippet}
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">

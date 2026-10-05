@@ -1,26 +1,56 @@
 <script>
     import { goto } from '\$app/navigation'
-    import { font_size } from '$lib/stores/settings'
-    import { modal, Settings, Help, Info } from '$lib/modals'
-    import { onMount } from 'svelte'
+    import { font_size, selected_difficulty } from '$lib/stores/settings'
+    import { modal, Settings, Help, Info, Pause, Skip, End } from '$lib/modals'
+    import { onMount, onDestroy } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { page } from '$app/state'
+    import { timerSeconds } from '$lib/stores/timer'
 
     let { children, form } = $props()
-    let hasAnimation = $state(true)
-
-    let gameActions = $state(false)
+    let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
     // Animate the background in a figure-8 pattern
-    onMount(() => { if(hasAnimation){ animateBackground() } })
-
-    $effect(() => {
-        initLocalStorageSettings();
-    });
+    onMount(() => { if(!isPlayPage){ animateBackground() } })
 
     // utility modals
     function openSettings() { modal.open(Settings, { form: form }) }
     function openHelp() { modal.open(Help, { form: form }) }
     function openInfo() { modal.open(Info, { form: form }) }
+
+    // utility modals for play
+    function open_pause() { modal.open(Pause, { form: form }); is_timer_paused = true; }
+    function open_skip() { modal.open(Skip, { form: form }); is_timer_paused = true; }
+    function open_end() { modal.open(End, { form: form }); is_timer_paused = true; }
+
+    // Game timer
+    timerSeconds.set(300);
+    let is_timer_paused = $state(false);
+
+    let formatted_time = $derived.by(() => {
+	const total = $timerSeconds
+	const mins = Math.floor(total / 60).toString().padStart(2, '0')
+	const secs = (total % 60).toString().padStart(2, '0')
+	return `${mins}:${secs}`
+    });
+
+    // Timer runs only while no pause/skip/end modal is open
+    $effect(() => {
+        if ($timerSeconds > 0 && !is_timer_paused) {
+            const timer = setInterval(() => {
+                timerSeconds.update((s) => Math.max(0, s - 1))
+            }, 1000);
+
+            return () => clearInterval(timer);
+        }
+    });
+
+    // Go to answer screen when timer expires on play screen
+    $effect(() => {
+        if ($timerSeconds === 0) {
+            goto('/answer');
+        }
+    });
 </script>
 
 <div class="page" style="--app-font-size: {font_size}px">
@@ -30,8 +60,33 @@
                 <span class="top-bar-home-title">TigerTrekkr</span>
             </button>
             <div class="button-circle-top">
-                {#if gameActions}
-                    <!--{@render gameActions()}-->
+                {#if isPlayPage}
+                    <div class="top-bar-center">
+        		<button class="utility-button button-pause" onclick={open_pause} title="Pause" aria-label="Pause">
+            		    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                		<rect x="6" y="2.5" width="4" height="19" rx="2" ry="2" />
+                		<rect x="14" y="2.5" width="4" height="19" rx="2" ry="2" />
+            		    </svg>
+        		</button>
+        		<button class="utility-button button-skip" onclick={open_skip} title="Skip" aria-label="Skip">
+            		    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                		<path d="M 3 5.5 Q 3 2.5 5.8 4.7 L 12.2 9.8 Q 15 12 12.2 14.2 L 5.8 19.3 Q 3 21.5 3 18.5 Z" />
+                		<rect x="17" y="2.5" width="4" height="19" rx="2" ry="2" />
+                	    </svg>
+        		</button>
+			<div class="timer-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" clas>
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{formatted_time}</span>
+                        </div>
+        		{#if $selected_difficulty}
+            		    <span class="difficulty-badge difficulty-{$selected_difficulty}">
+                		{$selected_difficulty}
+            		    </span>
+        		{/if}
+    		    </div>
                 {/if}
                 <button class="utility-button" title="Settings" aria-label="Settings" onclick={openSettings}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -84,7 +139,7 @@
                 </button>
             </div>
         </header>
-        {#if gameActions}
+        {#if isPlayPage}
             <div class="play-body">{@render children()}</div>
         {:else}
             <div class="page-body">

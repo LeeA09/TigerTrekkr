@@ -3,6 +3,11 @@
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'    
 
+    function handle_skip() {
+	modal.close()
+	goto('/answer')
+    }
+
     // close via esc and click out
     function handle_key_down(event) {
         if (event.key === 'Escape') { modal.close() }
@@ -37,7 +42,7 @@
             Are you sure you want to skip? You will recieve 0 points.
         </p>
         <div class="modal-confirm-buttons">
-            <button class="home-button" onclick={() => goto('/answer')}>
+            <button class="home-button" onclick={handle_skip}>
                 Skip
             </button>
             <button class="button-secondary" onclick={() => modal.close()}>
