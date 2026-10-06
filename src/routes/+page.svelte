@@ -9,8 +9,10 @@
     let { data } = $props();
     let user = $derived(page.data?.user);
 
-    if(user) { is_guest.set(false) }
-    else { is_guest.set(true) }
+    $effect(() => {
+        if(user) { is_guest.set(false) }
+        else { is_guest.set(true) }
+    })
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })

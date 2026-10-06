@@ -45,7 +45,7 @@
                     mouseViewMode: 'drag'
                 }
             });
-            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image.jpg');
+            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky-new.jpg');
             const geometry = new window.Marzipano.EquirectGeometry([{ width: 4096 }]);
             // Keep the existing zoom limits for every difficulty.
             const traditionalLimiter =
