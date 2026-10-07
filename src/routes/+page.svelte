@@ -1,5 +1,5 @@
 <script>
-    import { goto, invalidateAll } from '\$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
     import { page } from '$app/state'
     import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
     import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
@@ -16,6 +16,10 @@
 
     // Animate the background in a figure-8 pattern
     onMount(() => { animateBackground() })
+
+    let leadIsCollapsed = $state(false)
+
+    function toggleLeaderboard() { leadIsCollapsed = !leadIsCollapsed; }
 
     // go to difficulty
     function move_on() {
@@ -119,101 +123,109 @@
             </button>
         </div>
     </main>
-    <aside class="home-leaderboard">
-        <h2>
-            Leaderboard
-        </h2>
-        <div class="leaderboard-players">
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">1</span>
-                    <span class="leaderboard-player-name">Username</span>
+    <aside class="home-leaderboard" class:collapsed={leadIsCollapsed}>
+        <button class="toggle-btn" onclick={toggleLeaderboard} aria-label="Toggle leaderboard">
+            <svg class="chevron" class:rotated={leadIsCollapsed} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="leaderboard-content">
+            <h2>
+                Leaderboard
+            </h2>
+            <div class="leaderboard-players">
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">1</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">2</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">2</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">3</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">3</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">4</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">4</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">5</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">5</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">6</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">6</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">7</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">7</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">8</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">8</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">9</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">9</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">10</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">10</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">11</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">11</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">12</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">12</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
-            </div>
-            <div class="leaderboard-player">
-                <div class="leaderboard-player-info">
-                    <span class="leaderboard-player-rank">13</span>
-                    <span class="leaderboard-player-name">Username1</span>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">13</span>
+                        <span class="leaderboard-player-name">Username1</span>
+                    </div>
+                    <span class="leaderboard-player-score">100000</span>
                 </div>
-                <span class="leaderboard-player-score">100000</span>
             </div>
         </div>
     </aside>
