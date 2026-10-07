@@ -1,5 +1,5 @@
 import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
-import { sendEmail } from '\$lib/server/mailer'
+import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
     const formData = await request.formData()
@@ -26,11 +26,13 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         }
     })	
 
-    if (authError || !authData.properties?.action_link) { return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 400 }) }
+    const hashedToken = authData?.properties?.hashed_token;
 
-    const rawVerificationLink = authData.properties.action_link
+    if (authError || !hashedToken) {
+        return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 400 });
+    }
 
-    const verificationLink = rawVerificationLink.replace('127.0.0.1:54321', url.host)
+    const verificationLink = `${url.origin}/auth/callback?token_hash=${hashedToken}&type=signup`;
 
     try {
         await sendEmail({

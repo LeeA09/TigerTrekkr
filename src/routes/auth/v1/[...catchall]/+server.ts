@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit'
 import type { RequestHandler } from './\$types'
-import { PUBLIC_SUPABASE_URL } from '\$env/static/public'
+import { PUBLIC_SUPABASE_URL } from '$app/env/public'
 
 export const GET: RequestHandler = async ({ url, params, fetch }) => {
     const path = params.catchall

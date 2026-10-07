@@ -7,9 +7,9 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 	if (!session) { throw error(401, 'Unauthorized') }
 
 	const formData = await request.formData()
-	const currentPassword = formData.get('password').toString().trim()
-	const newPassword = formData.get('newPassword').toString().trim()
-	const confirmNewPassword = formData.get('confirmNewPassword').toString().trim()
+	const currentPassword = formData.get('password')?.toString().trim()
+	const newPassword = formData.get('newPassword')?.toString().trim()
+	const confirmNewPassword = formData.get('confirmNewPassword')?.toString().trim()
 
 	if (!currentPassword || !newPassword || !confirmNewPassword) {
 		return json({ error: 'Username cannot be empty' }, { status: 400 });

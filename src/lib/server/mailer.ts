@@ -1,4 +1,4 @@
-import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '\$env/static/private'
+import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '$app/env/private'
 import nodemailer from 'nodemailer'
 
 interface SendEmailOptions {

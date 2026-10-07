@@ -2,8 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@supabase/supabase-js'
 import { type Handle, redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$env/static/public'
-import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private'
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$app/env/public'
+import { SUPABASE_SERVICE_ROLE_KEY } from '$app/env/private'
 
 
 const handleSupabase: Handle = async ({ event, resolve }) => {
