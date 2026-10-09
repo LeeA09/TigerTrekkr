@@ -9,6 +9,7 @@
 
     let { opaque = false } = $props()
     let user = $derived(page.data?.user);
+    let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
     // music and sound
     function toggle_music() { is_music_on.update(value => !value); }
@@ -128,15 +129,18 @@
 		        {#if !user}
                 <div class="settings-item settings-account-info">
                     <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
+                    {#if !isPlayPage}
                     <div class="settings-account-buttons">
                         <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
                         <button class="home-button settings-button" onclick={sign_up_redirect}>Sign Up</button>
                     </div>
+                    {/if}
                 </div>
                 {:else}
                 <div class="settings-item settings-account-info">
                     <div class="settings-account-info-row">
                         <span class="settings-label">Username</span>
+                {#if !isPlayPage}
 			    {#if isEditingUsername}
 				<form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
 				    <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
@@ -149,6 +153,9 @@
                         ✎
                     </button>
 			    {/if}
+                {:else}
+                    <span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
+                {/if}
                         </div>
 			{#if usernameError}
 			    <p class="settings-error">{usernameError}</p>
@@ -156,21 +163,27 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>
+                            {#if !isPlayPage}
                             <button class="settings-account-edit-button fake-button">
                                 ✎
                             </button>
+                            {/if}
                         </div>
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
                             <span class="settings-account-value">••••••••</span>
+                            {#if !isPlayPage}
                             <button class="settings-account-edit-button" onclick={open_change_password} aria-label="Change Password">
                                 ✎
                             </button>
+                            {/if}
                         </div>
+                        {#if !isPlayPage}
                         <div class="settings-account-buttons">
                             <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
-			    <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
-			</div>
+			                <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
+			            </div>
+                        {/if}
                     </div>
                 {/if}
             </div>
