@@ -98,24 +98,24 @@
             <h1>
                 TigerTrekkr
             </h1>
+            {#if !user}
             <div class="button-main">
-                {#if !user}
-                <button class="home-button" onclick={() => goto('/login')}>
-                    Log in
-                </button>
-                <button class="home-button" onclick={() => goto('/signup')}>
-                    Sign up
-                </button>
-                <button class="home-button" onclick={openPlayAsGuest}>
-                    Play as Guest
-                </button>
-                {:else}
-		        <h2 style="color: #FFFFFF">{splashText[0]}<span>{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
-                <button class="home-button" onclick={move_on}>
-                    Play
-                </button>
-                {/if}
+            <button class="home-button" onclick={() => goto('/login')}>
+                Log in
+            </button>
+            <button class="home-button" onclick={() => goto('/signup')}>
+                Sign up
+            </button>
+            <button class="home-button" onclick={openPlayAsGuest}>
+                Play as Guest
+            </button>
             </div>
+            {:else}
+            <h2 style="color: #FFFFFF">{splashText[0]}<span>{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
+            <button class="home-button" onclick={move_on}>
+                Play
+            </button>
+            {/if}
         </div>
         <div class="button-circle">
             <button class="utility-button" title="Settings" aria-label="Settings" onclick={openSettings}>
@@ -171,11 +171,14 @@
     </main>
     <aside class="home-leaderboard" class:collapsed={leadIsCollapsed}>
         <button class="toggle-btn" onclick={toggleLeaderboard} aria-label="Toggle leaderboard">
-            <svg class="chevron" class:rotated={leadIsCollapsed} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+            <svg class="chevron" class:rotated={leadIsCollapsed} viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
+            <svg class="leaderboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 12.8 3.8 15 4 13.3 5.4 13.9 7.6 12 6.4 10.1 7.6 10.7 5.4 9 4 11.2 3.8"></polygon>
+                <path d="M 2 20 h 20 M 3 20 v -7 h 5 v -4 h 8 v 7 h 5 v 4 M 8 13 v 7 M 16 16 v 4"></path>
+            </svg>
         </button>
-
         <div class="leaderboard-content">
             <h2>
                 Leaderboard
