@@ -24,6 +24,7 @@
 
 <div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="modal-card">
+        <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close help">✖</button>
         <div class="modal-confirm-header">
             <div class="modal-confirm-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -40,9 +41,6 @@
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={move_on}>
                 Continue as Guest
-            </button>
-            <button class="button-secondary" onclick={() => modal.close()}>
-                Cancel
             </button>
         </div>
     </div>

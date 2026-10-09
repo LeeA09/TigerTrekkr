@@ -315,6 +315,7 @@ h3 {
     scrollbar-width: thin;
     scrollbar-color: #002952 #003566;
     -ms-overflow-style: none;
+    position: relative;
 }
 
 .modal-close-button {
@@ -334,6 +335,7 @@ h3 {
     color: #ffffff;
     font-size: calc(var(--font-size) * 1.5);
     transition: color 0.2s ease;
+    z-index: 1000;
 }
 
 .modal-close-button:hover {
@@ -623,10 +625,10 @@ h3 {
     font-size: calc(var(--font-size) * 1); 
 }
 
+.
+
 .button-toggle {
-    /* width: 81px;  */
     width: calc(var(--font-size) * 4.9);
-    /* height: 36px;  */
     height: calc(var(--font-size) * 2.2);
     border: 2px solid #557899;
     background: #003566;
@@ -634,7 +636,6 @@ h3 {
     border-radius: 50px; 
     font-weight: 700; 
     cursor: pointer;
-    /* font-size: 16px;  */
     font-size: calc(var(--font-size));
     transition: all 0.2s ease;
     font-family: "Actor", sans-serif;
