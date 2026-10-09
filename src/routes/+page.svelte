@@ -187,7 +187,7 @@
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">1</span>
-                        <span class="leaderboard-player-name">Username</span>
+                        <span class="leaderboard-player-name">Usernameeeeeeeeeeeeeeeee</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
