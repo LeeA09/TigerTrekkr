@@ -229,14 +229,15 @@ h3 {
     display: flex;
     flex-direction: column;
     flex: 1;
-    height: 100%;
+    height: 90%;
     min-height: 0;
 }
 
 .leaderboard-players {
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
@@ -286,16 +287,10 @@ h3 {
     position: fixed;
     inset: 0;
     z-index: 100;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(15px);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.modal-background.opaque-backdrop {
-    backdrop-filter: none;
-    background: #002952;
-    z-index: 19;
 }
 
 .modal-background.utility-backdrop {
