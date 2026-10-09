@@ -125,38 +125,40 @@
             </div>
             <div class="settings-section">
                 <h3>Account Information</h3>
-		{#if !user}
-                    <div class="settings-item settings-account-info">
-                        <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
-                        <div class="settings-account-buttons">
-                            <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
-                            <button class="home-button settings-button" onclick={sign_up_redirect}>Sign Up</button>
-                        </div>
+		        {#if !user}
+                <div class="settings-item settings-account-info">
+                    <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
+                    <div class="settings-account-buttons">
+                        <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
+                        <button class="home-button settings-button" onclick={sign_up_redirect}>Sign Up</button>
                     </div>
+                </div>
                 {:else}
-                    <div class="settings-item settings-account-info">
-                        <div class="settings-account-info-row">
-                            <span class="settings-label">Username</span>
+                <div class="settings-item settings-account-info">
+                    <div class="settings-account-info-row">
+                        <span class="settings-label">Username</span>
 			    {#if isEditingUsername}
 				<form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
 				    <input type="text" name="new_username" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
-				    <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">🖫</button>
+				    <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">✔</button>
 				    <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
 				</form>
 		 	    {:else}                            
 				<span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
-                            	<button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
-                                    ✎
-                            	</button>
+                    <button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
+                        ✎
+                    </button>
 			    {/if}
                         </div>
 			{#if usernameError}
 			    <p class="settings-error">{usernameError}</p>
 			{/if}
-			
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>
+                            <button class="settings-account-edit-button fake-button">
+                                ✎
+                            </button>
                         </div>
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>

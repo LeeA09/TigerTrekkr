@@ -275,6 +275,48 @@
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">14</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">1000</span>
+                </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">15</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100</span>
+                </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">16</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100</span>
+                </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">17</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100</span>
+                </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">18</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100</span>
+                </div>
+                <div class="leaderboard-player">
+                    <div class="leaderboard-player-info">
+                        <span class="leaderboard-player-rank">19</span>
+                        <span class="leaderboard-player-name">Username</span>
+                    </div>
+                    <span class="leaderboard-player-score">100</span>
+                </div>
             </div>
         </div>
     </aside>

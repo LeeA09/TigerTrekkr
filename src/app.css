@@ -532,6 +532,12 @@ h3 {
     color: #DC562E;
 }
 
+.settings-account-edit-button.fake-button {
+    /* purely for spacing ease */
+    color: #002952;
+    cursor: default;
+}
+
 .settings-input-form {
     display: flex !important;
     flex-direction: row;
