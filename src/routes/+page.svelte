@@ -14,8 +14,57 @@
         else { is_guest.set(true) }
     })
 
+    // random splash texts for logged-in
+    const splashTexts = [
+        ['Hello ', '!'],
+        ['Welcome ', '!'],
+        ['How are you, ', '?'],
+        ['Welcome back, ', '!'],
+        ['Welcome home, ', '.'],
+        ['Good to see you, ', '!'],
+        ['You look nice today, ', '!'],
+        ['What’s up, ', '?'],
+        ['Howdy, ', '!'],
+        ['Ahoy, ', '!'],
+        ['Well, well, well, ', '...'],
+        ['You come here often, ', '?'],
+        ['Greetings, ', '!'],
+        ['', '. Perchance.'],
+        ['Good yard, ', '.'],
+        ['Big brain time, ', '!'],
+        ['North is up, ', '.'],
+        ['Ready, set, guess, ', '!'],
+        ['Ready to explore, ', '?'],
+        ['Let’s trek, ', '!'],
+        ['The campus awaits, ', '...'],
+        ['Ready for another round, ', '?'],
+        ['Back for more, ', '?'],
+        ['Back in COMO, ', '?'],
+        ['Tiger pride, ', '!'],
+        ['MIZ ', '!'],
+        ['Let the guessing begin, ', '.'],
+        ['Lovely weather we’re having, ', '!'],
+        ['No pressure, ', '.'],
+        ['Trekking is your specialty, ', '!'],
+        ['Did you finish your homework, ', '?'],
+        ['You made an account and all you got was this lousy splash text, ', '.'],
+        ['1-2-3-4, I declare a thumb war, ', '!'],
+        ['Find the hidden rubber ducky, ', '.'],
+        ['*blushes and waves at ', '*'],
+        ['Don’t get lost, ', '!'],
+    ];
+
+    let splashText = $state(['Welcome ', '!']);
+
     // Animate the background in a figure-8 pattern
-    onMount(() => { animateBackground() })
+    onMount(() => { 
+        animateBackground();
+
+        // choose random splash text for logged-in
+        splashText = splashTexts[
+            Math.floor(Math.random() * splashTexts.length)
+        ];
+     })
 
     let leadIsCollapsed = $state(false)
 
@@ -61,7 +110,7 @@
                     Play as Guest
                 </button>
                 {:else}
-		<h2 style="color: #FFFFFF">Welcome back, <span style="color: #FFffff">{user.user_metadata?.display_name ?? 'Guest User'}</span>!</h2>
+		        <h2 style="color: #FFFFFF">{splashText[0]}<span>{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
                 <button class="home-button" onclick={move_on}>
                     Play
                 </button>
