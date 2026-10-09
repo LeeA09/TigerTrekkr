@@ -21,26 +21,26 @@
         <h2>Information</h2>
         <div class="info-grid">
             <div class="info-item">
-                <h3>Creators -- Team Rubber Ducky</h3>
-		<ul>
+                <h3>Creators—Team Rubber Ducky</h3>
+		        <ul>
                 	<li>Anna Mori</li>
                 	<li>Gina Hua</li>
                 	<li>Isaiah Korte</li>
                 	<li>Jenaya Monroe</li>
                 	<li>LeeAnn Lin</li>
                 	<li>Tessa Mitchell</li>
-		</ul>
+		        </ul>
             </div>
             <div class="info-item">
                 <h3>Credits</h3>
                 <ul>
-			<li>Svelte</li>
+			        <li>Svelte</li>
                 	<li>Marzipano</li>
                 	<li>Leaflet</li>
                 	<li>OpenStreetMap</li>
                 	<li>Supabase</li>
                 	<li>PostgreSQL</li>
-		</ul>
+		        </ul>
             </div>
         </div>
     </div>
@@ -53,6 +53,6 @@
   }  
 
   li::before {
-	content: "- ";
+	content: "• ";
   }
 </style>

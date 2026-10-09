@@ -116,7 +116,8 @@
             window.L.control.zoom({ position: 'topright' }).addTo(leaflet_map);
             // Custom Duck Icon for guessing marker
             const duckIcon = window.L.icon({
-                iconUrl: 'tiger-trekkr-logo.ico',
+                // iconUrl: 'tiger-trekkr-logo.ico',
+                iconUrl: 'mascot.png',
                 iconSize: [20, 20],
                 iconAnchor: [10, 10],
                 popupAnchor: [0, -20]

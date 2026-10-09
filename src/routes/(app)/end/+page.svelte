@@ -3,15 +3,15 @@
 </script>
 
 <div class="page-body">
-    <div class="page-body-card">
+    <div class="page-body-card end-card">
         <div class="page-body-card-buttons">
-            <button type="button" class="button-secondary" onclick={() => goto('/play')}>
+            <button type="button" class="home-button" onclick={() => goto('/play')}>
                 Play Again
             </button>
-            <button type="button" class="button-secondary" onclick={() => goto('/difficulty')}>
+            <button type="button" class="home-button" onclick={() => goto('/difficulty')}>
                 Change Difficulty
             </button>
-            <button type="button" class="button-secondary" onclick={() => goto('/')}>
+            <button type="button" class="home-button" onclick={() => goto('/')}>
                 Exit
             </button>
         </div>
