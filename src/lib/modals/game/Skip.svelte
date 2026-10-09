@@ -40,7 +40,7 @@
             <h3>Skip Round?</h3>
         </div>
         <p class="modal-confirm-body">
-            Are you sure you want to skip? You will recieve 0 points.
+            You will recieve zero points.
         </p>
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={handle_skip}>

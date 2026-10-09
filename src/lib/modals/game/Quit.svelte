@@ -45,7 +45,7 @@
             <h3>Quit Game?</h3>
         </div>
         <p class="modal-confirm-body">
-            Are you sure you want to quit? Your game progress will be lost.
+            Your game progress will be lost.
         </p>
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={handle_quit}>
