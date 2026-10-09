@@ -111,7 +111,7 @@
             </button>
             </div>
             {:else}
-            <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFC300">{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
+            <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFffff">{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
 	    <div class="button-main">
             <button class="home-button" onclick={move_on}>
                 Play
