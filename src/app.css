@@ -561,13 +561,16 @@ h3 {
     transform: all 0.2s ease;
     border: 2px solid #557899;
     background: #003566;
+    /* border: none;
+    background: #DC562E; */
 }
 
 .settings-button.button-secondary:hover {
-    background: #DC562E; 
-    border-color: #DC562E; 
+    /* background: #DC562E; 
+    border-color: #DC562E;  */
+    background: #1C4B77; 
     color: #ffffff; 
-    transform: scale(1);
+    transform: scale(1.025);
 }
 
 .settings-delete-button.button-secondary {
@@ -579,21 +582,22 @@ h3 {
     text-align: center;
     flex: 1;
     transform: all 0.2s ease;
-    border: 2px solid #557899;
-    background: #ff0000;
+    border: none;
+    background: #DC562E;
     color: #ffffff;
+    transform: all 0.2s ease;
 }
 
 .confirm-delete-button.button-secondary {
-    background: #ff0000;
+    background: #DC562E;
     color: #ffffff;
+    border: none;
 }
 
 .confirm-delete-button.button-secondary:hover,
 .settings-delete-button.button-secondary:hover {
-    background: #ffffff;
-    border-color: #ff0000;
-    color: #ff0000;
+    background: #DC562E;
+    color: #ffffff;
 }
 
 .settings-label {
