@@ -111,10 +111,15 @@
             </button>
             </div>
             {:else}
-            <h2 style="color: #FFFFFF">{splashText[0]}<span>{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
+            <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFC300">{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
+	    <div class="button-main">
             <button class="home-button" onclick={move_on}>
                 Play
             </button>
+	    <button class="home-button" onclick={logout}>
+		Logout
+	    </button>
+	    </div>
             {/if}
         </div>
         <div class="button-circle">
@@ -187,7 +192,7 @@
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">1</span>
-                        <span class="leaderboard-player-name">Usernameeeeeeeeeeeeeeeee</span>
+                        <span class="leaderboard-player-name">Username0</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
@@ -201,77 +206,56 @@
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">3</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username2</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">4</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username3</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">5</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username4</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">6</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username5</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">7</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username6</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">8</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username7</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">9</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username8</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
                 <div class="leaderboard-player">
                     <div class="leaderboard-player-info">
                         <span class="leaderboard-player-rank">10</span>
-                        <span class="leaderboard-player-name">Username1</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">11</span>
-                        <span class="leaderboard-player-name">Username1</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">12</span>
-                        <span class="leaderboard-player-name">Username1</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">13</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                        <span class="leaderboard-player-name">Username9</span>
                     </div>
                     <span class="leaderboard-player-score">100000</span>
                 </div>
