@@ -91,7 +91,7 @@
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
-    <main class="page-home">
+    <main class="page-home" class:leaderboard-open={!leadIsCollapsed}>
         <div class="background-animation"></div>
         <div class="background-overlay"></div>
         <div class="home-center">
