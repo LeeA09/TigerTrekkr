@@ -116,9 +116,9 @@
             <button class="home-button" onclick={move_on}>
                 Play
             </button>
-	    <button class="home-button" onclick={logout}>
+	    <!-- <button class="home-button" onclick={logout}>
 		Logout
-	    </button>
+	    </button> -->
 	    </div>
             {/if}
         </div>
