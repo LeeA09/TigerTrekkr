@@ -13,7 +13,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background utility-backdrop" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="modal-card">
         <div class="modal-confirm-header">
             <div class="modal-confirm-icon">
