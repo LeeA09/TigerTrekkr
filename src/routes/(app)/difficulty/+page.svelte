@@ -1,6 +1,10 @@
 <script>
     import { goto } from '\$app/navigation'
+    import { page } from '$app/state'
     import { is_guest, selected_difficulty } from '$lib/stores/settings'
+
+    let { data } = $props();
+    let user = $derived(page.data?.user);
 </script>
 
 <div class="page-body">
@@ -10,7 +14,7 @@
         {#if $is_guest}
             Playing as <span class="page-body-card-link">Guest</span>
         {:else}
-            Playing as <span class="page-body-card-link">Username</span>
+            Playing as <span class="page-body-card-link">{user.user_metadata?.display_name ?? 'User'}</span>
         {/if}
         </p>
         <div class="difficulty-grid">
