@@ -71,7 +71,7 @@ export async function POST({ request, locals }) {
     if (locationError || !location) {
         throw error(404, 'Game location not found.');
     }
-
+    
     const distance = haversineDistance(
         guessedLat,
         guessedLng,

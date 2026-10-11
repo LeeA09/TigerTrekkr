@@ -1,8 +1,10 @@
 <script>
-    import { goto } from '\$app/navigation'
+    import { goto } from '$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { timerSeconds } from '$lib/stores/timer'
+    import { currentLocation, roundResult, sessionLocations} from '$lib/stores/game'
+
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -37,7 +39,7 @@
         document.head.appendChild(script);
     });
 
-    // Initialize / tear down 360 image display
+    // Initialize / tear down random 360 image display
     $effect(() => {
         if (marzipano_loaded && panorama_container && !marzipano_viewer) {
             marzipano_viewer = new window.Marzipano.Viewer(panorama_container, {
@@ -45,8 +47,10 @@
                     mouseViewMode: 'drag'
                 }
             });
-            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky-new.jpg');
+            // REPLACE inside fromstringbelow with $currentLocation.imageURL when ready to use random images
+            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky-new.jpg');   
             const geometry = new window.Marzipano.EquirectGeometry([{ width: 4096 }]);
+
             // Keep the existing zoom limits for every difficulty.
             const traditionalLimiter =
                 window.Marzipano.RectilinearView.limit.traditional(
@@ -162,10 +166,89 @@
     let guess_placed = $state(false);
     let guess_marker = null;
 
+    // UNCOMMENT BELOW WHEN READY TO USE RANDOM IMAGES
+    // shuffles locations so that the player sees them in a different order each time they play
+    /*
+    function fisher_yates_shuffle(locations) {
+        const shuffled = [...locations];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    // initialize game session by fetching locations from the backend and shuffling them
+    async function initializeSession() {
+        if ($sessionLocations.length > 0) {
+            if (!$currentLocation) {
+                currentLocation.set($sessionLocations[0]);
+            }
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/game/location');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch locations.');
+            }
+
+            const data = await response.json();
+            const shuffled = fisher_yates_shuffle(data.locations);
+
+            sessionLocations.set(shuffled);
+            currentLocation.set(shuffled[0]);
+        } catch (err) {
+            console.error('Could not initialize game session:', err);
+        }
+    }
+
+    onMount(() => {
+        initializeSession();
+    });
+    */
+
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
-    // GIVE TIMERSECONDS TO BACKEND HERE
-    function submit_guess() { goto('/answer'); }
+    // REPLACE this submit_guess with function below when ready for random images with $currentLocation.imageURL
+    function submit_guess() {
+        goto('/answer');
+    }
+
+    // REPLACE submit_guess above with function below when ready for random images with $currentLocation.imageURL
+    /*
+    async function submit_guess() { 
+        if (!$currentLocation || !guess_marker) {
+            console.error('No guess placed or marker not found.');
+            return;
+        }
+        const guess = guess_marker.getLatLng();
+        try {
+            const response = await fetch('/api/game/guess', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                // Send the guess coordinates, time taken, and difficulty to the backend
+                    body: JSON.stringify({
+                    locationId: $currentLocation.locationId,
+                    guessedLat: guess.lat,
+                    guessedLng: guess.lng,
+                    seconds: $timerSeconds,
+                    difficulty: $selected_difficulty,
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to submit guess.');
+            }
+        
+        const result = await response.json();
+        roundResult.set(result);
+        goto('/answer'); 
+        } catch (err) {
+            console.error('Error submitting guess:', err);
+        }
+    }
+    */
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
