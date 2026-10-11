@@ -83,6 +83,8 @@
         }
     }
 
+    const leaderboard = Array.from({ length: 10}, (_, i) => data.leaderboard[i] || null);
+
     function openSettings() { modal.open(Settings, { data: data })}
     function openHelp() { modal.open(Help, { data: data })}
     function openInfo() { modal.open(Info, { data: data })}
@@ -189,76 +191,35 @@
                 Leaderboard
             </h2>
             <div class="leaderboard-players">
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">1</span>
-                        <span class="leaderboard-player-name">Username0</span>
+                {#each leaderboard as player, index}
+                    <div class="leaderboard-player" class:empty={!player}>
+                        <div class="leaderboard-player-info">
+                            <span class="leaderboard-player-rank">{index + 1}</span>
+                            {#if player}
+                                <span class="leaderboard-player-name">{player.username}</span>
+                            {:else}
+                                <span class="leaderboard-player-name placeholder">—</span>
+                            {/if}
+                        </div>
+                        {#if player}
+                            <span class="leaderboard-player-score">{player.totalscore}</span>
+                        {:else}
+                            <span class="leaderboard-player-score placeholder">—</span>
+                        {/if}
                     </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">2</span>
-                        <span class="leaderboard-player-name">Username1</span>
+                {/each}
+                <!-- {#if user}
+                    <hr />
+                    <hr />
+                    <hr />
+                    <div class="leaderboard-player">
+                        <div class="leaderboard-player-info">
+                            <span class="leaderboard-player-rank"></span>
+                            <span class="leaderboard-player-name">{user.user_metadata?.display_name}</span>
+                        </div>
+                        <span class="leaderboard-player-score">100000</span>
                     </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">3</span>
-                        <span class="leaderboard-player-name">Username2</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">4</span>
-                        <span class="leaderboard-player-name">Username3</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">5</span>
-                        <span class="leaderboard-player-name">Username4</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">6</span>
-                        <span class="leaderboard-player-name">Username5</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">7</span>
-                        <span class="leaderboard-player-name">Username6</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">8</span>
-                        <span class="leaderboard-player-name">Username7</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">9</span>
-                        <span class="leaderboard-player-name">Username8</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
-                <div class="leaderboard-player">
-                    <div class="leaderboard-player-info">
-                        <span class="leaderboard-player-rank">10</span>
-                        <span class="leaderboard-player-name">Username9</span>
-                    </div>
-                    <span class="leaderboard-player-score">100000</span>
-                </div>
+                {/if} -->
             </div>
         </div>
     </aside>

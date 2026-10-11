@@ -191,6 +191,15 @@ h3 {
     font-size: calc(var(--font-size) * 1.75);
 }
 
+.placeholder {
+    color: #666;
+    font-style: italic;
+}
+
+.leaderboard-player.empty {
+    opacity: 0.6;
+}
+
 .toggle-btn {
     position: absolute;
     left: calc(var(--font-size) * -4.5);
