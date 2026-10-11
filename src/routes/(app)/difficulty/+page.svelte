@@ -42,7 +42,7 @@
                 Play
             </button>
             <button class="button-secondary" onclick={() => goto('/')}>
-                Cancel
+                Exit
             </button>
         </div>
     </div>

@@ -19,8 +19,9 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background utility-backdrop" role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="modal-card">
+        <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close help">✖</button>
         <div class="modal-confirm-header">
             <div class="modal-confirm-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -39,14 +40,11 @@
             <h3>Skip Round?</h3>
         </div>
         <p class="modal-confirm-body">
-            Are you sure you want to skip? You will recieve 0 points.
+            You will recieve zero points.
         </p>
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={handle_skip}>
                 Skip
-            </button>
-            <button class="button-secondary" onclick={() => modal.close()}>
-                Cancel
             </button>
         </div>
     </div>

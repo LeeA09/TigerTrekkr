@@ -6,8 +6,7 @@
     import { modal } from '$lib/modals'
     import DeleteAccount from '../account/DeleteAccount.svelte'
     import UpdatePassword from '../account/UpdatePassword.svelte'
-
-    let { opaque = false } = $props()
+    
     let user = $derived(page.data?.user);
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
@@ -93,7 +92,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" class:utility-backdrop={opaque} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background" class:utility-backdrop={page.url.pathname === '/play'} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="settings-card page-body-card modal-card">
         <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close settings">✖</button>
 	<h2>Settings</h2>
