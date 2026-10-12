@@ -2,8 +2,7 @@
     import { goto } from '$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { timerSeconds } from '$lib/stores/timer'
-    import { currentLocation, roundResult, sessionLocations} from '$lib/stores/game'
+    import { currentLocation, roundResult, sessionLocations, timerSeconds} from '$lib/stores/game'
 
 
     // Load Leaflet and OpenStreetMap tiles

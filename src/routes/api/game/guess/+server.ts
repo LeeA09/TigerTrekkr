@@ -89,7 +89,7 @@ export async function POST({ request, locals }) {
 
     if (user && !user.is_anonymous) {
         const { data: profile } = await locals.supabaseAdmin
-            .from('user')
+            .from('user_data')
             .select('userid')
             .eq('userid', user.id)
             .maybeSingle();
@@ -122,7 +122,7 @@ export async function POST({ request, locals }) {
     if (profileId) {
         const { data: profile, error: profileError } =
             await locals.supabaseAdmin
-                .from('user')
+                .from('user_data')
                 .select('totalscore')
                 .eq('userid', profileId)
                 .single();
@@ -132,7 +132,7 @@ export async function POST({ request, locals }) {
         } else {
             const { error: updateError } =
                 await locals.supabaseAdmin
-                    .from('user')
+                    .from('user_data')
                     .update({
                         totalscore: Number(profile.totalscore) + score
                     })
