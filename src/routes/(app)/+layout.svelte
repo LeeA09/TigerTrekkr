@@ -5,28 +5,31 @@
     import { onMount } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { page } from '$app/state'
-    import { timerSeconds } from '$lib/stores/timer'
+    import { timerSeconds } from '$lib/stores/game'
 
     let { children, form } = $props()
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
+    let isAnswerPage = $derived(page.url.pathname.startsWith('/answer'))
 
     // Animate the background in a figure-8 pattern
-    onMount(() => { if(!isPlayPage){ animateBackground() } })
+    onMount(() => {
+        if(!isPlayPage || !isAnswerPage){ animateBackground() }
+        timerSeconds.set(300);
+    })
 
     // Game timer
-    timerSeconds.set(300);
     let is_timer_paused = $derived(modal.stack.length > 0);
 
     let formatted_time = $derived.by(() => {
-	const total = $timerSeconds
-	const mins = Math.floor(total / 60).toString().padStart(2, '0')
-	const secs = (total % 60).toString().padStart(2, '0')
-	return `${mins}:${secs}`
+        const total = $timerSeconds
+        const mins = Math.floor(total / 60).toString().padStart(2, '0')
+        const secs = (total % 60).toString().padStart(2, '0')
+        return `${mins}:${secs}`
     });
 
     // Timer runs only while no modal is open, and only if is play page
     $effect(() => {
-	if(isPlayPage){
+	    if(isPlayPage){
             if ($timerSeconds > 0 && !is_timer_paused) {
                 const timer = setInterval(() => {
                     timerSeconds.update((s) => Math.max(0, s - 1))
@@ -34,7 +37,7 @@
 
                 return () => clearInterval(timer);
             }
-	}
+	    }  
     });
 
     // Go to answer screen when timer expires on play screen

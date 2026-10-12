@@ -37,6 +37,8 @@
         </div>
         <p class="modal-confirm-body">
             Your scores will <strong>not</strong> be saved to the leaderboard.
+            <a href="/login" onclick={(e) => handleNavigate(e, '/login')} class="page-body-card-link">Log in</a>
+            to save your scores.
         </p>
         <div class="modal-confirm-buttons">
             <button class="home-button" onclick={move_on}>

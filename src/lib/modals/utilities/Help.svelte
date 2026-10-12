@@ -76,8 +76,8 @@
                 {#if open_faq === 2}
                     <p class="help-faq-answer">
                         No, you can play as a guest and jump straight into a game. However, guest scores aren't saved or shown on the leaderboard. 
-                        <a href="/signup" onclick={(e) => handleNavigate(e, '/signup')} style="color: #FFC300">Create an account</a>
-			if you want your scores tracked and a shot at the global top 20.
+                        <a href="/signup" onclick={(e) => handleNavigate(e, '/signup')} class="page-body-card-link">Create an account</a>
+			if you want your scores tracked and a shot at the global top 10.
                     </p>
                 {/if}
                 <button type="button" class="help-faq-question" onclick={() => toggle_faq(3)} aria-expanded={open_faq === 3}>

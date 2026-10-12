@@ -238,7 +238,6 @@ h3 {
 .leaderboard-content {
     display: flex;
     flex-direction: column;
-    flex: 1;
     height: 90%;
     min-height: 0;
 }
@@ -246,10 +245,12 @@ h3 {
 .leaderboard-players {
     flex: 1;
     min-height: 0;
-    /*overflow: hidden;*/
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: #002952 #003566;
+    padding-right: calc(var(--font-size));
 }
 
 .leaderboard-player {

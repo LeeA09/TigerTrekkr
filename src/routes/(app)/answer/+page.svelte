@@ -14,16 +14,33 @@
     let answer_line;
     let leaderboard_markers = [];
 
+    // GET ACTUAL DATA FROM BACKEND HERE
     let guessed_location = { lat: 38.9358, lng: -92.3331 };
     let correct_location = { lat: 38.9361, lng: -92.3255 };
+
+    // let username_import = $derived(() => {
+    //     const user = page.data?.user ?? page.data?.session?.user;
+    //     if (!user || user.is_anonymous) return 'Guest';
+    //     return page.data?.userdata.username ?? 'User';
+    // });
+
+    let userdate = page.data?.userdata ?? {};
+    let user_name = userdate.username ?? 'User';
+
+    //console.log(user_name);
 
     const players = [
         { name: 'Username0', score: 100000, lat: 38.9364, lng: -92.3262 },
         { name: 'Username1', score: 100000, lat: 38.9370, lng: -92.3280 },
         { name: 'Username2', score: 100000, lat: 38.9349, lng: -92.3243 },
-        { name: 'Username3', score: 100000, lat: 38.9372, lng: -92.3300 },
-        { name: 'Username4', score: 100000, lat: 38.9341, lng: -92.3275 }
     ];
+
+    let description = "description here. resources. fun facts. #awesome";
+    let guessed_distance = 1000;
+    let guessed_time_formatted = "2:30";
+    let round_score = 4758;
+
+    // END ACTUAL DATA FROM BACKEND HERE
 
     function escape_html(text) {
         return String(text)
@@ -124,13 +141,7 @@
         const L = window.L;
         const fs = get(font_size);
 
-        const username = escape_html(
-            untrack(() => {
-                const user = page.data?.user ?? page.data?.session?.user;
-                if (!user || user.is_anonymous) return 'Guest';
-                return user.user_metadata?.display_name ?? 'User';
-            })
-        );
+        const username = user_name
 
         const mizzouBounds = L.latLngBounds(
             [38.949697, -92.314951],
@@ -273,9 +284,7 @@
             <div bind:this={map_container} class="leaflet-map"></div>
             <aside class="answer-description-card">
                 <h2>Information</h2>
-                <p>
-                    description here. resources. fun facts. #awesome
-                </p>
+                <p>{description}</p>
             </aside>
             <aside class="answer-leaderboard-card">
                 <div class="leaderboard-content">
@@ -298,22 +307,22 @@
             <div class="answer-stats-group">
                 <div class="answer-round-stat distance-stat">
                     <span class="answer-round-stat-label">Distance</span>
-                    <span class="answer-round-stat-value">1000 <span class="answer-round-stat-unit">m</span></span>
+                    <span class="answer-round-stat-value">{guessed_distance}</span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat time-stat">
                     <span class="answer-round-stat-label">Time</span>
-                    <span class="answer-round-stat-value">2:30 <span class="answer-round-stat-unit">min</span></span>
+                    <span class="answer-round-stat-value">{guessed_time_formatted} <span class="answer-round-stat-unit">min</span></span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat difficulty-stat">
                     <span class="answer-round-stat-label">Difficulty</span>
-                    <span class="answer-round-stat-value difficulty-stat">MEDIUM</span>
+                    <span class="difficulty-badge difficulty-{$selected_difficulty}">{$selected_difficulty}</span>
                 </div>
             </div>
             <div class="answer-round-score">
                 <span class="answer-round-stat-label">Score</span>
-                <span class="answer-round-stat-value">4758</span>
+                <span class="answer-round-stat-value">{round_score}</span>
             </div>
             <button type="button" class="home-button" onclick={() => goto('/end')}>
                 Next

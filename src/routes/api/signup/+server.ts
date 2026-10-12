@@ -22,14 +22,27 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         password: password,
         options: {
             redirectTo: `${url.origin}/auth/callback`,
-            data: { display_name: username }
         }
-    })	
-
+    })
+    
+    const user = authData?.user;
     const hashedToken = authData?.properties?.hashed_token;
 
-    if (authError || !hashedToken) {
+    if (authError || !user || !hashedToken) {
         return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 400 });
+    }
+
+    const { error: dbError } = await supabaseAdmin
+        .from('user_data')
+        .insert({
+            userid: user.id,          
+            username: username,
+        });
+
+    if (dbError) {
+        console.error('Database Insertion Error:', dbError);
+        // Optional: you might want to delete the created auth user here if the table insert fails
+        return json({ success: false, error: 'Failed to create user profile record.' }, { status: 500 });
     }
 
     const verificationLink = `${url.origin}/auth/callback?token_hash=${hashedToken}&type=signup`;

@@ -34,7 +34,15 @@ const handleSupabase: Handle = async ({ event, resolve }) => {
     
     const { data: { session } } = await event.locals.supabase.auth.getSession()
 
-    return { session, user }
+    let userdata = null
+    if (user) {
+        const { data: userData } = await event.locals.supabase.from('user_data').select('*').eq('userid', user.id).single()
+        if (userData) {
+            userdata = { username: userData.username, totalscore: userData.totalscore }
+        }
+    }
+
+    return { session, user, userdata }
   }
 
   return resolve(event, { filterSerializedResponseHeaders(name) {

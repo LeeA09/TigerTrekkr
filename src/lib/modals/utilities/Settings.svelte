@@ -8,6 +8,7 @@
     import UpdatePassword from '../account/UpdatePassword.svelte'
     
     let user = $derived(page.data?.user);
+    let user_info = $derived(page.data?.userdata);
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
     // music and sound
@@ -26,7 +27,7 @@
     let usernameError = $state('')
 
     function start_editing_username() {
-	    newUsername = user?.user_metadata?.display_name ?? ''
+	    newUsername = user_info.username ?? ''
 	    usernameError = ''
 	    isEditingUsername = true
     }
@@ -127,12 +128,14 @@
                 <h3>Account Information</h3>
 		        {#if !user}
                 <div class="settings-item settings-account-info">
-                    <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                     {#if !isPlayPage}
+                    <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                     <div class="settings-account-buttons">
                         <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
                         <button class="home-button settings-button" onclick={sign_up_redirect}>Sign Up</button>
                     </div>
+                    {:else}
+                    <p>You cannot log in or sign up while playing.</p>
                     {/if}
                 </div>
                 {:else}
@@ -147,13 +150,13 @@
 				    <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
 				</form>
 		 	    {:else}                            
-				<span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
+				<span class="settings-account-value">{user_info.username ?? 'Guest User'}</span>
                     <button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
                         ✎
                     </button>
 			    {/if}
                 {:else}
-                    <span class="settings-account-value">{user.user_metadata?.display_name ?? 'Guest User'}</span>
+                    <span class="settings-account-value">{user_info.username ?? 'Guest User'}</span>
                 {/if}
                         </div>
 			{#if usernameError}
@@ -182,6 +185,8 @@
                             <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
 			                <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
 			            </div>
+                        {:else}
+                            <p>You cannot delete or edit your account, or log out while playing.</p>
                         {/if}
                     </div>
                 {/if}

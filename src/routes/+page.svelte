@@ -9,6 +9,8 @@
     let { data } = $props();
     let user = $derived(page.data?.user);
 
+    let user_info = $derived(data?.userdata);
+
     $effect(() => {
         if(user) { is_guest.set(false) }
         else { is_guest.set(true) }
@@ -113,14 +115,15 @@
             </button>
             </div>
             {:else}
-            <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFffff">{user.user_metadata?.display_name ?? 'User'}</span>{splashText[1]}</h2>
+            <!-- OR color: #FFC300 -->
+            <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFffff">{user_info?.username ?? 'User'}</span>{splashText[1]}</h2>
 	    <div class="button-main">
             <button class="home-button" onclick={move_on}>
                 Play
             </button>
-	    <!-- <button class="home-button" onclick={logout}>
-		Logout
-	    </button> -->
+            <button class="home-button" onclick={logout}>
+                Logout
+            </button>
 	    </div>
             {/if}
         </div>
@@ -208,18 +211,18 @@
                         {/if}
                     </div>
                 {/each}
-                <!-- {#if user}
+                {#if user}
                     <hr />
                     <hr />
                     <hr />
                     <div class="leaderboard-player">
                         <div class="leaderboard-player-info">
-                            <span class="leaderboard-player-rank"></span>
-                            <span class="leaderboard-player-name">{user.user_metadata?.display_name}</span>
+                            <span class="leaderboard-player-rank">★</span>
+                            <span class="leaderboard-player-name">{user_info.username}</span>
                         </div>
-                        <span class="leaderboard-player-score">100000</span>
+                        <span class="leaderboard-player-score">{user_info.totalscore}</span>
                     </div>
-                {/if} -->
+                {/if}
             </div>
         </div>
     </aside>
