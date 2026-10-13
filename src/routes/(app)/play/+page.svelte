@@ -47,8 +47,8 @@
                 }
             });
             // REPLACE inside fromstringbelow with $currentLocation.imageURL when ready to use random images
-            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky-new.jpg');   
-            const geometry = new window.Marzipano.EquirectGeometry([{ width: 4096 }]);
+            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky.jpg');   
+            const geometry = new window.Marzipano.EquirectGeometry([{ width: 12288 }]);
 
             // Keep the existing zoom limits for every difficulty.
             const traditionalLimiter =
