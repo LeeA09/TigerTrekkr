@@ -13,7 +13,7 @@
 
     // Animate the background in a figure-8 pattern
     onMount(() => {
-        if(!isPlayPage || !isAnswerPage){ animateBackground() }
+        if(!isPlayPage && !isAnswerPage){ animateBackground() }
     })
 
     // Game timer
@@ -29,7 +29,7 @@
     // Timer runs only while no modal is open, and only if is play page
     $effect(() => {
 	    if(isPlayPage){
-            if ($timerSeconds > 0 && !is_timer_paused && is_timer_active) {
+            if ($timerSeconds > 0 && !is_timer_paused && $is_timer_active) {
                 const timer = setInterval(() => {
                     timerSeconds.update((s) => Math.max(0, s - 1))
                 }, 1000);
@@ -49,7 +49,7 @@
     });
 </script>
 
-<div class="page" style="--app-font-size: {font_size}px">
+<div class="page" style="--app-font-size: {$font_size}px">
     <div class="page-background">
         <header class="top-bar">
 	    {#if isPlayPage}
@@ -77,7 +77,7 @@
                 	    </svg>
         		</button>
 			<div class="timer-display">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" clas>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>

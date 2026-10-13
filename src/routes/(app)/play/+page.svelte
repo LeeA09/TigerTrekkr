@@ -55,15 +55,15 @@
         const img = new Image();
         img.src = image_url;
 
-        img.onload = () => {
-            image_loaded = true;
-            is_timer_active.set(true);
-        };
-
-        img.onerror = () => {
-            console.error('Failed to load image:', image_url);
-            image_loaded = false;
-        };
+        img.decode()
+            .then(() => {
+                image_loaded = true;
+            })
+            .catch((err) => {
+                console.error('Failed to decode image:', err);
+                // Fallback to onload if decode fails
+                image_loaded = true; 
+            });
     });
 
     // Initialize / tear down random 360 image display
@@ -116,7 +116,9 @@
                 view,
                 pinFirstLevel: true
             });
-            marzipano_scene.switchTo();
+            marzipano_viewer.switchScene(marzipano_scene, { transitionDuration: 300 }, () => {
+		is_timer_active.set(true);
+	    })
         }
     });
 
@@ -298,7 +300,12 @@
     <div class="page-background">
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
-            <div class="map-container" class:expanded={is_map_expanded}>
+            {#if !$is_timer_active}
+        	<div class="loading-overlay">
+                    <p>Loading Panorama...</p>
+        	</div>
+    	    {/if}
+	    <div class="map-container" class:expanded={is_map_expanded}>
                 <div class="map-buttons">
                     <button class="button-map-expand" onclick={toggle_map_expand}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

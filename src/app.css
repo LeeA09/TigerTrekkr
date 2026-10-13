@@ -1182,6 +1182,18 @@ input:focus {
     background: #001d3d;
 }
 
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 10;
+}
+
 .pano {
     position: absolute;
     inset: 0;
