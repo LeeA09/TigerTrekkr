@@ -26,6 +26,8 @@
     let panorama_container = $state();
     let marzipano_viewer = null;
     let marzipano_scene = null;
+    let image_url = $state(null); // Placeholder image until random images are implemented
+    let image_id = $state(null); // Placeholder image ID until random images are implemented
     onMount(() => {
         if (typeof window !== 'undefined' && window.Marzipano) {
             marzipano_loaded = true;
@@ -38,16 +40,20 @@
         document.head.appendChild(script);
     });
 
+    onMount(() => {
+        getImage();
+    });
+
     // Initialize / tear down random 360 image display
     $effect(() => {
-        if (marzipano_loaded && panorama_container && !marzipano_viewer) {
+        if (marzipano_loaded && panorama_container && !marzipano_viewer && image_url) {
             marzipano_viewer = new window.Marzipano.Viewer(panorama_container, {
                 controls: {
                     mouseViewMode: 'drag'
                 }
             });
             // REPLACE inside fromstringbelow with $currentLocation.imageURL when ready to use random images
-            const source = window.Marzipano.ImageUrlSource.fromString('/sample-360-image-ducky.jpg');   
+            const source = window.Marzipano.ImageUrlSource.fromString(image_url);   
             const geometry = new window.Marzipano.EquirectGeometry([{ width: 12288 }]);
 
             // Keep the existing zoom limits for every difficulty.
@@ -165,6 +171,22 @@
     let guess_placed = $state(false);
     let guess_marker = null;
 
+    async function getImage() {
+        try {
+            const response = await fetch('/api/game/setup');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch image.');
+            }
+
+            const data = await response.json();
+            image_url = data?.image_url;
+            image_id = data?.image_id;
+        } catch (err) {
+            console.error('Could not fetch image:', err);
+        }
+    }
+
     // UNCOMMENT BELOW WHEN READY TO USE RANDOM IMAGES
     // shuffles locations so that the player sees them in a different order each time they play
     /*
@@ -251,6 +273,9 @@
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
+    <p style="color: red; background: yellow; position: absolute; z-index: 9999;">
+        Image URL: {image_url ?? 'Loading or null...'}
+    </p>
     <div class="page-background">
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
