@@ -5,7 +5,7 @@
     import { onMount } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { page } from '$app/state'
-    import { timerSeconds } from '$lib/stores/game'
+    import { timerSeconds, is_timer_active } from '$lib/stores/game'
 
     let { children, form } = $props()
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
@@ -14,7 +14,6 @@
     // Animate the background in a figure-8 pattern
     onMount(() => {
         if(!isPlayPage || !isAnswerPage){ animateBackground() }
-        timerSeconds.set(300);
     })
 
     // Game timer
@@ -30,7 +29,7 @@
     // Timer runs only while no modal is open, and only if is play page
     $effect(() => {
 	    if(isPlayPage){
-            if ($timerSeconds > 0 && !is_timer_paused) {
+            if ($timerSeconds > 0 && !is_timer_paused && is_timer_active) {
                 const timer = setInterval(() => {
                     timerSeconds.update((s) => Math.max(0, s - 1))
                 }, 1000);
@@ -42,8 +41,10 @@
 
     // Go to answer screen when timer expires on play screen
     $effect(() => {
-        if ($timerSeconds === 0) {
-            goto('/answer');
+        if(isPlayPage){
+            if ($timerSeconds === 0) {
+                goto('/answer');
+            }
         }
     });
 </script>

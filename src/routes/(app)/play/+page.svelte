@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { currentLocation, roundResult, sessionLocations, timerSeconds} from '$lib/stores/game'
+    import { currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active } from '$lib/stores/game'
 
 
     // Load Leaflet and OpenStreetMap tiles
@@ -26,8 +26,10 @@
     let panorama_container = $state();
     let marzipano_viewer = null;
     let marzipano_scene = null;
-    let image_url = $state(null); // Placeholder image until random images are implemented
-    let image_id = $state(null); // Placeholder image ID until random images are implemented
+    let image_url = $state(null);
+    let image_id = $state(null);
+    let image_loaded = $state(false);
+
     onMount(() => {
         if (typeof window !== 'undefined' && window.Marzipano) {
             marzipano_loaded = true;
@@ -41,12 +43,32 @@
     });
 
     onMount(() => {
+        timerSeconds.set(300);
+        is_timer_active.set(false);
         getImage();
+    });
+
+    $effect(() => {
+        if(!image_url) return;
+
+        image_loaded = false;
+        const img = new Image();
+        img.src = image_url;
+
+        img.onload = () => {
+            image_loaded = true;
+            is_timer_active.set(true);
+        };
+
+        img.onerror = () => {
+            console.error('Failed to load image:', image_url);
+            image_loaded = false;
+        };
     });
 
     // Initialize / tear down random 360 image display
     $effect(() => {
-        if (marzipano_loaded && panorama_container && !marzipano_viewer && image_url) {
+        if (marzipano_loaded && image_loaded && panorama_container && !marzipano_viewer && image_url) {
             marzipano_viewer = new window.Marzipano.Viewer(panorama_container, {
                 controls: {
                     mouseViewMode: 'drag'
