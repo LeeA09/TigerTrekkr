@@ -273,9 +273,6 @@
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
-    <p style="color: red; background: yellow; position: absolute; z-index: 9999;">
-        Image URL: {image_url ?? 'Loading or null...'}
-    </p>
     <div class="page-background">
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>

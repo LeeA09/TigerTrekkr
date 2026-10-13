@@ -19,8 +19,10 @@ export async function GET({ locals }) {
 
     const { data } = locals.supabase
             .storage
-            .from('images')
+            .from('location_images')
             .getPublicUrl(location[0].imageurl);
 
-    return json({ success: true, image_url: data.publicUrl, image_id: location[0].locationid });
+    const proxyUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
+
+    return json({ success: true, image_url: proxyUrl, image_id: location[0].locationid });
 }
