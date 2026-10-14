@@ -10,6 +10,7 @@
     
     let user = $derived(page.data?.user);
     let user_info = $derived(page.data?.userdata);
+
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
     // music and sound
@@ -31,7 +32,7 @@
     let usernameError = $state('')
 
     function start_editing_username() {
-	    newUsername = user_info.username ?? ''
+	    newUsername = user_info?.username ?? ''
 	    usernameError = ''
 	    isEditingUsername = true
     }
@@ -154,13 +155,13 @@
 				    <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
 				</form>
 		 	    {:else}                            
-				<span class="settings-account-value">{user_info.username ?? 'Guest User'}</span>
+				<span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
                     <button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
                         ✎
                     </button>
 			    {/if}
                 {:else}
-                    <span class="settings-account-value">{user_info.username ?? 'Guest User'}</span>
+                    <span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
                 {/if}
                         </div>
 			{#if usernameError}
