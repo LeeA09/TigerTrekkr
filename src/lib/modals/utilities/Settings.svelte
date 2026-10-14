@@ -6,13 +6,17 @@
     import { modal } from '$lib/modals'
     import DeleteAccount from '../account/DeleteAccount.svelte'
     import UpdatePassword from '../account/UpdatePassword.svelte'
+    import { backgroundMusic } from '$lib/stores/audio.svelte'
     
     let user = $derived(page.data?.user);
     let user_info = $derived(page.data?.userdata);
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
 
     // music and sound
-    function toggle_music() { is_music_on.update(value => !value); }
+    function toggle_music() { 
+        is_music_on.update(value => !value);
+        backgroundMusic.toggle();
+    }
     function toggle_sound() { is_sound_on.update(value => !value); }
 
     // font size

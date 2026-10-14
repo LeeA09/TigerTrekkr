@@ -4,6 +4,7 @@
     import ModalHost from '$lib/modals/ModalHost.svelte'
     import { invalidate } from '$app/navigation'
     import { onMount } from 'svelte'
+    import { backgroundMusic } from '$lib/stores/audio.svelte'
 
     let { data, children } = $props();
 
@@ -13,6 +14,8 @@
             invalidate('supabase:auth')
             }
         })
+
+        backgroundMusic.init('/tatamusic-game-game-music-599001.mp3');
         
         return () => subscription.unsubscribe()
     })
