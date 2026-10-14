@@ -57,9 +57,9 @@
 		    <span class="top-bar-home-title">TigerTrekkr</span>
 		</button>
 	    {:else}
-            	<button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
-                    <span class="top-bar-home-title">TigerTrekkr</span>
-            	</button>
+        <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
+            <span class="top-bar-home-title">TigerTrekkr</span>
+        </button>
 	    {/if}
             <div class="button-circle-top">
                 {#if isPlayPage}

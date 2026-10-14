@@ -15,8 +15,12 @@
     let answer_line;
     let leaderboard_markers = [];
 
-    let guessed_location = $roundResult?.guessedLocation ?? { lat: 38.9353, lng: -92.3300 };
+    let guessed_location = $roundResult?.guessedLocation ?? { lat: 0, lng: 0 };
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
+
+    $effect(() => {
+    if (guessed_location.lat === 0 && guessed_location.lng === 0) goto('/');
+    });
 
     let userdata = page.data?.userdata ?? {};
     let user_name = userdata.username ?? 'User';
