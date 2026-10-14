@@ -205,7 +205,6 @@
             const data = await response.json();
             image_url = data?.image_url;
             currentLocation.set(data?.image_id);
-            console.log('Fetched location:', $currentLocation);
         } catch (err) {
             console.error('Could not fetch location:', err);
         }
