@@ -145,7 +145,8 @@ export async function POST({ request, locals }) {
     }
 
     return json({
-        roundId: savedRound.roundid,
+         // savedRound.roundid,
+        locationId: location.locationid,
         guessedLocation: {
             lat: guessedLat,
             lng: guessedLng

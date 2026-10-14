@@ -22,7 +22,11 @@ export async function GET({ locals }) {
             .from('location_images')
             .getPublicUrl(location[0].imageurl);
 
-    const proxyUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
 
-    return json({ success: true, image_url: proxyUrl, image_id: location[0].locationid });
+    // THIS IS ONLY FOR PROD SERVER, SINCE WE CANNOT ACCESS THE PUBLIC URL DIRECTLY FROM THE CLIENT
+    //const proxyUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
+    //return json({ success: true, image_url: proxyUrl, image_id: location[0].locationid });
+
+    // THIS IS FOR LOCAL DEV SERVER, SINCE WE CAN ACCESS THE PUBLIC URL DIRECTLY FROM THE CLIENT
+    return json({ success: true, image_url: data.publicUrl, image_id: location[0].locationid });
 }

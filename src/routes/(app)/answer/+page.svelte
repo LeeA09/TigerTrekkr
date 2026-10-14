@@ -4,6 +4,7 @@
     import { onMount, untrack } from 'svelte';
     import { get } from 'svelte/store';
     import { page } from '$app/state';
+    import { roundResult } from '$lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -14,33 +15,24 @@
     let answer_line;
     let leaderboard_markers = [];
 
-    // GET ACTUAL DATA FROM BACKEND HERE
-    let guessed_location = { lat: 38.9358, lng: -92.3331 };
-    let correct_location = { lat: 38.9361, lng: -92.3255 };
+    let guessed_location = $roundResult?.guessedLocation ?? { lat: 38.9353, lng: -92.3300 };
+    let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
-    // let username_import = $derived(() => {
-    //     const user = page.data?.user ?? page.data?.session?.user;
-    //     if (!user || user.is_anonymous) return 'Guest';
-    //     return page.data?.userdata.username ?? 'User';
-    // });
+    let userdata = page.data?.userdata ?? {};
+    let user_name = userdata.username ?? 'User';
 
-    let userdate = page.data?.userdata ?? {};
-    let user_name = userdate.username ?? 'User';
+    // const players = [
+    //     { name: 'Username0', score: 100000, lat: 38.9364, lng: -92.3262 },
+    //     { name: 'Username1', score: 100000, lat: 38.9370, lng: -92.3280 },
+    //     { name: 'Username2', score: 100000, lat: 38.9349, lng: -92.3243 },
+    // ];
 
-    //console.log(user_name);
+    const players = [];
 
-    const players = [
-        { name: 'Username0', score: 100000, lat: 38.9364, lng: -92.3262 },
-        { name: 'Username1', score: 100000, lat: 38.9370, lng: -92.3280 },
-        { name: 'Username2', score: 100000, lat: 38.9349, lng: -92.3243 },
-    ];
-
-    let description = "description here. resources. fun facts. #awesome";
-    let guessed_distance = 1000;
-    let guessed_time_formatted = "2:30";
-    let round_score = 4758;
-
-    // END ACTUAL DATA FROM BACKEND HERE
+    let description = $roundResult?.description ?? 'No description available.';
+    let guessed_distance = $roundResult?.distance ?? '0';
+    let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "2:30";
+    let round_score = $roundResult?.score ?? 0;
 
     function escape_html(text) {
         return String(text)
@@ -112,168 +104,190 @@
         });
     }
 
-    onMount(() => {
+    function loadLeaflet() {
         if (typeof window !== 'undefined' && window.L) {
             leaflet_loaded = true;
-            return;
+            return window.L;
         }
 
-        const css_link = document.createElement('link');
-        css_link.rel = 'stylesheet';
-        css_link.href =
-            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        document.head.appendChild(css_link);
-
-        const script = document.createElement('script');
-        script.src =
-            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-
-        script.onload = () => {
-            leaflet_loaded = true;
-        };
-
-        document.head.appendChild(script);
-    });
-
-    $effect(() => {
-        if (!leaflet_loaded || !map_container || leaflet_map) return;
-
-        const L = window.L;
-        const fs = get(font_size);
-
-        const username = user_name
-
-        const mizzouBounds = L.latLngBounds(
-            [38.949697, -92.314951],
-            [38.927023, -92.346998]
-        );
-
-        leaflet_map = L.map(map_container, {
-            zoomControl: false,
-            attributionControl: true,
-            fadeAnimation: false,
-            maxBounds: mizzouBounds,
-            maxBoundsViscosity: 1.0,
-            minZoom: 15
-        }).setView([38.9353, -92.3300], 16);
-
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                maxZoom: 19,
-                minZoom: 15,
-                keepBuffer: 8,
-                updateWhenIdle: false,
-                updateWhenZooming: false,
-                attribution: '&copy; OpenStreetMap contributors'
+        return new Promise((resolve, reject) => {
+            if(!document.querySelector('link[href*="leaflet.css"]')) {
+                const css_link = document.createElement('link');
+                css_link.rel = 'stylesheet';
+                css_link.href =
+                    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+                document.head.appendChild(css_link);
             }
-        ).addTo(leaflet_map);
 
-        L.control.zoom({ position: 'bottomright' }).addTo(leaflet_map);
+            const script = document.createElement('script');
+            script.src =
+                'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            script.onload = () => {
+                leaflet_loaded = true;
+                resolve(window.L);
+            };
+            script.onerror = () => {
+                reject(new Error('Failed to load Leaflet'));
+            };
+            document.head.appendChild(script);
+        })
+    }
 
-        const label_h = fs * 1.5;
-
-        const guessIcon = L.divIcon({
-            className: 'map-marker',
-            html: `<img class="map-marker-img" src="/mascot.png" alt="" />
-                   <span class="map-marker-label map-marker-label--you">${username}</span>`,
-            iconSize: [fs * 2, fs * 2 + label_h],
-            iconAnchor: [fs, fs]
-        });
-
-        const pin_w = fs * 1.75;
-        const pin_h = fs * 2.375;
-        const pinIcon = L.divIcon({
-            className: 'map-marker',
-            html: `
-                <svg class="map-marker-pin" width="${pin_w}" height="${pin_h}" viewBox="0 0 28 38"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 37 C11 29 2 20 2 13
-                        A12 12 0 1 1 26 13 C26 20 17 29 14 37Z"
-                        fill="#ffc300" stroke="#ffc300"/>
-                    <circle cx="14" cy="13" r="4.5" fill="#ffffff"/>
-                </svg>
-                <span class="map-marker-label map-marker-label--correct">Actual</span>
-            `,
-            iconSize: [pin_w, pin_h + label_h],
-            iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
-        });
-
-        const guess = [
-            guessed_location.lat,
-            guessed_location.lng
-        ];
-
-        const answer = [
-            correct_location.lat,
-            correct_location.lng
-        ];
-
-        const leaderboardIcon = (rank) =>
-            L.divIcon({
-                className: 'map-marker',
-                html: `<img class="map-marker-img" src="/mascot.png" alt="" />
-                       <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
-                iconSize: [fs * 2, fs * 2 + label_h],
-                iconAnchor: [fs, fs]
-            });
-
-        leaderboard_markers = players.map((player, i) =>
-            L.marker([player.lat, player.lng], {
-                icon: leaderboardIcon(i + 1),
-                keyboard: false
-            }).addTo(leaflet_map)
-        );
-
-        guessed_marker = L.marker(guess, {
-            icon: guessIcon,
-            keyboard: false,
-            zIndexOffset: 1000
-        }).addTo(leaflet_map);
-
-        correct_marker = L.marker(answer, {
-            icon: pinIcon,
-            keyboard: false,
-            zIndexOffset: 500
-        }).addTo(leaflet_map);
-
-        measure_mascot_shift(map_container);
-
-        center_rank_numbers(map_container);
-        document.fonts
-            ?.load(`700 ${fs}px "Actor"`, '12345')
-            .catch(() => {})
-            .then(() => {
-                if (leaflet_map) center_rank_numbers(map_container);
-            });
-
-        answer_line = L.polyline([guess, answer], {
-            color: '#ffc300',
-            weight: 3,
-            opacity: 1,
-            dashArray: '8, 8'
-        }).addTo(leaflet_map);
-
-        leaflet_map.fitBounds(
-            L.latLngBounds([guess, answer, ...players.map((p) => [p.lat, p.lng])]),
-            {
-                paddingTopLeft: [fs * 21, fs * 4],
-                paddingBottomRight: [fs * 19, fs * 6],
-                maxZoom: 18
+    onMount(() => {
+        function cleanup() {
+            if (leaflet_map) {
+                leaflet_map.remove();
+                leaflet_map = null;
             }
-        );
+        }
+        
+        void (async () => {
+            try {
+                const L = await loadLeaflet();
+                if (!map_container || !L) return;
 
-        const resizeObserver = new ResizeObserver(() => {
-            leaflet_map?.invalidateSize();
-        });
+                const fs = get(font_size);
+                const username = user_name;
 
-        resizeObserver.observe(map_container);
+                const mizzouBounds = L.latLngBounds(
+                    [38.949697, -92.314951],
+                    [38.927023, -92.346998]
+                );
+
+                leaflet_map = L.map(map_container, {
+                    zoomControl: false,
+                    attributionControl: true,
+                    fadeAnimation: false,
+                    maxBounds: mizzouBounds,
+                    maxBoundsViscosity: 1.0,
+                    minZoom: 15
+                }).setView([38.9353, -92.3300], 16);
+
+                L.tileLayer(
+                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    {
+                        maxZoom: 19,
+                        minZoom: 15,
+                        keepBuffer: 8,
+                        updateWhenIdle: false,
+                        updateWhenZooming: false,
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }
+                ).addTo(leaflet_map);
+
+                L.control.zoom({ position: 'bottomright' }).addTo(leaflet_map);
+
+                const label_h = fs * 1.5;
+
+                const guessIcon = L.divIcon({
+                    className: 'map-marker',
+                    html: `<img class="map-marker-img" src="/mascot.png" alt="" />
+                           <span class="map-marker-label map-marker-label--you">${username}</span>`,
+                    iconSize: [fs * 2, fs * 2 + label_h],
+                    iconAnchor: [fs, fs]
+                });
+
+                const pin_w = fs * 1.75;
+                const pin_h = fs * 2.375;
+                const pinIcon = L.divIcon({
+                    className: 'map-marker',
+                    html: `
+                        <svg class="map-marker-pin" width="${pin_w}" height="${pin_h}" viewBox="0 0 28 38"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 37 C11 29 2 20 2 13
+                                A12 12 0 1 1 26 13 C26 20 17 29 14 37Z"
+                                fill="#ffc300" stroke="#ffc300"/>
+                            <circle cx="14" cy="13" r="4.5" fill="#ffffff"/>
+                        </svg>
+                        <span class="map-marker-label map-marker-label--correct">Actual</span>
+                    `,
+                    iconSize: [pin_w, pin_h + label_h],
+                    iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
+                });
+
+                const guess = [
+                    guessed_location.lat,
+                    guessed_location.lng
+                ];
+
+                const answer = [
+                    correct_location.lat,
+                    correct_location.lng
+                ];
+
+                const leaderboardIcon = (rank) =>
+                    L.divIcon({
+                        className: 'map-marker',
+                        html: `<img class="map-marker-img" src="/mascot.png" alt="" />
+                               <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
+                        iconSize: [fs * 2, fs * 2 + label_h],
+                        iconAnchor: [fs, fs]
+                    });
+
+                leaderboard_markers = players.map((player, i) =>
+                    L.marker([player.lat, player.lng], {
+                        icon: leaderboardIcon(i + 1),
+                        keyboard: false
+                    }).addTo(leaflet_map)
+                );
+
+                guessed_marker = L.marker(guess, {
+                    icon: guessIcon,
+                    keyboard: false,
+                    zIndexOffset: 1000
+                }).addTo(leaflet_map);
+
+                correct_marker = L.marker(answer, {
+                    icon: pinIcon,
+                    keyboard: false,
+                    zIndexOffset: 500
+                }).addTo(leaflet_map);
+
+                measure_mascot_shift(map_container);
+                center_rank_numbers(map_container);
+
+                document.fonts
+                    ?.load(`700 ${fs}px "Actor"`, '12345')
+                    .catch(() => {})
+                    .then(() => {
+                        if (leaflet_map) center_rank_numbers(map_container);
+                    });
+
+                answer_line = L.polyline([guess, answer], {
+                    color: '#ffc300',
+                    weight: 3,
+                    opacity: 1,
+                    dashArray: '8, 8'
+                }).addTo(leaflet_map);
+
+                leaflet_map.fitBounds(
+                    L.latLngBounds([guess, answer, ...players.map((p) => [p.lat, p.lng])]),
+                    {
+                        paddingTopLeft: [fs * 21, fs * 4],
+                        paddingBottomRight: [fs * 19, fs * 6],
+                        maxZoom: 18
+                    }
+                );
+
+                const resizeObserver = new ResizeObserver(() => {
+                    leaflet_map?.invalidateSize();
+                });
+
+                resizeObserver.observe(map_container);
+
+                cleanup = () => {
+                    resizeObserver.disconnect();
+                    leaflet_map?.remove();
+                    leaflet_map = undefined;
+                    leaderboard_markers = [];
+                };
+            } catch (error) {
+                console.error('Error loading Leaflet:', error);
+            }
+        })();
 
         return () => {
-            resizeObserver.disconnect();
-            leaflet_map?.remove();
-            leaflet_map = undefined;
-            leaderboard_markers = [];
+            cleanup?.();
         };
     });
 </script>

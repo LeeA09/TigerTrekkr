@@ -27,7 +27,6 @@
     let marzipano_viewer = null;
     let marzipano_scene = null;
     let image_url = $state(null);
-    let image_id = $state(null);
     let image_loaded = $state(false);
 
     onMount(() => {
@@ -45,7 +44,7 @@
     onMount(() => {
         timerSeconds.set(300);
         is_timer_active.set(false);
-        getImage();
+        getLocation();
     });
 
     $effect(() => {
@@ -195,19 +194,20 @@
     let guess_placed = $state(false);
     let guess_marker = null;
 
-    async function getImage() {
+    async function getLocation() {
         try {
             const response = await fetch('/api/game/setup');
 
             if (!response.ok) {
-                throw new Error('Failed to fetch image.');
+                throw new Error('Failed to fetch location.');
             }
 
             const data = await response.json();
             image_url = data?.image_url;
-            image_id = data?.image_id;
+            currentLocation.set(data?.image_id);
+            console.log('Fetched location:', $currentLocation);
         } catch (err) {
-            console.error('Could not fetch image:', err);
+            console.error('Could not fetch location:', err);
         }
     }
 
@@ -257,43 +257,34 @@
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
     // REPLACE this submit_guess with function below when ready for random images with $currentLocation.imageURL
-    function submit_guess() {
-        goto('/answer');
-    }
-
-    // REPLACE submit_guess above with function below when ready for random images with $currentLocation.imageURL
-    /*
-    async function submit_guess() { 
-        if (!$currentLocation || !guess_marker) {
-            console.error('No guess placed or marker not found.');
-            return;
-        }
+    async function submit_guess() {
         const guess = guess_marker.getLatLng();
+
         try {
             const response = await fetch('/api/game/guess', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 // Send the guess coordinates, time taken, and difficulty to the backend
-                    body: JSON.stringify({
-                    locationId: $currentLocation.locationId,
+                body: JSON.stringify({
+                    locationId: $currentLocation,
                     guessedLat: guess.lat,
                     guessedLng: guess.lng,
                     seconds: $timerSeconds,
                     difficulty: $selected_difficulty,
                 })
             });
+
             if (!response.ok) {
                 throw new Error('Failed to submit guess.');
             }
-        
-        const result = await response.json();
-        roundResult.set(result);
-        goto('/answer'); 
+
+            const result = await response.json();
+            roundResult.set(result);
+            goto('/answer');
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
     }
-    */
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
