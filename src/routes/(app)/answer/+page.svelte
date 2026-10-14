@@ -8,7 +8,7 @@
 
     let leaflet_loaded = false;
     let map_container;
-    let leaflet_map;
+    let leaflet_map = $state(null);
 
     let guessed_marker;
     let correct_marker;
@@ -19,19 +19,42 @@
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
     $effect(() => {
-    if (guessed_location.lat === 0 && guessed_location.lng === 0) goto('/');
+        if (guessed_location.lat === 0 && guessed_location.lng === 0) goto('/');
     });
 
     let userdata = page.data?.userdata ?? {};
     let user_name = userdata.username ?? 'User';
 
-    // const players = [
-    //     { name: 'Username0', score: 100000, lat: 38.9364, lng: -92.3262 },
-    //     { name: 'Username1', score: 100000, lat: 38.9370, lng: -92.3280 },
-    //     { name: 'Username2', score: 100000, lat: 38.9349, lng: -92.3243 },
-    // ];
+    async function getLeaderboard() {
+        try {
+            const id = $roundResult?.locationId ?? 0;
 
-    const players = [];
+            const response = await fetch('/api/location-leaderboard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    locationId: id,
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            players = Array.from({ length: 3 }, (_, i) => data?.leaderboard?.[i] || null);
+        } catch (error) {
+            console.error('Error fetching leaderboard:', error);
+        }
+    }
+
+    onMount(() => {
+        getLeaderboard();
+    });
+
+    let players = $state([]);
 
     let description = $roundResult?.description ?? 'No description available.';
     let guessed_distance = $roundResult?.distance ?? '0';
@@ -219,22 +242,6 @@
                     correct_location.lng
                 ];
 
-                const leaderboardIcon = (rank) =>
-                    L.divIcon({
-                        className: 'map-marker',
-                        html: `<img class="map-marker-img" src="/mascot.png" alt="" />
-                               <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
-                        iconSize: [fs * 2, fs * 2 + label_h],
-                        iconAnchor: [fs, fs]
-                    });
-
-                leaderboard_markers = players.map((player, i) =>
-                    L.marker([player.lat, player.lng], {
-                        icon: leaderboardIcon(i + 1),
-                        keyboard: false
-                    }).addTo(leaflet_map)
-                );
-
                 guessed_marker = L.marker(guess, {
                     icon: guessIcon,
                     keyboard: false,
@@ -264,15 +271,6 @@
                     dashArray: '8, 8'
                 }).addTo(leaflet_map);
 
-                leaflet_map.fitBounds(
-                    L.latLngBounds([guess, answer, ...players.map((p) => [p.lat, p.lng])]),
-                    {
-                        paddingTopLeft: [fs * 21, fs * 4],
-                        paddingBottomRight: [fs * 19, fs * 6],
-                        maxZoom: 18
-                    }
-                );
-
                 const resizeObserver = new ResizeObserver(() => {
                     leaflet_map?.invalidateSize();
                 });
@@ -294,6 +292,55 @@
             cleanup?.();
         };
     });
+
+    $effect(() => {
+        if(!leaflet_map || !window.L || !players || players.length === 0) return;
+        const L = window.L;
+        const fs = get(font_size);
+        const label_h = fs * 1.5;
+
+        leaderboard_markers.forEach((marker) => {
+            marker.remove();
+        });
+        leaderboard_markers = [];
+
+        const validPlayers = players.filter(Boolean);
+
+        const leaderboardIcon = (rank) =>
+            L.divIcon({
+                className: 'map-marker',
+                html: `<img class="map-marker-img" src="/mascot.png" alt="" />
+                       <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
+                iconSize: [fs * 2, fs * 2 + label_h],
+                iconAnchor: [fs, fs]
+            });
+
+        leaderboard_markers = validPlayers.map((player, i) =>
+            L.marker([player.lat, player.lng], {
+                icon: leaderboardIcon(i + 1),
+                keyboard: false
+            }).addTo(leaflet_map)
+        );
+
+        const guess = [
+            guessed_location.lat,
+            guessed_location.lng
+        ];
+
+        const answer = [
+            correct_location.lat,
+            correct_location.lng
+        ];
+
+        leaflet_map.fitBounds(
+            L.latLngBounds([guess, answer, ...validPlayers.map((p) => [p.lat, p.lng])]),
+            {
+                paddingTopLeft: [fs * 21, fs * 4],
+                paddingBottomRight: [fs * 19, fs * 6],
+                maxZoom: 18
+            }
+        );
+    });
 </script>
 
 <div class="page answer-page" style={`--font-size: ${$font_size}px`}>
@@ -309,12 +356,20 @@
                     <h2>Leaderboard</h2>
                     <div class="leaderboard-players">
                         {#each players as player, i}
-                            <div class="leaderboard-player">
+                            <div class="leaderboard-player" class:empty={!player}>
                                 <div class="leaderboard-player-info">
                                     <span class="leaderboard-player-rank">{i + 1}</span>
-                                    <span class="leaderboard-player-name">{player.name}</span>
+                                    {#if player}
+                                        <span class="leaderboard-player-name">{player.username}</span>
+                                    {:else}
+                                        <span class="leaderboard-player-name placeholder">—</span>
+                                    {/if}
                                 </div>
-                                <span class="leaderboard-player-score">{player.score}</span>
+                                {#if player}
+                                    <span class="leaderboard-player-score">{player.score}</span>
+                                {:else}
+                                    <span class="leaderboard-player-score placeholder">—</span>
+                                {/if}
                             </div>
                         {/each}
                     </div>

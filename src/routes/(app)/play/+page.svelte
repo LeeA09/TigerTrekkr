@@ -211,7 +211,7 @@
     }
 
     // UNCOMMENT BELOW WHEN READY TO USE RANDOM IMAGES
-    // shuffles locations so that the player sees them in a different order each time they play
+    // shuffles locations so that the player sees them in a different order each time they play --- DO THIS IN SETUP API INSTEAD OF FRONTEND
     /*
     function fisher_yates_shuffle(locations) {
         const shuffled = [...locations];
