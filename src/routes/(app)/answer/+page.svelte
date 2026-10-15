@@ -61,14 +61,14 @@
     let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "2:30";
     let round_score = $roundResult?.score ?? 0;
 
-    function escape_html(text) {
-        return String(text)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
+    // function escape_html(text) {
+    //     return String(text)
+    //         .replace(/&/g, '&amp;')
+    //         .replace(/</g, '&lt;')
+    //         .replace(/>/g, '&gt;')
+    //         .replace(/"/g, '&quot;')
+    //         .replace(/'/g, '&#39;');
+    // }
 
     function measure_mascot_shift(root) {
         const img = new Image();
@@ -341,6 +341,11 @@
             }
         );
     });
+
+    function goToEnd() {
+        document.cookie = "game_played=true; path=/; SameSite=Strict";
+        goto('/end');
+    }
 </script>
 
 <div class="page answer-page" style={`--font-size: ${$font_size}px`}>
@@ -397,7 +402,7 @@
                 <span class="answer-round-stat-label">Score</span>
                 <span class="answer-round-stat-value">{round_score}</span>
             </div>
-            <button type="button" class="home-button" onclick={() => goto('/end')}>
+            <button type="button" class="home-button" onclick={goToEnd}>
                 Next
             </button>
         </aside>

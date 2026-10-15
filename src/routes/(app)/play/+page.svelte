@@ -4,7 +4,6 @@
     import { onMount } from 'svelte'
     import { currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active } from '$lib/stores/game'
 
-
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
         if (typeof window !== 'undefined' && window.L) {
@@ -279,6 +278,8 @@
 
             const result = await response.json();
             roundResult.set(result);
+
+            document.cookie = "from_game=true; path=/; SameSite=Strict";
             goto('/answer');
         } catch (err) {
             console.error('Error submitting guess:', err);

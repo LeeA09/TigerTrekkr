@@ -5,6 +5,11 @@
 
     let { data } = $props();
     let user_info = $derived(page.data?.userdata);
+
+    function startNewGame() {
+        document.cookie = "can_play=true; path=/; SameSite=Strict";
+        goto('/play')
+    }
 </script>
 
 <div class="page-body">
@@ -38,7 +43,7 @@
             </button>
         </div>
         <div class="difficulty-buttons">
-            <button class="home-button" onclick={() => goto('/play')} disabled={!$selected_difficulty}>
+            <button class="home-button" onclick={startNewGame} disabled={!$selected_difficulty}>
                 Play
             </button>
             <button class="button-secondary" onclick={() => goto('/')}>

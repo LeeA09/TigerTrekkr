@@ -1,11 +1,16 @@
 <script>
     import { goto } from '\$app/navigation'
+     
+    function startNewGame() {
+        document.cookie = "can_play=true; path=/; SameSite=Strict";
+        goto('/play')
+    }
 </script>
 
 <div class="page-body">
     <div class="page-body-card end-card">
         <div class="page-body-card-buttons">
-            <button type="button" class="home-button" onclick={() => goto('/play')}>
+            <button type="button" class="home-button" onclick={startNewGame}>
                 Play Again
             </button>
             <button type="button" class="home-button" onclick={() => goto('/difficulty')}>
