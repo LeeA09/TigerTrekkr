@@ -1,4 +1,4 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
+import { json, type RequestHandler } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 
@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
     if (error) {
         console.log('Error fetching leaderboard data:', error);
-        return json({ success: false, message: 'Error fetching leaderboard data', error }, { status: 500 });
+        return json({ success: false, message: 'Error fetching leaderboard data', error }, { status: 200 });
     }
 
     const leaderboard = (rawLeaderboard || []).map(item => ({

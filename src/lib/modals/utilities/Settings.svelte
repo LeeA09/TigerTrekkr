@@ -37,7 +37,7 @@
 	    isEditingUsername = true
     }
 
-    function cancel_editing_username() { isEditingUsername = false }
+    function cancel_editing_username() { isEditingUsername = false; usernameError = ''; newUsername = user_info?.username ?? '' }
 
     function handle_username_submit() {
         isSavingUsername = true
@@ -51,7 +51,7 @@
                 isEditingUsername = false
                 await invalidateAll()
             } else {
-                usernameError = result.data?.error ?? 'An error occurred'
+                usernameError = data?.error ?? 'An error occurred'
                 console.log(usernameError)
 	        }
 	    }
@@ -140,33 +140,33 @@
                         <button class="home-button settings-button" onclick={sign_up_redirect}>Sign Up</button>
                     </div>
                     {:else}
-                    <p>You cannot log in or sign up while playing.</p>
+                        <p>You cannot log in or sign up while playing.</p>
                     {/if}
                 </div>
                 {:else}
                 <div class="settings-item settings-account-info">
                     <div class="settings-account-info-row">
                         <span class="settings-label">Username</span>
-                {#if !isPlayPage}
-			    {#if isEditingUsername}
-				<form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
-				    <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
-				    <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">✔</button>
-				    <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
-				</form>
-		 	    {:else}                            
-				<span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
-                    <button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
-                        ✎
-                    </button>
-			    {/if}
-                {:else}
-                    <span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
-                {/if}
+                        {#if !isPlayPage}
+                        {#if isEditingUsername}
+                            <form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
+                                <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
+                                <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">✔</button>
+                                <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
+                            </form>
+                            {:else}                            
+                                <span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
+                                <button class="settings-account-edit-button" onclick={start_editing_username} aria-label="Edit Username">
+                                    ✎
+                                </button>
+                            {/if}
+                            {:else}
+                                <span class="settings-account-value">{user_info?.username ?? 'Guest User'}</span>
+                            {/if}
                         </div>
-			{#if usernameError}
-			    <p class="settings-error">{usernameError}</p>
-			{/if}
+                        {#if usernameError}
+                            <p class="error-message">{usernameError}</p>
+                        {/if}
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>

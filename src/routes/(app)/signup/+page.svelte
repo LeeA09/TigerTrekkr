@@ -1,7 +1,6 @@
 <script>
     import { goto } from '\$app/navigation'
     import { enhance } from '$app/forms'
-    //import { font_size } from '$lib/stores/settings'
 
     let isSubmitting = $state(false)
     let errorMessage = $state('')
@@ -12,19 +11,64 @@
     function toggle_show_password() { showPassword = !showPassword }
     function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword }
 
-    async function handle_signup() { 
+    // async function handle_signup() { 
+    //     return async ({ formData, cancel }) => {
+    //         const password = formData.get('password')
+    //         const confirmPassword = formData.get('confirmPassword')
+
+    //         // Check if passwords match before hitting the server
+    //         if (password !== confirmPassword) {
+    //             cancel() // Stops the form submission
+    //             isSubmitting = false
+    //             errorMessage = 'Error: Passwords do not match.'
+    //             console.log(errorMessage)
+    //             return
+    //         }       
+        
+    //         isSubmitting = true
+    //         errorMessage = ''
+
+    //         return async ({ result }) => {
+    //             isSubmitting = false
+    //             const data = result.data ?? result
+
+    //             if (data?.success){
+    //                 const email = data?.email
+    //                 await goto(`/check-email?email=${encodeURIComponent(email)}`)
+    //             } else {
+    //                 errorMessage = 'Error: ' + (data?.error?.message ?? 'An error occurred')
+    //                 console.log(errorMessage)
+    //             }
+    //         }
+    //     }
+    // }
+
+    const handle_signup = ({ formData, cancel }) => {
+        const password = formData.get('password')
+        const confirmPassword = formData.get('confirmPassword')
+
+        // Check if passwords match before hitting the server
+        if (password !== confirmPassword) {
+            cancel() // Stops the form submission completely
+            isSubmitting = false
+            errorMessage = 'Error: Passwords do not match.'
+            console.log(errorMessage)
+            return
+        }
+
         isSubmitting = true
         errorMessage = ''
 
-        return async ({ result, update }) => {
+        // Return the callback for handling the server response
+        return async ({ result }) => {
             isSubmitting = false
             const data = result.data ?? result
 
-            if (data?.success){
+            if (data?.success) {
                 const email = data?.email
                 await goto(`/check-email?email=${encodeURIComponent(email)}`)
             } else {
-                errorMessage = result.data?.error ?? 'An error occurred'
+                errorMessage = 'Error: ' + (data?.error ?? 'An error occurred')
                 console.log(errorMessage)
             }
         }
@@ -38,6 +82,9 @@
             Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
         </p>
         <form method="POST" action="/api/signup" use:enhance={handle_signup}>
+            {#if errorMessage}
+                <p class="error-message">{errorMessage}</p>
+            {/if}
             <div class="fill-in">
                 <label for="signup-username">Username</label>
                 <input name="username" type="text" placeholder="Enter username" required />

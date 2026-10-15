@@ -33,7 +33,7 @@
 			await invalidateAll()
 			modal.close()
 		} else {
-			errorMessage = result.data?.error ?? 'An error occurred'
+			errorMessage = data?.error ?? 'An error occurred'
 			console.log(errorMessage)
 		}
 	}
@@ -50,6 +50,9 @@
             <h3>Change Password</h3>
         </div>
 	    <form method="POST" action="/api/update-password" use:enhance={handle_update_password}>
+            {#if errorMessage}
+                <p class="error-message">{errorMessage}</p>
+            {/if}
             <div class="fill-in">
                 <label for="current-password">Current password</label>
                 <input type="password" name="password" placeholder="Enter current password" required />

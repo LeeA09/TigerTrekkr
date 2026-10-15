@@ -1,6 +1,5 @@
 <script>
     import { goto, invalidateAll } from '\$app/navigation'
-    //import { font_size } from '$lib/stores/settings'
     import { enhance } from '$app/forms'
 
     let { form } = $props()
@@ -12,7 +11,7 @@
         isSubmitting = true
         errorMessage = ''
 
-        return async ({ result, update }) => {
+        return async ({ result }) => {
             isSubmitting = false
             const data = result.data ?? result
 
@@ -20,7 +19,7 @@
                 await invalidateAll()
                 goto('/')
             } else {
-                errorMessage = result.data?.error ?? 'An error occurred'
+                errorMessage = 'Error: ' + (data?.error ?? 'An error occurred')
                 console.log(errorMessage)
             }
         }
@@ -38,6 +37,9 @@
             Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
         </p>
         <form method="POST" action="/api/login" use:enhance={handle_login}>
+            {#if errorMessage}
+                <p class="error-message">{errorMessage}</p>
+            {/if}
             <div class="fill-in">
                 <label for="email">Email</label>
                 <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />

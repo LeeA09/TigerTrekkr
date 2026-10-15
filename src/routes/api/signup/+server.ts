@@ -8,12 +8,12 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
     const confirmPassword = formData.get('confirmPassword')?.toString().trim()
     const username = formData.get('username')?.toString().trim()
 
-    if (!email || !password || !confirmPassword || !username) { return json({ success: false, error: 'All fields are required.' }, { status: 400 }) }
+    if (!email || !password || !confirmPassword || !username) { return json({ success: false, error: 'All fields are required.' }, { status: 200 }) }
 
-    if (password !== confirmPassword) { return json({ success: false, error: 'Passwords do not match.' }, { status: 400 }) }
+    if (password !== confirmPassword) { return json({ success: false, error: 'Passwords do not match.' }, { status: 200 }) }
 
     const { supabaseAdmin } = locals
-    if (!supabaseAdmin) { return json({ success: false, error: "Server misconfiguration: Database client not found." }, { status: 500 }) }
+    if (!supabaseAdmin) { return json({ success: false, error: "Server misconfiguration: Database client not found." }, { status: 200 }) }
 
     // Call your local self-hosted Supabase Auth engine
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.generateLink({ 
@@ -29,7 +29,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
     const hashedToken = authData?.properties?.hashed_token;
 
     if (authError || !user || !hashedToken) {
-        return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 400 });
+        return json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 200 });
     }
 
     const { error: dbError } = await supabaseAdmin
@@ -40,9 +40,14 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         });
 
     if (dbError) {
-        console.error('Database Insertion Error:', dbError);
-        // Optional: you might want to delete the created auth user here if the table insert fails
-        return json({ success: false, error: 'Failed to create user profile record.' }, { status: 500 });
+        let dbErrorMessage = dbError.message || 'Failed to create user profile record.';
+        await supabaseAdmin.auth.admin.deleteUser(user.id);
+
+        if (dbError.code === '23505' || dbError.message.toLowerCase().includes('unique')) {
+            dbErrorMessage = 'Username already exists.';
+        }
+        console.error(dbError);
+        return json({ success: false, error: dbErrorMessage }, { status: 200 });
     }
 
     const verificationLink = `${url.origin}/auth/callback?token_hash=${hashedToken}&type=signup`;
@@ -64,7 +69,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         })
     } catch (mailError) {
         console.error('Mail Error:', mailError)
-        return json({ success: false, error: 'Account initialized, but Gmail deliver failed.' }, { status: 500 })
+        return json({ success: false, error: 'Account initialized, but Gmail deliver failed.' }, { status: 200 })
     }
 
     return json({ success: true, message: '', email: email })
