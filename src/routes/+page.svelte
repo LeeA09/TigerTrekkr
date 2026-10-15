@@ -10,6 +10,7 @@
     let user = $derived(page.data?.user);
 
     let user_info = $derived(data?.userdata);
+    let userOnLeaderboard = $derived(user_info && data.leaderboard?.some(player => player.username === user_info.username));
 
     $effect(() => {
         if(user) { is_guest.set(false) }
@@ -211,7 +212,7 @@
                         {/if}
                     </div>
                 {/each}
-                {#if user}
+                {#if user && user_info && !userOnLeaderboard}
                     <hr />
                     <hr />
                     <hr />
