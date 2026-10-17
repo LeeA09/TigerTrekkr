@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation'
-    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
+    import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
     
     // close via esc and click out
@@ -13,8 +13,6 @@
 
     // go to difficulty screen
     function move_on() {
-        $is_guest = true;
-        $selected_difficulty = '';
 	    modal.close();
         goto('/difficulty');
     }

@@ -66,6 +66,7 @@
 
             if (data?.success) {
                 const email = data?.email
+                document.cookie = "sign_up=true; path=/; SameSite=Strict";
                 await goto(`/check-email?email=${encodeURIComponent(email)}`)
             } else {
                 errorMessage = 'Error: ' + (data?.error ?? 'An error occurred')

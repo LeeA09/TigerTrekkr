@@ -1,10 +1,10 @@
 <script>
     import { goto } from '\$app/navigation'
     import { page } from '$app/state'
-    import { is_guest, selected_difficulty } from '$lib/stores/settings'
+    import { selected_difficulty } from '$lib/stores/settings'
 
-    let { data } = $props();
     let user_info = $derived(page.data?.userdata);
+    let user = $derived(page.data?.user);
 
     function startNewGame() {
         document.cookie = "can_play=true; path=/; SameSite=Strict";
@@ -16,7 +16,7 @@
     <div class="difficulty-card page-body-card">
         <h2 class="page-body-card-title">Select Difficulty</h2>
         <p class="page-body-card-description">
-        {#if $is_guest}
+        {#if !user}
             Playing as <span class="page-body-card-link">Guest</span>
         {:else}
             Playing as <span class="page-body-card-link">{user_info?.username ?? 'User'}</span>

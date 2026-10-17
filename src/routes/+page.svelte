@@ -1,7 +1,7 @@
 <script>
     import { goto, invalidateAll } from '$app/navigation';
     import { page } from '$app/state'
-    import { font_size, is_guest, selected_difficulty } from '$lib/stores/settings'
+    import { font_size, selected_difficulty } from '$lib/stores/settings'
     import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
     import { onMount } from 'svelte';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
@@ -11,11 +11,6 @@
 
     let user_info = $derived(data?.userdata);
     let userOnLeaderboard = $derived(user_info && data.leaderboard?.some(player => player.username === user_info.username));
-
-    $effect(() => {
-        if(user) { is_guest.set(false) }
-        else { is_guest.set(true) }
-    })
 
     // random splash texts for logged-in
     const splashTexts = [
