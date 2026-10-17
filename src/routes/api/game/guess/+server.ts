@@ -18,24 +18,21 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Calculates the score based on distance, time taken, and difficulty level.
-function calculateScore(distance, seconds, difficulty) {
-    const multipliers = {
-        easy: 1.0,
-        medium: 1.1,
-        hard: 1.2
-    };
-
-    const multiplier = multipliers[difficulty];
-
-    if (!multiplier) {
+function calculateScore(distance: number, seconds: number, difficulty: string) {
+    const settings = {
+        easy: { multiplier: 1.0, maxScore: 3000 },
+        medium: { multiplier: 1.1, maxScore: 4000 },
+        hard: { multiplier: 1.2, maxScore: 5000 }
+    }
+    const config = settings[difficulty as keyof typeof settings];
+    if (!config) {
         throw error(400, 'Invalid difficulty.');
     }
+    const distanceScore = config.maxScore * Math.exp(-0.0014 * distance);
+    const timePenalty = 10 * seconds;
+    const rawScore = (distanceScore - timePenalty) * config.multiplier;
 
-    const rawScore =
-        (5000 * Math.exp(-0.0014 * distance) - 1.15 * seconds)
-        * multiplier;
-
-    return Math.round(Math.max(0, Math.min(5000, rawScore)));
+    return Math.round(Math.max(0, Math.min(config.maxScore, rawScore)));
 }
 
 export async function POST({ request, locals }) {
