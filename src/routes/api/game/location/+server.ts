@@ -1,3 +1,5 @@
+// CURRENTLY NOT USED ANYWHERE
+
 import { json, error } from '@sveltejs/kit';
 
 export async function GET({ locals }) {

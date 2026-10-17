@@ -1,11 +1,10 @@
 import { json, error } from '@sveltejs/kit';
-import { sessionLocations } from '$lib/stores/game';
 
 export async function GET({ locals }) {
-    const { data: location, error: dbError } = await locals.supabase
+    const { data: locations, error: dbError } = await locals.supabase
         .rpc('get_random_rows', {
             table_name: 'location_image_info',
-            row_count: 1
+            row_count: 3
         })
 
     if (dbError) {
@@ -13,20 +12,37 @@ export async function GET({ locals }) {
         throw error(500, 'Could not load game locations.');
     }
 
-    if (!location || location.length === 0) {
+    if (!locations || locations.length === 0) {
         throw error(404, 'No game locations are available.');
     }
 
-    const { data } = locals.supabase
+    const formattedLocations = locations.map((loc) => {
+        const { data } = locals.supabase
             .storage
             .from('location_images')
-            .getPublicUrl(location[0].imageurl);
+            .getPublicUrl(loc.imageurl);
 
+        // USE IF ON LOCAL SERVER
+        const trueUrl = data.publicUrl;
 
-    // THIS IS ONLY FOR PROD SERVER, SINCE WE CANNOT ACCESS THE PUBLIC URL DIRECTLY FROM THE CLIENT
-    // const proxyUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
-    // return json({ success: true, image_url: proxyUrl, image_id: location[0].locationid });
+        // USE IF ON PROD SERVER
+        // const truUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
+        
+        return {
+            image_id: loc.locationid,
+            image_url: trueUrl
+        }
+    })
 
-    // THIS IS FOR LOCAL DEV SERVER, SINCE WE CAN ACCESS THE PUBLIC URL DIRECTLY FROM THE CLIENT
-    return json({ success: true, image_url: data.publicUrl, image_id: location[0].locationid });
+    return json({ success: true, locations: formattedLocations });
 }
+
+// SHUFFLE FUNCTION MOVED FROM PLAY PAGE
+// function fisher_yates_shuffle(locations) {
+//     const shuffled = [...locations];
+//     for (let i = shuffled.length - 1; i > 0; i--) {
+//         const j = Math.floor(Math.random() * (i + 1));
+//         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+//     }
+//     return shuffled;
+// }

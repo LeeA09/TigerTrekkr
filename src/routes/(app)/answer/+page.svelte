@@ -5,6 +5,7 @@
     import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { roundResult } from '$lib/stores/game';
+    import { currentLocIdx } from '$lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -342,7 +343,14 @@
         );
     });
 
+    function nextRound() {
+        $currentLocIdx++;
+        document.cookie = "can_play=true; path=/; SameSite=Strict";
+        goto('/play')
+    }
+
     function goToEnd() {
+        currentLocIdx.set(0);
         document.cookie = "game_played=true; path=/; SameSite=Strict";
         goto('/end');
     }
@@ -402,9 +410,15 @@
                 <span class="answer-round-stat-label">Score</span>
                 <span class="answer-round-stat-value">{round_score}</span>
             </div>
-            <button type="button" class="home-button" onclick={goToEnd}>
-                Next
+            {#if $currentLocIdx < 2}
+            <button type="button" class="home-button" onclick={nextRound}>
+                Next Round
             </button>
+            {:else}
+            <button type="button" class="home-button" onclick={goToEnd}>
+                End Game
+            </button>
+            {/if}
         </aside>
     </div>
 </div>

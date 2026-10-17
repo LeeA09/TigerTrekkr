@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation'
     import { font_size, selected_difficulty } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active } from '$lib/stores/game'
+    import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active } from '$lib/stores/game'
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -41,7 +41,8 @@
     });
 
     onMount(() => {
-        timerSeconds.set(300);
+        // CHANGE TIMER BASED ON DIFFICULTY?
+        timerSeconds.set(60);
         is_timer_active.set(false);
         getLocation();
     });
@@ -194,6 +195,12 @@
     let guess_marker = null;
 
     async function getLocation() {
+        if($currentLocIdx <= 0){ await setUpGame() }
+        currentLocation.set($sessionLocations[$currentLocIdx])
+        image_url = $currentLocation.image_url
+    }
+
+    async function setUpGame() {
         try {
             const response = await fetch('/api/game/setup');
 
@@ -202,24 +209,15 @@
             }
 
             const data = await response.json();
-            image_url = data?.image_url;
-            currentLocation.set(data?.image_id);
+            // image_url = data?.locations[0].image_url;
+            sessionLocations.set(data.locations);
+            // currentLocIdx.set($sessionLocations[0]);
         } catch (err) {
             console.error('Could not fetch location:', err);
         }
     }
 
-    // UNCOMMENT BELOW WHEN READY TO USE RANDOM IMAGES
-    // shuffles locations so that the player sees them in a different order each time they play --- DO THIS IN SETUP API INSTEAD OF FRONTEND
     /*
-    function fisher_yates_shuffle(locations) {
-        const shuffled = [...locations];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }
 
     // initialize game session by fetching locations from the backend and shuffling them
     async function initializeSession() {
@@ -229,27 +227,8 @@
             }
             return;
         }
-
-        try {
-            const response = await fetch('/api/game/location');
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch locations.');
-            }
-
-            const data = await response.json();
-            const shuffled = fisher_yates_shuffle(data.locations);
-
-            sessionLocations.set(shuffled);
-            currentLocation.set(shuffled[0]);
-        } catch (err) {
-            console.error('Could not initialize game session:', err);
-        }
     }
 
-    onMount(() => {
-        initializeSession();
-    });
     */
 
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
@@ -264,7 +243,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 // Send the guess coordinates, time taken, and difficulty to the backend
                 body: JSON.stringify({
-                    locationId: $currentLocation,
+                    locationId: $currentLocation.image_id,
                     guessedLat: guess.lat,
                     guessedLng: guess.lng,
                     seconds: $timerSeconds,

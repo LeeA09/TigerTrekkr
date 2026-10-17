@@ -1,3 +1,5 @@
+// NOT CURRENTLY USED ANYWHERE?
+
 import { error } from '@sveltejs/kit';
 
 export async function GET({ url }) {

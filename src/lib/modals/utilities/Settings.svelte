@@ -12,6 +12,7 @@
     let user_info = $derived(page.data?.userdata);
 
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
+    let isAnswerPage = $derived(page.url.pathname.startsWith('/answer'))
 
     // music and sound
     function toggle_music() { 
@@ -133,7 +134,7 @@
                 <h3>Account Information</h3>
 		        {#if !user}
                 <div class="settings-item settings-account-info">
-                    {#if !isPlayPage}
+                    {#if !isPlayPage && !isAnswerPage}
                     <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                     <div class="settings-account-buttons">
                         <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
@@ -147,7 +148,7 @@
                 <div class="settings-item settings-account-info">
                     <div class="settings-account-info-row">
                         <span class="settings-label">Username</span>
-                        {#if !isPlayPage}
+                        {#if !isPlayPage && !isAnswerPage}
                         {#if isEditingUsername}
                             <form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
                                 <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
@@ -170,7 +171,7 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>
-                            {#if !isPlayPage}
+                            {#if !isPlayPage && !isAnswerPage}
                             <button class="settings-account-edit-button fake-button">
                                 ✎
                             </button>
@@ -179,13 +180,13 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
                             <span class="settings-account-value">••••••••</span>
-                            {#if !isPlayPage}
+                            {#if !isPlayPage && !isAnswerPage}
                             <button class="settings-account-edit-button" onclick={open_change_password} aria-label="Change Password">
                                 ✎
                             </button>
                             {/if}
                         </div>
-                        {#if !isPlayPage}
+                        {#if !isPlayPage && !isAnswerPage}
                         <div class="settings-account-buttons">
                             <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
 			                <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
