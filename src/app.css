@@ -1537,9 +1537,11 @@ input:focus {
 
 .answer-bot-bar .home-button {
     justify-self: end;
-    width: calc(var(--font-size) * 8);
-    height: calc(var(--font-size) * 2.2);
+    width: auto;
+    height: calc(var(--font-size) * 2.5);
+    padding: 0 calc(var(--font-size) * 1.5);
     font-size: calc(var(--font-size) * 1.5);
+    white-space: nowrap;
 }
 
 .map-marker {

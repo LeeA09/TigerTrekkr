@@ -81,68 +81,54 @@ export async function POST({ request, locals }) {
     // Only link the round to a registered profile if its ID matches
     // the authenticated Supabase Auth user's ID.
     const { user } = await locals.safeGetSession();
-
-    let profileId = null;
-
-    if (user && !user.is_anonymous) {
-        const { data: profile } = await locals.supabaseAdmin
+    if(user){
+        // GET USER PROFILE
+        const { data: profile, error: userError } = await locals.supabaseAdmin
             .from('user_data')
-            .select('userid')
+            .select('*')
             .eq('userid', user.id)
             .maybeSingle();
 
-        if (profile) profileId = profile.userid;
-    }
+        if(!profile || userError){
+            console.error('Failed to find user:', userError);
+            throw error(500, 'Could not find user.');
+        }
 
-    const { data: savedRound, error: saveError } =
-        await locals.supabaseAdmin
-            .from('round')
-            .insert({
-                userid: profileId,
-                guessedlat: guessedLat,
-                guessedlong: guessedLng,
-                distance,
-                timetaken: Math.floor(seconds),
-                difficulty,
-                score,
-                locationid: locationId
-            })
-            .select('roundid')
-            .single();
-
-    if (saveError) {
-        console.error('Failed to save round:', saveError);
-        throw error(500, 'Could not save your round.');
-    }
-
-    // Update registered users' totals only when a matching profile exists.
-    if (profileId) {
-        const { data: profile, error: profileError } =
+        // SAVE NEW ROUND TO DATABASE
+        const { error: saveError } =
             await locals.supabaseAdmin
-                .from('user_data')
-                .select('totalscore')
-                .eq('userid', profileId)
+                .from('round')
+                .insert({
+                    userid: profile.userid,
+                    guessedlat: guessedLat,
+                    guessedlong: guessedLng,
+                    distance,
+                    timetaken: Math.floor(seconds),
+                    difficulty,
+                    score,
+                    locationid: locationId
+                })
+                .select('roundid')
                 .single();
 
-        if (profileError) {
-            console.error('Failed to load user total:', profileError);
-        } else {
-            const { error: updateError } =
-                await locals.supabaseAdmin
-                    .from('user_data')
-                    .update({
-                        totalscore: Number(profile.totalscore) + score
-                    })
-                    .eq('userid', profileId);
-
-            if (updateError) {
-                console.error('Failed to update user total:', updateError);
-            }
+        if (saveError) {
+            console.error('Failed to save round:', saveError);
+            throw error(500, 'Could not save your round.');
         }
-    }
+
+        // UPDATE USER TOTAL SCORE
+        const { error: updateError } =
+            await locals.supabaseAdmin
+                .from('user_data')
+                .update({ totalscore: Number(profile.totalscore) + score })
+                .eq('userid', profile.userid);
+
+        if (updateError) {
+            console.error('Failed to update user total:', updateError);
+        }
+    }    
 
     return json({
-         // savedRound.roundid,
         locationId: location.locationid,
         guessedLocation: {
             lat: guessedLat,

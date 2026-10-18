@@ -69,10 +69,7 @@
     function toggleLeaderboard() { leadIsCollapsed = !leadIsCollapsed; }
 
     // go to difficulty
-    function move_on() {
-        $selected_difficulty = '';
-        goto('/difficulty'); 
-    }
+    function move_on() { goto('/difficulty'); }
 
     async function logout() {
         if (data.supabase) {

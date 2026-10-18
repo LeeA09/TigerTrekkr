@@ -1,8 +1,8 @@
 <script>
     import { goto } from '$app/navigation'
-    import { font_size, selected_difficulty } from '$lib/stores/settings'
+    import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active } from '$lib/stores/game'
+    import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {

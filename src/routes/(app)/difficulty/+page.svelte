@@ -1,10 +1,13 @@
 <script>
     import { goto } from '\$app/navigation'
     import { page } from '$app/state'
-    import { selected_difficulty } from '$lib/stores/settings'
+    import { selected_difficulty } from '$lib/stores/game'
+    import { onMount } from 'svelte';
 
     let user_info = $derived(page.data?.userdata);
     let user = $derived(page.data?.user);
+
+    onMount(() => { selected_difficulty.set('') })
 
     function startNewGame() {
         document.cookie = "can_play=true; path=/; SameSite=Strict";

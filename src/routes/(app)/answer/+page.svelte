@@ -1,11 +1,10 @@
 <script>
     import { goto } from '$app/navigation';
-    import { font_size, selected_difficulty } from '$lib/stores/settings';
-    import { onMount, untrack } from 'svelte';
+    import { font_size } from '$lib/stores/settings';
+    import { onMount } from 'svelte';
     import { get } from 'svelte/store';
     import { page } from '$app/state';
-    import { roundResult } from '$lib/stores/game';
-    import { currentLocIdx } from '$lib/stores/game';
+    import { roundResult, currentLocIdx, selected_difficulty } from '$lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -19,18 +18,14 @@
     let guessed_location = $roundResult?.guessedLocation ?? { lat: 0, lng: 0 };
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
-    $effect(() => {
-        if (guessed_location.lat === 0 && guessed_location.lng === 0) goto('/');
-    });
-
     let userdata = page.data?.userdata ?? {};
-    let user_name = userdata.username ?? 'User';
+    let user_name = userdata.username ?? 'Guest';
 
     async function getLeaderboard() {
         try {
             const id = $roundResult?.locationId ?? 0;
 
-            const response = await fetch('/api/location-leaderboard', {
+            const response = await fetch('/api/game/location-leaderboard', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -227,8 +222,8 @@
                                 fill="#ffc300" stroke="#ffc300"/>
                             <circle cx="14" cy="13" r="4.5" fill="#ffffff"/>
                         </svg>
-                        <span class="map-marker-label map-marker-label--correct">Actual</span>
                     `,
+                    // <span class="map-marker-label map-marker-label--correct">Answer</span>
                     iconSize: [pin_w, pin_h + label_h],
                     iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
                 });
@@ -310,7 +305,8 @@
         const leaderboardIcon = (rank) =>
             L.divIcon({
                 className: 'map-marker',
-                html: `<img class="map-marker-img" src="/mascot.png" alt="" />
+                // MODIFY OPACITY OF LEADERBOARD MARKERS HERE
+                html: `<img class="map-marker-img" style="opacity: 0.7;" src="/mascot.png" alt="" />
                        <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
                 iconSize: [fs * 2, fs * 2 + label_h],
                 iconAnchor: [fs, fs]
@@ -393,7 +389,7 @@
             <div class="answer-stats-group">
                 <div class="answer-round-stat distance-stat">
                     <span class="answer-round-stat-label">Distance</span>
-                    <span class="answer-round-stat-value">{guessed_distance}</span>
+                    <span class="answer-round-stat-value">{guessed_distance} m</span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat time-stat">

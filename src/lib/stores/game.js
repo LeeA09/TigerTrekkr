@@ -6,3 +6,4 @@ export const roundResult = writable(null);
 export const sessionLocations = writable([]);
 export const timerSeconds = writable(0);
 export const is_timer_active = writable(false);
+export const selected_difficulty = writable('');
