@@ -39,10 +39,41 @@ export async function POST({ request, locals }) {
     const body = await request.json();
 
     const locationId = Number(body.locationId);
-    const guessedLat = Number(body.guessedLat);
-    const guessedLng = Number(body.guessedLng);
+    const guessedLat = Number(body.guessedLat ?? 100);
+    const guessedLng = Number(body.guessedLng ?? 200);
     const seconds = Number(body.seconds);
     const difficulty = String(body.difficulty ?? '').toLowerCase();
+
+    // USE LAT=100 AND LONG=200 AS IDENTIFIER FOR INCOMPLETE SUBMISSION/TIMER RAN OUT
+    if(guessedLat == 100 || guessedLng == 200){
+        const { data: location, error: locationError } =
+            await locals.supabaseAdmin
+                .from('location_image_info')
+                .select(
+                    'locationid, latitude, longitude, description, locationname'
+                )
+                .eq('locationid', locationId)
+                .single();
+
+        if (locationError || !location) {
+            throw error(404, 'Game location not found.');
+        }
+
+        return json({
+            locationId: location.locationid,
+            guessedLocation: {
+                lat: 100,
+                lng: 200
+            },
+            correctLocation: {
+                lat: location.latitude,
+                lng: location.longitude
+            },
+            description: location.description,
+            locationName: location.locationname,
+            difficulty,
+        });
+    }
 
     if (
         !Number.isInteger(locationId) ||

@@ -38,15 +38,6 @@
             }
 	    }  
     });
-
-    // Go to answer screen when timer expires on play screen
-    $effect(() => {
-        if(isPlayPage){
-            if ($timerSeconds === 0) {
-                goto('/answer');
-            }
-        }
-    });
 </script>
 
 <div class="page" style="--app-font-size: {$font_size}px">

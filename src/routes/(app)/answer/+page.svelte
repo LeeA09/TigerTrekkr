@@ -15,6 +15,7 @@
     let answer_line;
     let leaderboard_markers = [];
 
+    let is_valid_guess = $derived(($roundResult?.guessedLocation?.lat >= -90) && ($roundResult?.guessedLocation?.lat <= 90));
     let guessed_location = $roundResult?.guessedLocation ?? { lat: 0, lng: 0 };
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
@@ -53,8 +54,8 @@
     let players = $state([]);
 
     let description = $roundResult?.description ?? 'No description available.';
-    let guessed_distance = $roundResult?.distance ?? '0';
-    let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "2:30";
+    let guessed_distance = $roundResult?.distance ?? 'N/A';
+    let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "0:00";
     let round_score = $roundResult?.score ?? 0;
 
     // function escape_html(text) {
@@ -228,21 +229,31 @@
                     iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
                 });
 
-                const guess = [
-                    guessed_location.lat,
-                    guessed_location.lng
-                ];
-
                 const answer = [
                     correct_location.lat,
                     correct_location.lng
                 ];
 
-                guessed_marker = L.marker(guess, {
-                    icon: guessIcon,
-                    keyboard: false,
-                    zIndexOffset: 1000
-                }).addTo(leaflet_map);
+                // IF SUBMITTED ANSWER WAS BECAUSE OF A TIMER RUNOUT
+                if(is_valid_guess){
+                    const guess = [
+                        guessed_location.lat,
+                        guessed_location.lng
+                    ];
+
+                    guessed_marker = L.marker(guess, {
+                        icon: guessIcon,
+                        keyboard: false,
+                        zIndexOffset: 1000
+                    }).addTo(leaflet_map);
+
+                    answer_line = L.polyline([guess, answer], {
+                        color: '#ffc300',
+                        weight: 3,
+                        opacity: 1,
+                        dashArray: '8, 8'
+                    }).addTo(leaflet_map);
+                }
 
                 correct_marker = L.marker(answer, {
                     icon: pinIcon,
@@ -259,13 +270,6 @@
                     .then(() => {
                         if (leaflet_map) center_rank_numbers(map_container);
                     });
-
-                answer_line = L.polyline([guess, answer], {
-                    color: '#ffc300',
-                    weight: 3,
-                    opacity: 1,
-                    dashArray: '8, 8'
-                }).addTo(leaflet_map);
 
                 const resizeObserver = new ResizeObserver(() => {
                     leaflet_map?.invalidateSize();
@@ -319,18 +323,24 @@
             }).addTo(leaflet_map)
         );
 
-        const guess = [
-            guessed_location.lat,
-            guessed_location.lng
-        ];
-
         const answer = [
             correct_location.lat,
             correct_location.lng
         ];
 
+        const boundsPoints = [answer, ...validPlayers.map((p) => [p.lat, p.lng])];
+
+        if(is_valid_guess){
+            const guess = [
+                guessed_location.lat,
+                guessed_location.lng
+            ];
+
+            boundsPoints.push(guess)
+        }
+
         leaflet_map.fitBounds(
-            L.latLngBounds([guess, answer, ...validPlayers.map((p) => [p.lat, p.lng])]),
+            L.latLngBounds(boundsPoints),
             {
                 paddingTopLeft: [fs * 21, fs * 4],
                 paddingBottomRight: [fs * 19, fs * 6],

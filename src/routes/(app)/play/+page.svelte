@@ -234,9 +234,7 @@
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
     // REPLACE this submit_guess with function below when ready for random images with $currentLocation.imageURL
-    async function submit_guess() {
-        const guess = guess_marker.getLatLng();
-
+    async function submit_guess(guess = guess_marker.getLatLng()) {
         try {
             const response = await fetch('/api/game/guess', {
                 method: 'POST',
@@ -264,6 +262,10 @@
             console.error('Error submitting guess:', err);
         }
     }
+
+    $effect(() => {
+        if ($timerSeconds === 0) { submit_guess({ lat: 100, lng: 200 }); }
+    });
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
