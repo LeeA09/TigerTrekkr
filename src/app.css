@@ -1030,7 +1030,7 @@ input:focus {
     border: 2px solid #557899;
     border-radius: 6%;
     /* padding: 30px 0px; */
-    padding: calc(var(--font-size) * 1.875) 0;
+    padding: calc(var(--font-size) * 1.5) 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1066,6 +1066,7 @@ input:focus {
     font-size: calc(var(--font-size) * 0.9);
     color: #aabccc;
     font-family: "Actor", sans-serif;
+    padding: 5px 0;
 }
 
 .difficulty-buttons {
