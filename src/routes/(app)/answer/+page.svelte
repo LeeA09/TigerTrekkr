@@ -54,18 +54,17 @@
     let players = $state([]);
 
     let description = $roundResult?.description ?? 'No description available.';
-    let guessed_distance = $roundResult?.distance ?? 'N/A';
+    let guessed_distance = $roundResult?.distance ?? '∞';
     let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "0:00";
     let round_score = $roundResult?.score ?? 0;
+    
+    const max_scores = {
+	easy: 3000,
+	medium: 4000,
+	hard: 5000
+    };
 
-    // function escape_html(text) {
-    //     return String(text)
-    //         .replace(/&/g, '&amp;')
-    //         .replace(/</g, '&lt;')
-    //         .replace(/>/g, '&gt;')
-    //         .replace(/"/g, '&quot;')
-    //         .replace(/'/g, '&#39;');
-    // }
+    let max_score = $derived(max_scores[$selected_difficulty]);
 
     function measure_mascot_shift(root) {
         const img = new Image();
@@ -414,7 +413,7 @@
             </div>
             <div class="answer-round-score">
                 <span class="answer-round-stat-label">Score</span>
-                <span class="answer-round-stat-value">{round_score}</span>
+                <span class="answer-round-stat-value">{round_score} / {max_score}</span>
             </div>
             {#if $currentLocIdx < 2}
             <button type="button" class="home-button" onclick={nextRound}>
