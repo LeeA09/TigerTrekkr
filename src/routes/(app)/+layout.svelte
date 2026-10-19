@@ -1,11 +1,11 @@
 <script>
     import { goto } from '\$app/navigation'
-    import { font_size, selected_difficulty } from '$lib/stores/settings'
+    import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info, Pause, Skip, Quit } from '$lib/modals'
     import { onMount } from 'svelte'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { page } from '$app/state'
-    import { timerSeconds, is_timer_active } from '$lib/stores/game'
+    import { timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
 
     let { children, form } = $props()
     let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
