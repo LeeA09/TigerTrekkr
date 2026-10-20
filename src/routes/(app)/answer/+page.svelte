@@ -349,13 +349,11 @@
     });
 
     function nextRound() {
-        $currentLocIdx++;
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/play')
     }
 
     function goToEnd() {
-        currentLocIdx.set(0);
         document.cookie = "game_played=true; path=/; SameSite=Strict";
         goto('/end');
     }
@@ -415,7 +413,7 @@
                 <span class="answer-round-stat-label">Score</span>
                 <span class="answer-round-stat-value">{round_score} / {max_score}</span>
             </div>
-            {#if $currentLocIdx < 2}
+            {#if $currentLocIdx < 3}
             <button type="button" class="home-button" onclick={nextRound}>
                 Next Round
             </button>

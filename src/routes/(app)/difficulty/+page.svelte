@@ -3,6 +3,7 @@
     import { page } from '$app/state'
     import { selected_difficulty } from '$lib/stores/game'
     import { onMount } from 'svelte';
+    import { currentLocIdx } from '../../../lib/stores/game';
 
     let user_info = $derived(page.data?.userdata);
     let user = $derived(page.data?.user);
@@ -10,6 +11,7 @@
     onMount(() => { selected_difficulty.set('') })
 
     function startNewGame() {
+        currentLocIdx.set(0)
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/play')
     }

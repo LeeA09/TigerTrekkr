@@ -45,6 +45,7 @@
         timerSeconds.set(60);
         is_timer_active.set(false);
         getLocation();
+        $currentLocIdx++
     });
 
     $effect(() => {
@@ -209,27 +210,11 @@
             }
 
             const data = await response.json();
-            // image_url = data?.locations[0].image_url;
             sessionLocations.set(data.locations);
-            // currentLocIdx.set($sessionLocations[0]);
         } catch (err) {
             console.error('Could not fetch location:', err);
         }
     }
-
-    /*
-
-    // initialize game session by fetching locations from the backend and shuffling them
-    async function initializeSession() {
-        if ($sessionLocations.length > 0) {
-            if (!$currentLocation) {
-                currentLocation.set($sessionLocations[0]);
-            }
-            return;
-        }
-    }
-
-    */
 
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 

@@ -1,7 +1,9 @@
 <script>
     import { goto } from '\$app/navigation'
+    import { currentLocIdx } from '$lib/stores/game';
      
     function startNewGame() {
+        currentLocIdx.set(0);
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/play')
     }
