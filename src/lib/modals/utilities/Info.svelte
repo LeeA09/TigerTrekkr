@@ -33,12 +33,11 @@
             <div class="info-item">
                 <h3>Credits</h3>
                 <ul>
-			        <li>Svelte</li>
                 	<li>Marzipano</li>
                 	<li>Leaflet</li>
                 	<li>OpenStreetMap</li>
-                	<li>Supabase</li>
-                	<li>PostgreSQL</li>
+                    <!-- CHANGE THIS TO WHATEVER MUSIC WE DECIDE ON -->
+                    <li>TataMusic</li>
 		        </ul>
             </div>
         </div>

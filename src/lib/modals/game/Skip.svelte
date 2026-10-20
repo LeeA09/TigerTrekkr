@@ -3,10 +3,18 @@
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'   
     import { SkipIcon } from '$lib/shared/icons' 
+    import { currentLocIdx } from '$lib/stores/game'
     
-    function handle_skip() {
-	modal.close()
-	goto('/answer')
+    async function handle_skip() {
+        console.log($currentLocIdx)
+        if($currentLocIdx == 3){
+            document.cookie = "game_played=true; path=/; SameSite=Strict";
+            goto('/end')
+        }
+        else {
+            // FIGURE OUT HOW TO RELOAD PAGE TO GET NEXT LOCATION
+        }
+        modal.close()
     }
 
     // close via esc and click out

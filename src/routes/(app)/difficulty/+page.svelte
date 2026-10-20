@@ -1,10 +1,9 @@
 <script>
     import { goto } from '\$app/navigation'
     import { page } from '$app/state'
-    import { selected_difficulty } from '$lib/stores/game'
+    import { selected_difficulty, currentLocIdx, sessionScore } from '$lib/stores/game'
     import { onMount } from 'svelte';
-    import { currentLocIdx } from '../../../lib/stores/game';
-
+    
     let user_info = $derived(page.data?.userdata);
     let user = $derived(page.data?.user);
 
@@ -12,6 +11,7 @@
 
     function startNewGame() {
         currentLocIdx.set(0)
+        sessionScore.set(0)
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/play')
     }

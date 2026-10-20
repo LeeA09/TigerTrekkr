@@ -1,5 +1,5 @@
 <script>
-    import { goto, invalidateAll } from '$app/navigation';
+    import { goto, refreshAll } from '$app/navigation';
     import { page } from '$app/state'
     import { font_size } from '$lib/stores/settings'
     import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
@@ -71,7 +71,7 @@
     async function logout() {
         if (data.supabase) {
             await data.supabase.auth.signOut();
-            await invalidateAll();
+            await refreshAll();
         }
     }
 

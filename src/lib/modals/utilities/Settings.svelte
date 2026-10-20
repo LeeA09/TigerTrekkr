@@ -1,6 +1,6 @@
 <script>
     import { is_music_on, is_sound_on, font_size } from '$lib/stores/settings'
-    import { goto, invalidateAll } from '$app/navigation'
+    import { goto, refreshAll } from '$app/navigation'
     import { enhance } from '$app/forms'
     import { page } from '$app/state'
     import { modal } from '$lib/modals'
@@ -50,7 +50,7 @@
 
             if (data?.success){
                 isEditingUsername = false
-                await invalidateAll()
+                await refreshAll()
             } else {
                 usernameError = data?.error ?? 'An error occurred'
                 console.log(usernameError)
@@ -68,7 +68,7 @@
             const result = await response.json()
 
             if(response.ok) {
-                await invalidateAll();
+                await refreshAll();
                 modal.close();
                 goto('/')
             }

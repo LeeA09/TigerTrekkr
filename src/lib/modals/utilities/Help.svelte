@@ -54,7 +54,7 @@
                 </button>
                 {#if open_faqs[1]}
 		    <div class="help-faq-answer">
-                        <p>Each round is worth up to 5,000 points, and your score depends on three things:</p>
+                        <p>Each round is worth up to a maximum number of points depending on the selected difficulty, and your score depends on three things:</p>
 			<ol>
 				<li><strong style="color: #FFC300;">Distance</strong>: 
 					the closer your pin is to the real location, the more points you earn. Points drop off quickly as your guess 
@@ -65,7 +65,8 @@
 					for every second you take, so quick guesses score a little higher.
 				</li>
 				<li><strong style="color: #FFC300;">Difficulty</strong>: your result is multiplied by your difficulty bonus, 
-                        		which is why a nearly perfect guess on Hard can still hit the 5,000 cap.
+                    and capped at a maximum possible score based on the selected difficulty. You get more points on harder difficulties,
+                    so taking a risk may payoff!
 				</li>
 			</ol>
 		    </div>
@@ -87,28 +88,31 @@
                 </button>
                 {#if open_faqs[3]}
 		    <div class="help-faq-answer">
-                        <p>Difficulty controls how much you can look around in the 360° image.</p>
+                <p>Difficulty controls how much you can look around in the 360° image and the max score possible.</p>
 			<ul>			
 				<li><strong style="color: #FFC300;">Easy</strong>: 
 					<ul>
 						<li>Full 360° rotation and zoom</li>
 						<li>1.0× score modifier</li>
+                        <li>Max possible score of 3000</li>
 					</ul>
 				</li> 
                         	<li><strong style="color: #FFC300;">Medium</strong>:
 					<ul>
 						<li>Rotate 180° and zoom</li>
 						<li>1.1× score modifier</li>
+                        <li>Max possible score of 4000</li>
 					</ul>
 				</li>
 				<li><strong style="color: #FFC300;">Hard</strong>:
 					<ul>
 						<li>Still image (no rotation) with zoom only</li>
 						<li>1.2× score modifier</li>
+                        <li>Max possible score of 5000</li>
 					</ul>
 				</li>
 			</ul>
-			<p>You pick a difficulty before the game starts, and it stays the same for the whole round.</p>
+			<p>You pick a difficulty before the game starts, and it stays the same for the whole session (3 rounds).</p>
                     </div>
                 {/if}
             </div>

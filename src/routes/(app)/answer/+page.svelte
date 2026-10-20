@@ -5,6 +5,7 @@
     import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { roundResult, currentLocIdx, selected_difficulty } from '$lib/stores/game';
+    import { sessionScore } from '../../../lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -348,12 +349,18 @@
         );
     });
 
+    function addScore() {
+        $sessionScore += round_score;
+    }
+
     function nextRound() {
+        addScore()
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/play')
     }
 
     function goToEnd() {
+        addScore()
         document.cookie = "game_played=true; path=/; SameSite=Strict";
         goto('/end');
     }
