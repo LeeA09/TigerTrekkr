@@ -8,6 +8,7 @@ export { default as HelpIcon } from './utilities/HelpIcon.svelte'
 export { default as InfoIcon } from './utilities/InfoIcon.svelte'
 export { default as FAQChevronIcon } from './utilities/FAQChevronIcon.svelte'
 export { default as DeleteIcon } from './utilities/DeleteIcon.svelte'
+export { default as BugReporterIcon } from './utilities/BugReporterIcon.svelte'
 
 export { default as LeaderboardIcon } from './misc/LeaderboardIcon.svelte'
 export { default as LeadChevronIcon } from './misc/LeadChevronIcon.svelte'
