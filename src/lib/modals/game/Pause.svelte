@@ -1,6 +1,7 @@
 <script>
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'
+    import { PauseIcon } from '$lib/shared/icons';
         
     // close via esc and click out
     function handle_key_down(event) {
@@ -17,10 +18,7 @@
     <div class="modal-card">
         <div class="modal-confirm-header">
             <div class="modal-confirm-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="6" y="2.5" width="4" height="19" rx="2" ry="2" />
-                    <rect x="14" y="2.5" width="4" height="19" rx="2" ry="2" />
-                </svg>
+                <PauseIcon />
             </div>
             <h3>Game Paused</h3>
         </div>

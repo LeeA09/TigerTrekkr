@@ -3,18 +3,23 @@
     import { modal } from '$lib/modals'
     import { goto } from '$app/navigation'
     import { page } from '$app/state'
+    import { FAQChevronIcon } from '$lib/shared/icons';
 
     function handleNavigate(event, path) {
-	event.preventDefault()
-	modal.close()
-	goto(path)
+        event.preventDefault()
+        modal.close()
+        goto(path)
     }
 
     // faq controls
-    let open_faq = $state(0);
+    let open_faqs = $state({
+        1: false,
+        2: false,
+        3: false
+    });
+
     function toggle_faq(faq_number) {
-        if (open_faq === faq_number) { open_faq = 0; }
-        else { open_faq = faq_number; }
+        open_faqs[faq_number] = !open_faqs[faq_number];
     }
 
     // close via esc and click out
@@ -43,13 +48,11 @@
             </div>
             <div class="help-item">
                 <h3 class="need-padding">FAQ</h3>
-                <button type="button" class="help-faq-question" onclick={() => toggle_faq(1)} aria-expanded={open_faq === 1}>
+                <button type="button" class="help-faq-question" onclick={() => toggle_faq(1)} aria-expanded={open_faqs[1]}>
                     <p>How does scoring work?</p>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:faq-open={open_faq === 1}>
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+                    <FAQChevronIcon rotated={open_faqs[1]}/>
                 </button>
-                {#if open_faq === 1}
+                {#if open_faqs[1]}
 		    <div class="help-faq-answer">
                         <p>Each round is worth up to 5,000 points, and your score depends on three things:</p>
 			<ol>
@@ -67,26 +70,22 @@
 			</ol>
 		    </div>
                 {/if}
-                <button type="button" class="help-faq-question" onclick={() => toggle_faq(2)} aria-expanded={open_faq === 2}>
+                <button type="button" class="help-faq-question" onclick={() => toggle_faq(2)} aria-expanded={open_faqs[2]}>
                     <p>Do I need an account to play?</p>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:faq-open={open_faq === 2}>
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+                    <FAQChevronIcon rotated={open_faqs[2]}/>
                 </button>
-                {#if open_faq === 2}
+                {#if open_faqs[2]}
                     <p class="help-faq-answer">
                         No, you can play as a guest and jump straight into a game. However, guest scores aren't saved or shown on the leaderboard. 
                         <a href="/signup" onclick={(e) => handleNavigate(e, '/signup')} class="page-body-card-link">Create an account</a>
 			if you want your scores tracked and a shot at the global top 10.
                     </p>
                 {/if}
-                <button type="button" class="help-faq-question" onclick={() => toggle_faq(3)} aria-expanded={open_faq === 3}>
+                <button type="button" class="help-faq-question" onclick={() => toggle_faq(3)} aria-expanded={open_faqs[3]}>
                     <p>What do the difficulty levels change?</p>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class:faq-open={open_faq === 3}>
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+                    <FAQChevronIcon rotated={open_faqs[3]}/>
                 </button>
-                {#if open_faq === 3}
+                {#if open_faqs[3]}
 		    <div class="help-faq-answer">
                         <p>Difficulty controls how much you can look around in the 360° image.</p>
 			<ul>			
