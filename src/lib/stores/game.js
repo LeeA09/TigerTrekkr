@@ -8,3 +8,5 @@ export const timerSeconds = writable(0);
 export const is_timer_active = writable(false);
 export const selected_difficulty = writable('');
 export const sessionScore = writable(0);
+
+export const activeSubmitHandler = writable(null)

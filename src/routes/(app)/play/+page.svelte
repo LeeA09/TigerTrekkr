@@ -1,8 +1,9 @@
 <script>
     import { goto } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
+    import { activeSubmitHandler } from '$lib/stores/game';
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -45,7 +46,6 @@
         timerSeconds.set(60);
         is_timer_active.set(false);
         getLocation();
-        $currentLocIdx++
     });
 
     $effect(() => {
@@ -117,8 +117,19 @@
                 pinFirstLevel: true
             });
             marzipano_viewer.switchScene(marzipano_scene, { transitionDuration: 300 }, () => {
-		is_timer_active.set(true);
-	    })
+                requestAnimationFrame(() => {
+                    is_timer_active.set(true);
+                });	    
+            })
+        }
+
+        return () => {
+            if(marzipano_viewer) {
+                marzipano_viewer.destroyAllScenes();
+                marzipano_viewer.destroy();
+                marzipano_viewer = null;
+                marzipano_scene = null;
+            }
         }
     });
 
@@ -197,7 +208,7 @@
 
     async function getLocation() {
         if($currentLocIdx <= 0){ await setUpGame() }
-        currentLocation.set($sessionLocations[$currentLocIdx])
+        currentLocation.set($sessionLocations[$currentLocIdx++])
         image_url = $currentLocation.image_url
     }
 
@@ -219,10 +230,7 @@
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
     async function submit_guess(other_guess) {
-        let guess;
-
-        if(other_guess){ guess = other_guess }
-        else { guess = guess_marker.getLatLng() }
+        let guess = other_guess ? other_guess : guess_marker.getLatLng();
 
         try {
             const response = await fetch('/api/game/guess', {
@@ -251,6 +259,15 @@
             console.error('Error submitting guess:', err);
         }
     }
+
+    onMount(() => {
+        // @ts-expect-error
+        activeSubmitHandler.set((guess) => submit_guess(guess));
+    });
+
+    onDestroy(() => {
+        activeSubmitHandler.set(null)
+    })
 
     $effect(() => {
         // SUBMIT GUESS WITH TIMER RUNOFF IDENTIFIERS
