@@ -89,25 +89,28 @@
             // Medium = 180° total rotation (-90° to +90°)
             // Hard   = no rotation (yaw and pitch locked), but zoom remains enabled
             let limiter;
+			let startView = (Math.random()*270-135)*Math.PI/180;
             if ($selected_difficulty === 'easy') {
                 limiter = traditionalLimiter;
             } else if ($selected_difficulty === 'medium') {
+                let minYaw=startView -(45 * Math.PI / 180);
+                let maxYaw=startView + (45 * Math.PI / 180);
                 limiter = window.Marzipano.util.compose(
                     traditionalLimiter,
                     window.Marzipano.RectilinearView.limit.yaw(
-                        -45 * Math.PI / 180,
-                        45 * Math.PI / 180
+                        minYaw,
+                        maxYaw
                     )
                 );
             } else {
                 limiter = window.Marzipano.util.compose(
                     traditionalLimiter,
-                    window.Marzipano.RectilinearView.limit.yaw(0, 0),
+                    window.Marzipano.RectilinearView.limit.yaw(startView, startView),
                     window.Marzipano.RectilinearView.limit.pitch(0, 0)
                 );
             }
             const view = new window.Marzipano.RectilinearView(
-                { yaw: 0, pitch: 0, fov: 90 * Math.PI / 180 },
+                { yaw: startView, pitch: 0, fov: 90 * Math.PI / 180 },
                 limiter
             );
             marzipano_scene = marzipano_viewer.createScene({
