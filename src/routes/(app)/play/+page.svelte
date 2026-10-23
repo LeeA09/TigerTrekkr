@@ -229,7 +229,10 @@
 
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
+    let is_submitting = false;
+
     async function submit_guess(other_guess) {
+        is_submitting = true;
         let guess = other_guess ? other_guess : guess_marker.getLatLng();
 
         try {
@@ -258,6 +261,8 @@
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
+
+        is_submitting = false;
     }
 
     onMount(() => {
@@ -298,7 +303,7 @@
                 </div>
                 <div class="map-map" bind:this={map_container}></div>
                 {#if guess_placed}
-                    <button class="button-guess" onclick={() => submit_guess(null)}>
+                    <button class="button-guess" onclick={() => submit_guess(null)} disabled={is_submitting}>
                         Submit
                     </button>
                 {/if}

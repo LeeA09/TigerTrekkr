@@ -1,7 +1,7 @@
 <script>
     import { goto, refreshAll } from '$app/navigation';
     import { page } from '$app/state'
-    import { font_size } from '$lib/stores/settings'
+    import { font_size, lead_is_collapsed } from '$lib/stores/settings'
     import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
     import { onMount } from 'svelte';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
@@ -14,7 +14,6 @@
     let userOnLeaderboard = $derived(user_info && data.leaderboard?.some(player => player.username === user_info.username));
 
     const leaderboard = Array.from({ length: 10}, (_, i) => data.leaderboard[i] || null);
-    let leadIsCollapsed = $state(false)
 
     // random splash texts for logged-in
     const splashTexts = [
@@ -67,18 +66,10 @@
             Math.floor(Math.random() * splashTexts.length)
         ];
      })
-
-    async function logout() {
-        if (data.supabase) {
-            await data.supabase.auth.signOut();
-            await refreshAll();
-        }
-    }
-
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
-    <main class="page-home" class:leaderboard-open={!leadIsCollapsed}>
+    <main class="page-home" class:leaderboard-open={!$lead_is_collapsed}>
         <div class="background-animation"></div>
         <div class="background-overlay"></div>
         <div class="home-center">
@@ -86,28 +77,27 @@
                 TigerTrekkr
             </h1>
             {#if !user}
+            <h2 style="color: #FFFFFF">Play as guest or log in to track statistics!</h2>
             <div class="button-main">
-            <button class="home-button" onclick={() => goto('/login')}>
-                Log in
-            </button>
-            <button class="home-button" onclick={() => goto('/signup')}>
-                Sign up
-            </button>
-            <button class="home-button" onclick={() => modal.open(PlayAsGuest)}>
-                Play as Guest
-            </button>
+                <button class="home-button" title="Play as guest" onclick={() => modal.open(PlayAsGuest)}>
+                    Play as Guest
+                </button>
+                <div class="account-button">
+                    <button class="home-button" title="Log In" onclick={() => goto('/login')}>
+                        Log in
+                    </button>
+                    <button class="home-button" title="Sign Up" onclick={() => goto('/signup')}>
+                        Sign up
+                    </button>
+                </div>
             </div>
             {:else}
-            <!-- OR color: #FFC300 -->
             <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFffff">{user_info?.username ?? 'User'}</span>{splashText[1]}</h2>
-	    <div class="button-main">
-            <button class="home-button" onclick={() => goto('/difficulty')}>
-                Play
-            </button>
-            <button class="home-button" onclick={logout}>
-                Logout
-            </button>
-	    </div>
+            <div class="button-main">
+                <button class="home-button" title="Play" onclick={() => goto('/difficulty')}>
+                    Play
+                </button>
+            </div>
             {/if}
         </div>
         <div class="button-circle">
@@ -125,9 +115,9 @@
             </button>
         </div>
     </main>
-    <aside class="home-leaderboard" class:collapsed={leadIsCollapsed}>
-        <button class="toggle-btn" onclick={() => (leadIsCollapsed = !leadIsCollapsed)} aria-label="Toggle leaderboard">
-            <LeadChevronIcon rotated={leadIsCollapsed}/>
+    <aside class="home-leaderboard" class:collapsed={$lead_is_collapsed}>
+        <button class="toggle-btn" title="Leaderboard" onclick={() => (lead_is_collapsed.set(!$lead_is_collapsed))} aria-label="Toggle leaderboard">
+            <LeadChevronIcon rotated={$lead_is_collapsed}/>
             <LeaderboardIcon />
         </button>
         <div class="leaderboard-content">

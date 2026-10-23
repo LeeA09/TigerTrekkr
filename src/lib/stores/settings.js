@@ -20,3 +20,4 @@ function persistentWritable(key, defaultValue) {
 export const is_music_on = persistentWritable('is_music_on', true)
 export const is_sound_on = persistentWritable('is_sound_on', true)
 export const font_size = persistentWritable('font_size', 16)
+export const lead_is_collapsed = persistentWritable('lead_is_collapsed', false)

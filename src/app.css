@@ -75,13 +75,13 @@ h3 {
 }
 
 .home-button {
-    height: calc(var(--font-size) * 3);
+    height: calc(var(--font-size) * 4);
     border: none;
     border-radius: 60px;
     background: #DC562E;
     color: #ffffff;
     font-family: "Actor", sans-serif;
-    font-size: calc(var(--font-size) * 1.5);
+    font-size: calc(var(--font-size) * 2);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -93,7 +93,7 @@ h3 {
 }
 
 .page-home .home-button {
-    width: calc(var(--font-size) * 12.5);
+    width: calc(var(--font-size) * 20);
 }
 
 .page-body-card .home-button {
@@ -151,6 +151,33 @@ h3 {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.account-button {
+    display: flex;
+    gap: 1rem; /* Controls the padding/space between the buttons */
+    justify-content: center;
+    align-items: center;
+}
+
+.account-button .home-button {
+    width: calc(var(--font-size) * 9.5);
+    height: calc(var(--font-size) * 3);
+    font-size: calc(var(--font-size) * 1.2);
+
+    /* REMOVE IF YOU WANT THEM TO LOOK THE SAME AS PLAY BUTTON */
+    /* HOWEVER, I THINK THAT THIS SIZING SHOULD STAY */
+    /* border: 3px solid #DC562E;
+    background: #001D3D;
+    color: #DC562E;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.account-button .home-button:hover {
+    background: #DC562E;
+    color: #ffffff;
+} */
 }
 
 .utility-button svg {
@@ -1364,6 +1391,11 @@ input:focus {
 .button-guess:hover {
     background: #E86A44;
     transform: translateX(-50%) scale(1.025);
+}
+
+.button-guess:disabled { 
+    /* opacity: 0.5;  */
+    cursor: not-allowed; 
 }
 
 .page.answer-page {
