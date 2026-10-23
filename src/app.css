@@ -87,6 +87,21 @@ h3 {
     transition: all 0.2s ease;
 }
 
+.end-button {
+    display: flex;
+    gap: 1rem; /* Controls the padding/space between the buttons */
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.end-button .home-button{
+    height: calc(var(--font-size) * 3);
+    font-size: calc(var(--font-size) * 1.5);
+}
+
 .home-button:hover {
     background: #E37A5B;
     transform: scale(1.025);

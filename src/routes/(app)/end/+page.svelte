@@ -27,16 +27,18 @@
                 <h2>-Total Game Score-</h2>
                 <h2 style="color: #FFC300">{score} / {max_score}</h2>
             </div>
-	    <div style="width: 100%; height: 2px; background-color: #FFFFFF; border-radius: 3px;"></div>
-            <button type="button" class="home-button" onclick={startNewGame}>
-                Play Again
-            </button>
-            <button type="button" class="home-button" onclick={() => goto('/difficulty')}>
-                Change Difficulty
-            </button>
-            <button type="button" class="home-button" onclick={() => goto('/')}>
-                Exit
-            </button>
+	        <div style="width: 100%; height: 2px; background-color: #FFFFFF; border-radius: 3px;"></div>
+            <div class="end-button">
+                <button type="button" class="home-button" onclick={startNewGame}>
+                    Play Again
+                </button>
+                <button type="button" class="home-button" onclick={() => goto('/difficulty')}>
+                    Change Difficulty
+                </button>
+                <button type="button" class="home-button" onclick={() => goto('/')}>
+                    Exit
+                </button>
+            </div>
         </div>
     </div>
 </div>
