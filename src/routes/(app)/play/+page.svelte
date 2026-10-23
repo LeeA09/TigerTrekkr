@@ -89,10 +89,11 @@
             // Medium = 180° total rotation (-90° to +90°)
             // Hard   = no rotation (yaw and pitch locked), but zoom remains enabled
             let limiter;
-			let startView = (Math.random()*270-135)*Math.PI/180;
+			let startView = (Math.random()*360-180)*Math.PI/180;
             if ($selected_difficulty === 'easy') {
                 limiter = traditionalLimiter;
             } else if ($selected_difficulty === 'medium') {
+				startView = (Math.random()*270-135)*Math.PI/180;
                 let minYaw=startView -(45 * Math.PI / 180);
                 let maxYaw=startView + (45 * Math.PI / 180);
                 limiter = window.Marzipano.util.compose(
