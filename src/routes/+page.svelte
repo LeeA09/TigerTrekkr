@@ -94,7 +94,7 @@
             {:else}
             <h2 style="color: #FFFFFF">{splashText[0]}<span style="color: #FFffff">{user_info?.username ?? 'User'}</span>{splashText[1]}</h2>
             <div class="button-main">
-                <button class="home-button" title="Play" onclick={() => goto('/difficulty')}>
+                <button class="home-button" title="Play" onclick={() => goto('/game/difficulty')}>
                     Play
                 </button>
             </div>

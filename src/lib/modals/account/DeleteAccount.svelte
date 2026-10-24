@@ -20,7 +20,7 @@
 	    errorMessage = ''
 
         try {
-            const response = await fetch('/api/delete-account', {
+            const response = await fetch('/api/account-change/delete-account', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
                 })

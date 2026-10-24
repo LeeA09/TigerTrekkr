@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
     import { onDestroy, onMount } from 'svelte'
+    import { PlayHeader } from '$lib/shared/headers'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
     import { activeSubmitHandler } from '$lib/stores/game';
 
@@ -165,7 +166,7 @@
             // Custom Duck Icon for guessing marker
             const duckIcon = window.L.icon({
                 // iconUrl: 'tiger-trekkr-logo.ico',
-                iconUrl: 'mascot.png',
+                iconUrl: '/mascot.png',
                 iconSize: [20, 20],
                 iconAnchor: [10, 10],
                 popupAnchor: [0, -20]
@@ -261,7 +262,7 @@
             roundResult.set(result);
 
             document.cookie = "from_game=true; path=/; SameSite=Strict";
-            goto('/answer');
+            goto('/game/answer');
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
@@ -286,6 +287,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
+        <PlayHeader />
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}
@@ -315,16 +317,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    :global(html),
-    :global(body) {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        box-sizing: border-box;
-        font-family: "Actor", sans-serif;
-    }
-</style>

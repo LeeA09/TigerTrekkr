@@ -4,8 +4,9 @@
     import { onMount } from 'svelte';
     import { get } from 'svelte/store';
     import { page } from '$app/state';
+    import { MainHeader } from '$lib/shared/headers';
     import { roundResult, currentLocIdx, selected_difficulty } from '$lib/stores/game';
-    import { sessionScore } from '../../../lib/stores/game';
+    import { sessionScore } from '$lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -356,18 +357,19 @@
     function nextRound() {
         addScore()
         document.cookie = "can_play=true; path=/; SameSite=Strict";
-        goto('/play')
+        goto('/game/play')
     }
 
     function goToEnd() {
         addScore()
         document.cookie = "game_played=true; path=/; SameSite=Strict";
-        goto('/end');
+        goto('/game/end');
     }
 </script>
 
-<div class="page answer-page" style={`--font-size: ${$font_size}px`}>
+<div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
+        <MainHeader />
         <main class="answer-map">
             <div bind:this={map_container} class="leaflet-map"></div>
             <aside class="answer-description-card">

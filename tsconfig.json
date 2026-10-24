@@ -12,17 +12,8 @@
 		"strict": true,
 		"moduleResolution": "bundler"
 	},
-	"include": [
-    	"src",
-    	"test",
-    	"*"
-  	],
-  	"exclude": [
-    	"src/service-worker"
-  	]
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
 	//
-	// To make changes to top-level options such as include and exclude, we recommend extending
-	// the generated config; see https://svelte.dev/docs/kit/configuration#typescript
+	// Top-level options such as include and exclude are supplied by the generated config.
 }

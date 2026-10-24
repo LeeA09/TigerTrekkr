@@ -49,7 +49,7 @@
 	        <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close">✖</button>
             <h3>Change Password</h3>
         </div>
-	    <form method="POST" action="/api/update-password" use:enhance={handle_update_password}>
+	    <form method="POST" action="/api/account-change/update-password" use:enhance={handle_update_password}>
             {#if errorMessage}
                 <p class="error-message">{errorMessage}</p>
             {/if}

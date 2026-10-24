@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 .page {
     width: 100vw;
     height: 100vh;
@@ -921,7 +925,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 70vh;
+    max-height: 78vh;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #002952 #003566;
@@ -1054,7 +1058,7 @@ input:focus {
 
 .page-body-card.difficulty-card {
     /* width: 600px;  */
-    width: calc(var(--font-size) * 25);
+    width: calc(var(--font-size) * 28);
 }
 
 .difficulty-grid {
@@ -1122,7 +1126,7 @@ input:focus {
 
 .page-body-card.end-card {
     /* width: 600px;  */
-    width: calc(var(--font-size) * 15);
+    width: calc(var(--font-size) * 22);
 }
 
 .home-button:disabled { 
@@ -1412,11 +1416,6 @@ input:focus {
 .button-guess:disabled { 
     /* opacity: 0.5;  */
     cursor: not-allowed; 
-}
-
-.page.answer-page {
-    --answer-top-offset: calc(var(--font-size) * 3.75);
-    height: calc(100vh - var(--answer-top-offset));
 }
 
 .answer-map {

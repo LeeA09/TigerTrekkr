@@ -4,8 +4,7 @@
     import { enhance } from '$app/forms'
     import { page } from '$app/state'
     import { modal } from '$lib/modals'
-    import DeleteAccount from '../account/DeleteAccount.svelte'
-    import UpdatePassword from '../account/UpdatePassword.svelte'
+    import { DeleteAccount, UpdatePassword } from '$lib/modals'
     import { backgroundMusic } from '$lib/stores/audio.svelte'
     
     let user = $derived(page.data?.user);
@@ -60,7 +59,7 @@
 
     async function handle_logout() {
         try {
-            const response = await fetch('/api/logout', {
+            const response = await fetch('/api/account/logout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -150,7 +149,7 @@
                         <span class="settings-label">Username</span>
                         {#if !isPlayPage && !isAnswerPage}
                         {#if isEditingUsername}
-                            <form method="POST" action="/api/update-account" use:enhance={handle_username_submit} class="settings-input-form">
+                            <form method="POST" action="/api/account-change/update-account" use:enhance={handle_username_submit} class="settings-input-form">
                                 <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
                                 <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">✔</button>
                                 <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
