@@ -1,10 +1,9 @@
 <script>
     import { goto } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
-    import { onDestroy, onMount } from 'svelte'
+    import { onMount } from 'svelte'
     import { PlayHeader } from '$lib/shared/headers'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
-    import { activeSubmitHandler } from '$lib/stores/game';
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -234,7 +233,7 @@
 
     function toggle_map_expand() { is_map_expanded = !is_map_expanded; }
 
-    let is_submitting = false;
+    let is_submitting = $state(false);
 
     async function submit_guess(other_guess) {
         is_submitting = true;
@@ -266,18 +265,7 @@
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
-
-        is_submitting = false;
     }
-
-    onMount(() => {
-        // @ts-expect-error
-        activeSubmitHandler.set((guess) => submit_guess(guess));
-    });
-
-    onDestroy(() => {
-        activeSubmitHandler.set(null)
-    })
 
     $effect(() => {
         // SUBMIT GUESS WITH TIMER RUNOFF IDENTIFIERS
@@ -287,7 +275,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <PlayHeader />
+        <PlayHeader skip={submit_guess({ lat: 100, lng: 200 })}/>
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}

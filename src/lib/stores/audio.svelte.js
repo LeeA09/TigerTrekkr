@@ -14,16 +14,33 @@ class AudioManager {
         this.isPlaying = false;
       });
     }
+
+    this.toggle();
+  }
+
+  async play() {
+    if (!this.audio) return;
+    try {
+      await this.audio.play();
+      this.isPlaying = true;
+    } catch (err) {
+      // Browser blocked autoplay due to lack of user interaction
+      console.warn("Autoplay prevented:", err);
+      this.isPlaying = false;
+    }
+  }
+
+  pause() {
+    if (!this.audio) return;
+    this.audio.pause();
+    this.isPlaying = false;
   }
 
   toggle() {
-    if (!this.audio) return;
     if (this.isPlaying) {
-      this.audio.pause();
-      this.isPlaying = false;
+      this.pause();
     } else {
-      this.audio.play();
-      this.isPlaying = true;
+      this.play();
     }
   }
 }

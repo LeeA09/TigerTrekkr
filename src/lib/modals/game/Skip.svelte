@@ -2,19 +2,12 @@
     import { font_size } from '$lib/stores/settings'
     import { modal } from '$lib/modals'   
     import { SkipIcon } from '$lib/shared/icons' 
-    import { get } from 'svelte/store'
-    import { activeSubmitHandler } from '$lib/stores/game';
     
-    let { submit_guess } = $props();
+    let { skip } = $props()
 
     async function handle_skip() {
         modal.close()
-
-        const submit = get(activeSubmitHandler);
-
-        if(submit) {
-            await submit({ lat: 100, lng: 200 });
-        }
+        await skip()
     }
 
     // close via esc and click out
