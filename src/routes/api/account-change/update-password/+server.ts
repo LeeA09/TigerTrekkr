@@ -1,10 +1,10 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
-import { sendEmail } from '\$lib/server/mailer'
+import { json, error, type RequestHandler } from '@sveltejs/kit'
+import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
 	const { session, userdata } = await locals.safeGetSession?.()
 
-	if (!session) { console.log("failed here"); throw svelteError(401, 'Unauthorized') }
+	if (!session) { console.log("failed here"); throw error(401, 'Unauthorized') }
 
 	const formData = await request.formData()
 	const currentPassword = formData.get('password')?.toString().trim()
@@ -42,15 +42,17 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 		    subject: '⚠ Account password changed ⚠',
 		    text: `Password has changed for ${username}.`,
 		    html: `
-				<div style="font-family: sans-serif; max-width 600px; margin: 0 auto;">
-			   		<h2>Account password changed!</h2>
-			    	<p>The password has been changed for user <strong>${username}</strong>. If you did not do this, please contact us immediately.</p>
+				<div style="font-size: 125%; font-family: sans-serif; max-width 600px; margin: 0 auto;">
+			   		<h2>Your account password has changed!</h2>
+			    	<p>The password for user <strong style="color: #DC562E">${username}</strong> has been changed.</p>
+					<p>If you did not do this, please contact us immediately!</p>
+					<p>- TigerTrekkr Team</p>
 				</div>
 		    	`
 		})
 	} catch (mailError) {
 		console.error('Mail error:', mailError)
-		return svelteError(500, 'Account password changed, but Gmail deliver failed')
+		return error(500, 'Account password changed, but Gmail deliver failed')
 	}
 	return json({ success: true, message: 'Password updated successfully.' });
 };

@@ -1,5 +1,5 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
-import { sendEmail } from '\$lib/server/mailer'
+import { json, error, type RequestHandler } from '@sveltejs/kit'
+import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals }) => {
     
@@ -35,18 +35,18 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             subject: '⚠ Account username changed ⚠',
             text: `Username has changed for ${oldUsername}.`,
             html: `
-                <div style="font-family: sans-serif; max-width 600px; margin: 0 auto;">
-                    <h2>Account username changed!</h2>
-                    <p>
-                        The username has been changed for user <strong>${oldUsername}</strong> to <strong>${username}</strong>.
-                        If you did not do this, please contact us immediately.
-                    </p>
-                </div>
+				<div style="font-size: 125%; font-family: sans-serif; max-width 600px; margin: 0 auto;">
+			   		<h2>Your account username has changed!</h2>
+			    	<p>The username for user <strong style="color: #DC562E">${oldUsername}</strong> has been changed to <strong style="color: #DC562E">${username}</strong>.</p>
+                    <p style="font-size: 130%; color: #ffffff; border: 4px solid #001D3D; font-weight: bold; background-color: #DC562E; border-radius: 6px; padding: 12px 15px; display: inline-block;">${oldUsername} ➔ ${username}</p>
+                    <p>If you did not do this, please contact us immediately!</p>
+                    <p>- TigerTrekkr Team</p>
+				</div>
                 `
         })
     } catch (mailError) {
         console.error('Mail error:', mailError)
-        return svelteError(500, 'Account username changed, but Gmail deliver failed')
+        return error(500, 'Account username changed, but Gmail deliver failed')
     }
 
     return json({ success: true });

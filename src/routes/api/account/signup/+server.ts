@@ -1,4 +1,4 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
+import { json, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
@@ -60,7 +60,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
                     <h2>Welcome aboard, ${username}!</h2>
-                    <p>Thank you for signing up. Click below to verify your email and activate your account:</p>
+                    <p>Thank you for signing up! Click below to verify your email and activate your account:</p>
                     <a href="${verificationLink}" style="background-color: #ff3e00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 15px 0;">
                         Verify My Account
                     </a>
