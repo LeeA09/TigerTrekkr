@@ -11,11 +11,12 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             roundid,
             user_data(username),
             score,
+            distance,
             lat:guessedlat,
             lng:guessedlong
         `)
         .eq('locationid', locationId)
-        .order('score', { ascending: false })
+        .order('distance', { ascending: false }) //
         .limit(3); // THIS CAN BE CHANGED IF WE WANT TO LIST MORE THAN 3 LEADERS
 
     if (error) {
@@ -29,6 +30,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         score: item.score,
         lat: item.lat,
         lng: item.lng,
+        distance: Math.round(item.distance),
         isCurrGuess: item.roundid === roundId
     }));
 
