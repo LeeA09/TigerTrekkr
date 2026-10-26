@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation'
-    import { font_size } from '$lib/stores/settings'
+    import { font_size, is_sound_on } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { PlayHeader } from '$lib/shared/headers'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
@@ -28,6 +28,8 @@
     let marzipano_scene = null;
     let image_url = $state(null);
     let image_loaded = $state(false);
+
+    const clickAudio = new Audio('/audiomass-output.mp3'); 
 
     onMount(() => {
         if (typeof window !== 'undefined' && window.Marzipano) {
@@ -172,6 +174,11 @@
             });
             // Map click listener to place/move duck marker
             leaflet_map.on('click', (e) => {
+                if($is_sound_on) {
+                    clickAudio.currentTime = 0;
+                    clickAudio.play().catch(err => console.error("Audio playback failed:", err));
+                }
+
                 if (guess_marker) {
                     guess_marker.setLatLng(e.latlng);
                 } else {
