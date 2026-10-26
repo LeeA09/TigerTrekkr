@@ -1,6 +1,6 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
+import { json, error, type RequestHandler } from '@sveltejs/kit'
 
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST: RequestHandler = async ({ locals }) => {
 
 	const session = await locals.getSession?.() || (await locals.safeGetSession?.())?.session
 

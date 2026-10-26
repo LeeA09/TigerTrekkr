@@ -1,4 +1,4 @@
-import { json, error as svelteError, type RequestHandler } from '@sveltejs/kit'
+import { json, type RequestHandler } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ request, locals }) => {
     const formData = await request.formData()

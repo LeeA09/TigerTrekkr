@@ -26,7 +26,7 @@ export async function GET({ locals }) {
         const trueUrl = data.publicUrl;
 
         // USE IF ON PROD SERVER
-        // const truUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
+        // const trueUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
         
         return {
             image_id: loc.locationid,

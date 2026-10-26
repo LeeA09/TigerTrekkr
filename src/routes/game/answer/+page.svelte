@@ -5,8 +5,7 @@
     import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
-    import { roundResult, currentLocIdx, selected_difficulty } from '$lib/stores/game';
-    import { sessionScore } from '$lib/stores/game';
+    import { roundResult, currentLocIdx, selected_difficulty, sessionScore } from '$lib/stores/game';
 
     let leaflet_loaded = false;
     let map_container;
@@ -16,6 +15,7 @@
     let correct_marker;
     let answer_line;
     let leaderboard_markers = [];
+    let leaderboard_lines = [];
 
     let is_valid_guess = $derived(($roundResult?.guessedLocation?.lat >= -90) && ($roundResult?.guessedLocation?.lat <= 90));
     let guessed_location = $roundResult?.guessedLocation ?? { lat: 0, lng: 0 };
@@ -27,6 +27,7 @@
     async function getLeaderboard() {
         try {
             const id = $roundResult?.locationId ?? 0;
+            const currRoundId = $roundResult?.roundId;
 
             const response = await fetch('/api/game/location-leaderboard', {
                 method: 'POST',
@@ -35,6 +36,7 @@
                 },
                 body: JSON.stringify({
                     locationId: id,
+                    roundId: currRoundId
                 })
             });
 
@@ -54,6 +56,7 @@
     });
 
     let players = $state([]);
+    let user_rank = $state(-1);
 
     let description = $roundResult?.description ?? 'No description available.';
     let guessed_distance = $roundResult?.distance ?? '∞';
@@ -61,73 +64,12 @@
     let round_score = $roundResult?.score ?? 0;
     
     const max_scores = {
-	easy: 3000,
-	medium: 4000,
-	hard: 5000
+        easy: 3000,
+        medium: 4000,
+        hard: 5000
     };
 
     let max_score = $derived(max_scores[$selected_difficulty]);
-
-    function measure_mascot_shift(root) {
-        const img = new Image();
-        img.onload = () => {
-            try {
-                const w = img.naturalWidth;
-                const h = img.naturalHeight;
-                if (!w || !h) return;
-                const canvas = document.createElement('canvas');
-                canvas.width = w;
-                canvas.height = h;
-                const ctx = canvas.getContext('2d', { willReadFrequently: true });
-                ctx.drawImage(img, 0, 0);
-                const { data } = ctx.getImageData(0, 0, w, h);
-
-                let min_x = w;
-                let max_x = -1;
-                for (let y = 0; y < h; y++) {
-                    for (let x = 0; x < w; x++) {
-                        if (data[(y * w + x) * 4 + 3] > 24) {
-                            if (x < min_x) min_x = x;
-                            if (x > max_x) max_x = x;
-                        }
-                    }
-                }
-                if (max_x < min_x) return;
-
-                const shift = (min_x + max_x + 1) / 2 / w - 0.5;
-                root?.style.setProperty('--duck-art-shift', shift.toFixed(4));
-            } catch {
-            }
-        };
-        img.src = '/mascot.png';
-    }
-
-    function center_rank_numbers(root) {
-        if (!root) return;
-        const ctx = document.createElement('canvas').getContext('2d');
-
-        root.querySelectorAll('.map-marker-rank-num').forEach((num) => {
-            const label = num.parentElement;
-            const style = getComputedStyle(num);
-            ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-            const m = ctx.measureText(num.textContent);
-
-            const line_h = parseFloat(style.fontSize);
-            const asc = m.fontBoundingBoxAscent;
-            const desc = m.fontBoundingBoxDescent;
-            if (!asc && !desc) return;
-
-            const baseline =
-                (label.clientHeight - line_h) / 2 + (line_h - (asc + desc)) / 2 + asc;
-            const ink_center_y =
-                baseline - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
-            const dy = label.clientHeight / 2 - ink_center_y;
-
-            const dx = (m.width - m.actualBoundingBoxRight + m.actualBoundingBoxLeft) / 2;
-
-            num.style.transform = `translate(${dx}px, ${dy}px)`;
-        });
-    }
 
     function loadLeaflet() {
         if (typeof window !== 'undefined' && window.L) {
@@ -158,12 +100,77 @@
         })
     }
 
+    $effect(() => {
+        if(!leaflet_map || !window.L) return;
+        const L = window.L;
+        const fs = $derived($font_size)
+
+        if (guessed_marker) { guessed_marker.remove(); guessed_marker = null; }
+        
+        user_rank = players.findIndex(p => p?.isCurrGuess === true);
+        const hasRank = user_rank !== -1;
+        const rankDisplay = hasRank
+            ? `<span class="map-marker-label--rank"><span class="map-marker-rank-num">${user_rank + 1}</span></span>`
+            : '';
+
+        const usernameWidth = user_name.length * (fs * 0.5)
+        const basePadding = fs * 2
+        const rankWidth = hasRank ? (fs * 1.5 + 6) : 0; // Rank badge width plus padding gap
+
+        const totalWidth = usernameWidth + basePadding + rankWidth;
+        const totalHeight = fs * 1.75;
+
+        const guessIcon = L.divIcon({
+            className: 'map-marker',
+            html:  `<div class="map-marker-wrapper">
+                        <img class="map-marker-img" src="/mascot.png" alt="" />
+                        <span class="map-marker-label map-marker-label--you">
+                            ${rankDisplay}
+                            <span class="map-marker-username">${user_name}</span>
+                        </span>
+                    </div>`,
+            iconAnchor: [totalWidth / 16, totalHeight]
+        });
+
+        const answer = [
+            correct_location.lat,
+            correct_location.lng
+        ];
+
+        // IF SUBMITTED ANSWER WAS BECAUSE OF A TIMER RUNOUT
+        if(is_valid_guess){
+            const guess = [
+                guessed_location.lat,
+                guessed_location.lng
+            ];
+
+            guessed_marker = L.marker(guess, {
+                icon: guessIcon,
+                keyboard: false,
+                zIndexOffset: 1000
+            }).addTo(leaflet_map);
+
+            if(answer_line){ answer_line.remove() }
+
+            answer_line = L.polyline([guess, answer], {
+                color: '#ffc300',
+                weight: 3,
+                opacity: 1,
+                dashArray: '8, 8'
+            }).addTo(leaflet_map);
+        }
+    })
+
     onMount(() => {
         function cleanup() {
-            if (leaflet_map) {
-                leaflet_map.remove();
-                leaflet_map = null;
-            }
+            const resizeObserver = new ResizeObserver(() => {
+                leaflet_map?.invalidateSize();
+            });
+            resizeObserver.disconnect();
+            leaflet_map?.remove();
+            leaflet_map = null;
+            leaderboard_markers = [];
+            leaderboard_lines = [];
         }
         
         void (async () => {
@@ -172,7 +179,6 @@
                 if (!map_container || !L) return;
 
                 const fs = get(font_size);
-                const username = user_name;
 
                 const mizzouBounds = L.latLngBounds(
                     [38.949697, -92.314951],
@@ -202,16 +208,6 @@
 
                 L.control.zoom({ position: 'bottomright' }).addTo(leaflet_map);
 
-                const label_h = fs * 1.5;
-
-                const guessIcon = L.divIcon({
-                    className: 'map-marker',
-                    html: `<img class="map-marker-img" src="/mascot.png" alt="" />
-                           <span class="map-marker-label map-marker-label--you">${username}</span>`,
-                    iconSize: [fs * 2, fs * 2 + label_h],
-                    iconAnchor: [fs, fs]
-                });
-
                 const pin_w = fs * 1.75;
                 const pin_h = fs * 2.375;
                 const pinIcon = L.divIcon({
@@ -221,12 +217,11 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M14 37 C11 29 2 20 2 13
                                 A12 12 0 1 1 26 13 C26 20 17 29 14 37Z"
-                                fill="#ffc300" stroke="#ffc300"/>
-                            <circle cx="14" cy="13" r="4.5" fill="#ffffff"/>
+                                fill="#ffc300" stroke="#001D3D" stroke-width="0.5"/>
+                            <circle cx="14" cy="13" r="4.5" fill="#001D3D"/>
                         </svg>
                     `,
-                    // <span class="map-marker-label map-marker-label--correct">Answer</span>
-                    iconSize: [pin_w, pin_h + label_h],
+                    //iconSize: [pin_w, pin_h + label_h],
                     iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
                 });
 
@@ -235,55 +230,21 @@
                     correct_location.lng
                 ];
 
-                // IF SUBMITTED ANSWER WAS BECAUSE OF A TIMER RUNOUT
-                if(is_valid_guess){
-                    const guess = [
-                        guessed_location.lat,
-                        guessed_location.lng
-                    ];
-
-                    guessed_marker = L.marker(guess, {
-                        icon: guessIcon,
-                        keyboard: false,
-                        zIndexOffset: 1000
-                    }).addTo(leaflet_map);
-
-                    answer_line = L.polyline([guess, answer], {
-                        color: '#ffc300',
-                        weight: 3,
-                        opacity: 1,
-                        dashArray: '8, 8'
-                    }).addTo(leaflet_map);
-                }
-
                 correct_marker = L.marker(answer, {
                     icon: pinIcon,
                     keyboard: false,
                     zIndexOffset: 500
                 }).addTo(leaflet_map);
 
-                measure_mascot_shift(map_container);
-                center_rank_numbers(map_container);
-
                 document.fonts
                     ?.load(`700 ${fs}px "Actor"`, '12345')
                     .catch(() => {})
-                    .then(() => {
-                        if (leaflet_map) center_rank_numbers(map_container);
-                    });
 
                 const resizeObserver = new ResizeObserver(() => {
                     leaflet_map?.invalidateSize();
                 });
 
                 resizeObserver.observe(map_container);
-
-                cleanup = () => {
-                    resizeObserver.disconnect();
-                    leaflet_map?.remove();
-                    leaflet_map = undefined;
-                    leaderboard_markers = [];
-                };
             } catch (error) {
                 console.error('Error loading Leaflet:', error);
             }
@@ -297,39 +258,60 @@
     $effect(() => {
         if(!leaflet_map || !window.L || !players || players.length === 0) return;
         const L = window.L;
-        const fs = get(font_size);
-        const label_h = fs * 1.5;
+        const fs = $derived($font_size);
 
-        leaderboard_markers.forEach((marker) => {
-            marker.remove();
-        });
+        leaderboard_markers.forEach((marker) => { marker.remove(); });
         leaderboard_markers = [];
 
-        const validPlayers = players.filter(Boolean);
+        leaderboard_lines.forEach((line) => { line.remove(); });
+        leaderboard_lines = [];
 
+        const filteredPlayers = players
+            .map((player, index) => ({ player, rank: index + 1 }))
+            .filter(({ player }) => 
+                player && 
+                !player.isCurrGuess
+            );
+
+        // MODIFY OPACITY OF LEADERBOARD MARKERS HERE
+        // <img class="map-marker-img" style="opacity: 0.7;" src="/mascot.png" alt="" />
         const leaderboardIcon = (rank) =>
             L.divIcon({
                 className: 'map-marker',
-                // MODIFY OPACITY OF LEADERBOARD MARKERS HERE
-                html: `<img class="map-marker-img" style="opacity: 0.7;" src="/mascot.png" alt="" />
-                       <span class="map-marker-label map-marker-label--rank"><span class="map-marker-rank-num">${rank}</span></span>`,
-                iconSize: [fs * 2, fs * 2 + label_h],
-                iconAnchor: [fs, fs]
+                html:  `<div class="map-marker-wrapper">
+                            <span class="map-marker-label map-marker-label--rank">
+                                <span class="map-marker-rank-num">${rank}</span>
+                            </span>
+                        </div>`,
+                iconAnchor: [fs * 0.75, fs * 0.75]
             });
-
-        leaderboard_markers = validPlayers.map((player, i) =>
-            L.marker([player.lat, player.lng], {
-                icon: leaderboardIcon(i + 1),
-                keyboard: false
-            }).addTo(leaflet_map)
-        );
 
         const answer = [
             correct_location.lat,
             correct_location.lng
         ];
 
-        const boundsPoints = [answer, ...validPlayers.map((p) => [p.lat, p.lng])];
+        leaderboard_markers = filteredPlayers.map((player) => {
+            const playerLatLng = [player.player.lat, player.player.lng];
+            
+            const marker = L.marker(playerLatLng, {
+                icon: leaderboardIcon(player.rank),
+                keyboard: false
+            }).addTo(leaflet_map);
+
+            const line = L.polyline([playerLatLng, answer], {
+                color: '#003566',
+                weight: 2,
+                opacity: 0.7,
+                dashArray: '6, 6'
+            }).addTo(leaflet_map);
+
+            leaderboard_lines.push(line);
+
+            return marker;
+        });
+
+        const boundsPoints = [answer, ...filteredPlayers.map((p) => [p.player.lat, p.player.lng])];
 
         if(is_valid_guess){
             const guess = [
@@ -367,7 +349,7 @@
     }
 </script>
 
-<div class="page" style={`--font-size: ${$font_size}px`}>
+<div class="page" style={`--font-size: ${$font_size}px; --duck-art-shift: 0px;`}>
     <div class="page-background">
         <MainHeader />
         <main class="answer-map">
@@ -390,8 +372,14 @@
                                         <span class="leaderboard-player-name placeholder">—</span>
                                     {/if}
                                 </div>
-                                {#if player}
+                                <!-- {#if player}
                                     <span class="leaderboard-player-score">{player.score}</span>
+                                {:else}
+                                    <span class="leaderboard-player-score placeholder">—</span>
+                                {/if} -->
+
+                                {#if player}
+                                    <span class="leaderboard-player-score">{player.distance} m</span>
                                 {:else}
                                     <span class="leaderboard-player-score placeholder">—</span>
                                 {/if}

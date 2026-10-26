@@ -112,6 +112,7 @@ export async function POST({ request, locals }) {
     // Only link the round to a registered profile if its ID matches
     // the authenticated Supabase Auth user's ID.
     const { user } = await locals.safeGetSession();
+    let roundid = 0;
     if(user){
         // GET USER PROFILE
         const { data: profile, error: userError } = await locals.supabaseAdmin
@@ -126,7 +127,7 @@ export async function POST({ request, locals }) {
         }
 
         // SAVE NEW ROUND TO DATABASE
-        const { error: saveError } =
+        const { data: round, error: saveError } =
             await locals.supabaseAdmin
                 .from('round')
                 .insert({
@@ -157,9 +158,12 @@ export async function POST({ request, locals }) {
         if (updateError) {
             console.error('Failed to update user total:', updateError);
         }
+
+        roundid = round.roundid;
     }    
 
     return json({
+        roundId: roundid,
         locationId: location.locationid,
         guessedLocation: {
             lat: guessedLat,
