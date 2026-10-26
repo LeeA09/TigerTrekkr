@@ -265,18 +265,18 @@
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
-	is_submitting = false;
+	    is_submitting = false;
     }
 
     $effect(() => {
-        // SUBMIT GUESS WITH TIMER RUNOFF IDENTIFIERS
+        // SUBMIT GUESS WITH TIMER RUNOFF/SKIP IDENTIFIERS
         if ($timerSeconds === 0) { submit_guess({ lat: 100, lng: 200 }); }
     });
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <PlayHeader skip={submit_guess({ lat: 100, lng: 200 })}/>
+        <PlayHeader skip={() => submit_guess({ lat: 100, lng: 200 })}/>
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}

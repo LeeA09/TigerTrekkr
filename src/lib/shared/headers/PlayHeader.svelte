@@ -4,6 +4,8 @@
     import { PauseIcon, SkipIcon, TimerIcon } from '$lib/shared/icons'
     import Utilities from './Utilities.svelte';
 
+    let { skip } = $props()
+
     // Game timer
     let is_timer_paused = $derived(modal.stack.length > 0);
 
@@ -35,8 +37,8 @@
             <button class="utility-button button-pause" onclick={() => modal.open(Pause)} title="Pause" aria-label="Pause">
                 <PauseIcon />
             </button>
-            <button class="utility-button button-skip" onclick={() => modal.open(Skip)} title="Skip" aria-label="Skip">
-                <SkipIcon />
+            <button class="utility-button button-skip" onclick={() => modal.open(Skip, { skip })} title="Skip" aria-label="Skip">
+                <SkipIcon/>
             </button>
             <div class="timer-display">
                 <TimerIcon />
