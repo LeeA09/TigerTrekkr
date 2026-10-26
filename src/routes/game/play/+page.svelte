@@ -265,6 +265,7 @@
         } catch (err) {
             console.error('Error submitting guess:', err);
         }
+	is_submitting = false;
     }
 
     $effect(() => {

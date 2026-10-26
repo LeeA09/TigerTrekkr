@@ -14,7 +14,7 @@
     // go to difficulty screen
     function move_on() {
 	    modal.close();
-        goto('/difficulty');
+        goto('/game/difficulty');
     }
 </script>
 

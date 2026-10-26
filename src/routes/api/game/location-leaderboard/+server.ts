@@ -16,7 +16,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             lng:guessedlong
         `)
         .eq('locationid', locationId)
-        .order('distance', { ascending: false }) //
+        .order('distance', { ascending: true }) //
         .limit(3); // THIS CAN BE CHANGED IF WE WANT TO LIST MORE THAN 3 LEADERS
 
     if (error) {
