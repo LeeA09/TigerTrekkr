@@ -3,6 +3,7 @@
     import { enhance } from '$app/forms'
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
+    import { MainHeader } from '$lib/shared/headers'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     onMount(() => { animateBackground() })
 
@@ -50,6 +51,7 @@
 
 <div class="page" style="--app-font-size: {$font_size}px">
     <div class="page-background">
+        <MainHeader />
         <div class="page-body">
             <div class="background-animation"></div>
             <div class="background-overlay"></div>
