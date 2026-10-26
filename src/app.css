@@ -98,7 +98,7 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 115%;
 }
 
 .end-button .home-button{
@@ -773,7 +773,6 @@ h3 {
     margin: 0 0 0px 0; 
     color: #FFC300; 
     border-bottom: 2px solid #001D3D;
-    /* padding-bottom: 8px; */
     padding-bottom: calc(var(--font-size) * 0.5);
     font-size: calc(var(--font-size) * 1.25);
 }
@@ -782,7 +781,7 @@ h3 {
 .info-item li,
 .help-item p,
 .info-item p {
-    margin-top: calc(var(--font-size) * 0.125); 
+    margin-top: calc(var(--font-size) * 0.5); 
     margin-bottom: calc(var(--font-size) * 0.125); 
     color: #aabccc; 
     font-size: var(--font-size); 
@@ -948,6 +947,16 @@ h3 {
     text-align: center; 
 }
 
+.page-body-title-card {
+    background: #001f3b;
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 12px 24px;
+    margin-top: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: inline-block;
+}
+
 .page-body-card-description {
     /* margin: 0 0 8px 0;  */
     margin: 0 0 calc(var(--font-size) * 0.5) 0;
@@ -1058,7 +1067,7 @@ input:focus {
 
 .page-body-card.difficulty-card {
     /* width: 600px;  */
-    width: calc(var(--font-size) * 28);
+    width: calc(var(--font-size) * 35);
 }
 
 .difficulty-grid {
@@ -1126,7 +1135,7 @@ input:focus {
 
 .page-body-card.end-card {
     /* width: 600px;  */
-    width: calc(var(--font-size) * 22);
+    width: calc(var(--font-size) * 21);
 }
 
 .home-button:disabled { 

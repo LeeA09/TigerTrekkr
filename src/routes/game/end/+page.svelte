@@ -34,10 +34,12 @@
             <div class="page-body-card end-card">
                 <div class="page-body-card-buttons">
                     <div class="page-body-card-title">
-                        <h2>-Total Game Score-</h2>
-                        <h2 style="color: #FFC300">{score} / {max_score}</h2>
+                        <div class="page-body-title-card">
+                            <h2>Total Game Score</h2>
+                            <!-- SOME KIND OF BANNER SHOULD GO HERE? -->
+                            <h2 style="color: #FFC300">{score} / {max_score}</h2>
+                        </div>
                     </div>
-                    <div style="width: 100%; height: 2px; background-color: #FFFFFF; border-radius: 3px;"></div>
                     <div class="end-button">
                         <button type="button" class="home-button" onclick={startNewGame}>
                             Play Again

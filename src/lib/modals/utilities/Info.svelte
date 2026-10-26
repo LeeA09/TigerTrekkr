@@ -20,7 +20,7 @@
         <h2>Information</h2>
         <div class="info-grid">
             <div class="info-item">
-                <h3>Creators—Team Rubber Ducky</h3>
+                <h3>Creators—Rubber Ducky</h3>
 		        <ul>
                 	<li>Anna Mori</li>
                 	<li>Gina Hua</li>

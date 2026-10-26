@@ -39,24 +39,18 @@
                 <div class="difficulty-grid">
                     <button class="difficulty-option" class:selected={$selected_difficulty === 'easy'} onclick={() => ($selected_difficulty = 'easy') }>
                         <span class="difficulty-option-title">Easy</span>
-                        <span class="difficulty-option-description">
-                            360&deg
-                        </span>
-                <span class="difficulty-option-description">Max Pts - 3000</span>
+                        <span class="difficulty-option-description">360&deg</span>
+                        <span class="difficulty-option-description">Max Points - 3000</span>
                     </button>
-                        <button class="difficulty-option" class:selected={$selected_difficulty === 'medium'} onclick={ () => ($selected_difficulty = 'medium') }>
+                    <button class="difficulty-option" class:selected={$selected_difficulty === 'medium'} onclick={ () => ($selected_difficulty = 'medium') }>
                         <span class="difficulty-option-title">Medium</span>
-                        <span class="difficulty-option-description">
-                            180&deg
-                        </span>
-                <span class="difficulty-option-description">Max Pts - 4000</span>
+                        <span class="difficulty-option-description">180&deg</span>
+                        <span class="difficulty-option-description">Max Points - 4000</span>
                     </button>
                     <button class="difficulty-option" class:selected={$selected_difficulty === 'hard'} onclick={ () => ($selected_difficulty = 'hard') }>
                         <span class="difficulty-option-title">Hard</span>
-                        <span class="difficulty-option-description">
-                            0&deg
-                        </span>
-                <span class="difficulty-option-description">Max Pts - 5000</span>
+                        <span class="difficulty-option-description">0&deg</span>
+                        <span class="difficulty-option-description">Max Points - 5000</span>
                     </button>
                 </div>
                 <div class="difficulty-buttons">
