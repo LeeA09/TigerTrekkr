@@ -1617,12 +1617,11 @@ input:focus {
 .map-marker-label {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
     top: calc(var(--font-size) * 2.1);
     width: max-content;
     flex-shrink: 0;
     white-space: nowrap;
-    padding: 0 calc(var(--font-size) * 0.75);
+    padding: 0 calc(var(--font-size) * 0.5);
     height: calc(var(--font-size) * 1.5);
     box-sizing: border-box;
     display: flex;
@@ -1635,6 +1634,10 @@ input:focus {
     font-weight: 700;
     font-family: "Actor", sans-serif;
     cursor: grab;
+
+    margin: 0;
+    position: static;
+    transform: none;
 }
 
 .map-marker-pin ~ .map-marker-label {
@@ -1642,28 +1645,47 @@ input:focus {
 }
 
 .map-marker-rank-num {
-    display: block;
+    display: inline-block;
     line-height: 1;
+    transform: translateY(-2.5px);
+    font-size: calc(var(--font-size) * 0.85);
 }
 
 .map-marker-label--rank {
     background: #003566;
     color: #ffffff;
     width: calc(var(--font-size) * 1.5);
-    padding: 0;
+    height: calc(var(--font-size) * 1.5);
+    /* padding: 0 calc(var(--font-size) * 0.4); */
     cursor: grab;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
 }
 
 .map-marker-label--you {
     background: #ffc300;
     color: #001D3D;
     cursor: grab;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: calc(var(--font-size) * 1.75);
 }
 
 .map-marker-label--correct {
     background: #ffc300;
     color: #001D3D;
     cursor: grab;
+}
+
+.map-marker-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
 .error-message {
