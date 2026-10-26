@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 # SQL and Database
 *.sql
 /supabase
+
+robots.txt
