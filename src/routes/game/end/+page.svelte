@@ -36,7 +36,6 @@
                     <div class="page-body-card-title">
                         <div class="page-body-title-card">
                             <h2>Total Game Score</h2>
-                            <!-- SOME KIND OF BANNER SHOULD GO HERE? -->
                             <h2 style="color: #FFC300">{score} / {max_score}</h2>
                         </div>
                     </div>

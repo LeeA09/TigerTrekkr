@@ -948,12 +948,12 @@ h3 {
 }
 
 .page-body-title-card {
-    background: #001f3b;
+    background: #002b51;
     backdrop-filter: blur(8px);
     border-radius: 12px;
     padding: 12px 24px;
     margin-top: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: inline-block;
 }
 
@@ -1265,8 +1265,8 @@ input:focus {
 
 .map-container {
     position: absolute;
-    bottom: calc(var(--font-size) * 3);
-    right: calc(var(--font-size) * 1);
+    bottom: calc(var(--font-size) * 1.5);
+    right: calc(var(--font-size) * 1.5);
     width: 50vh;
     /* width: calc(var(--font-size) * 22.5); */
     height: 35vh;
