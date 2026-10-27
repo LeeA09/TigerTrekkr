@@ -4,7 +4,7 @@
         "latitude": "38.93264",
         "longitude": "92.33122",
         "time": "2026:05:12 08:15:40",
-        "description": "Hearnes Center opened in 1972. It is a multi-purpose arena, home to the Missouri Tigers' wrestling, women's volleyball, and indoor track and field teams.",
+        "description": "This is one of the athlete parking lot by Hearns Center and Mizzou Arena.",
         "potentialimgmatches": [
             "IMG_20260512_081505_00_009.jpg"
         ]
@@ -24,7 +24,7 @@
         "latitude": "38.94414",
         "longitude": "92.32716",
         "time": "2026:05:12 11:08:05",
-        "description": "Ellis Library is one of the largest research libraries in the state, with over 3 million volumes.",
+        "description": "Ellis Library is one of the largest research libraries in the state, with over 3 million volumes. It was named in 1972 after Elmer Ellis, the 13th president of the University of Missouri and the first president of the UM System.",
         "potentialimgmatches": [
             "IMG_20260512_110820_00_013.jpg"
         ]
@@ -34,17 +34,17 @@
         "latitude": "38.94432",
         "longitude": "92.32733",
         "time": "2026:05:12 11:10:03",
-        "description": "Ellis Auditorium can only be entered through the exterior door on the west side of the building.",
+        "description": "This is the intersecting pathway by Ellis Library and Speaker Circle",        
         "potentialimgmatches": [
             "IMG_20260512_110944_00_014.jpg"
         ]
     },
-    {
+    { 
         "imgname": "IMG_5952.JPEG",
         "latitude": "38.94832",
         "longitude": "92.32854",
         "time": "2026:05:12 11:48:12",
-        "description": "Neff Hall was the first building donated to the University by one of its alumnus, Jay Neff's son, Ward.",
+        "description": "This is the Mizzou's Memorial Gateway, also known as the North Gateway. It was constructed in 1915, with the original cornerstone salvaged from Academic Hall (Mizzou's very first campus budiling that tragically burned down in 1892). ",
         "potentialimgmatches": [
             "IMG_20260512_114758_00_016.jpg"
         ]
@@ -54,17 +54,7 @@
         "latitude": "38.94807",
         "longitude": "92.33141",
         "time": "2026:05:13 09:44:45",
-        "description": "McReynolds Hall houses psychology academic advising.",
-        "potentialimgmatches": [
-            "IMG_20260513_094428_00_017.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_5977.JPEG",
-        "latitude": "38.94807",
-        "longitude": "92.33142",
-        "time": "2026:05:13 09:44:47",
-        "description": "McDavid Hall was named after Frank Mitchell McDavid, who served on the Board of Curators of the University of Missouri from 1921 to 1943.",
+        "description": "Pathway between McReynolds Hall and McDavid Residence Hall. McReynolds Hall (named after Allen McReynolds) was constrcuted in 1956 as a men's resdience hall, now it turned into campus office space.",
         "potentialimgmatches": [
             "IMG_20260513_094428_00_017.jpg"
         ]
@@ -74,17 +64,7 @@
         "latitude": "38.94815",
         "longitude": "92.33077",
         "time": "2026:05:13 09:49:58",
-        "description": "The annual Columbia Area Earth Day Festival is held in Peace Park, promoting sustainability for future generations. ",
-        "potentialimgmatches": [
-            "IMG_20260513_094943_00_018.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_5979.JPEG",
-        "latitude": "38.94815",
-        "longitude": "92.33077",
-        "time": "2026:05:13 09:50:01",
-        "description": "Peace Park was renamed after the Kent State Massacre, to which there is a memorial in the park.",
+        "description": "Peace Park was renamed after the Kent State Massacre, to which there is a memorial in the park. The annual Columbia Area Earth Day Festival is held in Peace Park, promoting sustainability for future generations. ",
         "potentialimgmatches": [
             "IMG_20260513_094943_00_018.jpg"
         ]
@@ -104,8 +84,8 @@
         "latitude": "38.94655",
         "longitude": "92.33143",
         "time": "2026:05:13 10:00:20",
-        "description": "Naka Hall is the University of Missouri's computer engineering, electrical engineering, and computer science building.",
-        "potentialimgmatches": [
+        "description": "Backside of Nake Hall. Naka Hall was built in 1958, and house the University of Missouri's computer engineering, electrical engineering, and computer science department.",
+        "potentialimgmatches": [ 
             "IMG_20260513_095956_00_021.jpg"
         ]
     },
@@ -114,7 +94,7 @@
         "latitude": "38.94630",
         "longitude": "92.33077",
         "time": "2026:05:13 10:12:49",
-        "description": "Lafferre Hall is where the Mizzou Computing Association hosts their annual hackathon, TigerHacks!",
+        "description": "Lafferre Hall is the primary home of the Univeristy of Missour College of Engineering. It was 3 buildings renovated into 1 huge building in 2016. Lafferre Hall is also where the Mizzou Computing Association hosts their annual hackathon, TigerHacks!",
         "potentialimgmatches": [
             "IMG_20260513_101233_00_022.jpg"
         ]
@@ -144,7 +124,7 @@
         "latitude": "38.94532",
         "longitude": "92.33036",
         "time": "2026:05:13 10:26:01",
-        "description": "Lafferre Hall constitutes 70% of the College of Engineering’s space on the MU campus.",
+        "description": "Intersected pathway between Lafferre Hall, Hill Hall, and Townsend Hall. ",
         "potentialimgmatches": [
             "IMG_20260513_102540_00_025.jpg"
         ]
@@ -154,7 +134,7 @@
         "latitude": "38.94507",
         "longitude": "92.32911",
         "time": "2026:05:13 10:30:48",
-        "description": "Jesse Hall has served as the main administration building for the university for 127 years. ",
+        "description": "West-side of Jesse Hall.",
         "potentialimgmatches": [
             "IMG_20260513_103028_00_026.jpg"
         ]
@@ -162,13 +142,33 @@
     {
         "imgname": "IMG_5990.JPEG",
         "latitude": "38.94495",
-        "longitude": "92.32872",
+        "longitude": "92.32874",
         "time": "2026:05:13 10:33:49",
-        "description": "Jesse Hall was built to replace Academic Hall, which burned down in an electrical fire in 1892.",
+        "description": "Under pathway under Jesse Hall front stair.",
         "potentialimgmatches": [
             "IMG_20260513_103336_00_027.jpg"
         ]
     },
+    {
+        "imgname": "IMG_5991.JPEG",
+        "latitude": "38.94519",
+        "longitude": "92.32955",
+        "time": "2026:05:13 10:38:24",
+        "description": "Pathway between Hill hall and Jesse Hall.",
+        "potentialimgmatches": [
+            "IMG_20260513_103807_00_028.jpg"
+        ]
+    },
+    {
+        "imgname": "IMG_5992.JPEG",
+        "latitude": "38.94557",
+        "longitude": "92.32954",
+        "time": "2026:05:13 10:40:21",
+        "description": "Stairs between Hill Hall and Lafferre Hall.",
+        "potentialimgmatches": [
+            "IMG_20260513_104004_00_029.jpg"
+        ]
+    }, /*done*/
     {
         "imgname": "IMG_5991.JPEG",
         "latitude": "38.94519",
