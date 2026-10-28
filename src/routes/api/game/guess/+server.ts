@@ -18,7 +18,7 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Calculates the score based on distance, time taken, and difficulty level.
-function calculateScore(distance: number, seconds: number, difficulty: string) {
+function calculateScore(distance: number, secondsRemaining: number, difficulty: string) {
     const settings = {
         easy: { maxScore: 3000, distanceRate: 0.0005 },
         medium: { maxScore: 4000, distanceRate: 0.0015},
@@ -30,14 +30,18 @@ function calculateScore(distance: number, seconds: number, difficulty: string) {
         throw error(400, 'Invalid difficulty.');
     }
 
+    
+
+    const totalTime = 60; // 60 seconds
+    const remaining = Math.min(Math.max(secondsRemaining, 0), totalTime); 
+    const elapsedSeconds = totalTime - remaining;
     const gracePeriod = 2; // allow 2 seconds with no time penalty
-    const penaltySeconds = Math.max(0, seconds - gracePeriod);
+    const penaltySeconds = Math.max(0, elapsedSeconds - gracePeriod);
     const timePenalty = 10 * penaltySeconds;
 
     const distanceScore = config.maxScore * Math.exp(-config.distanceRate * distance);
     let rawScore = distanceScore;
-
-
+    
     if (distance <= 10) { // apply bonus for guesses within 10 meters
         rawScore = config.maxScore;
     }
