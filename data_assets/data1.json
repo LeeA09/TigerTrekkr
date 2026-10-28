@@ -154,7 +154,7 @@
         "latitude": "38.94519",
         "longitude": "92.32955",
         "time": "2026:05:13 10:38:24",
-        "description": "Pathway between Hill hall and Jesse Hall.",
+        "description": "Pathway between Hill hall and Jesse Hall that connect the Quad with Conley Ave..",
         "potentialimgmatches": [
             "IMG_20260513_103807_00_028.jpg"
         ]
@@ -164,27 +164,7 @@
         "latitude": "38.94557",
         "longitude": "92.32954",
         "time": "2026:05:13 10:40:21",
-        "description": "Stairs between Hill Hall and Lafferre Hall.",
-        "potentialimgmatches": [
-            "IMG_20260513_104004_00_029.jpg"
-        ]
-    }, /*done*/
-    {
-        "imgname": "IMG_5991.JPEG",
-        "latitude": "38.94519",
-        "longitude": "92.32955",
-        "time": "2026:05:13 10:38:24",
-        "description": "Jesse Hall is home to offices like the chancellor's, admissions, and financial aid.",
-        "potentialimgmatches": [
-            "IMG_20260513_103807_00_028.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_5992.JPEG",
-        "latitude": "38.94557",
-        "longitude": "92.32954",
-        "time": "2026:05:13 10:40:21",
-        "description": "Stairs between Hill Hall and Lafferre Hall.",
+        "description": "Stairs between Hill Hall and Lafferre Hall that connect the Quad with S 6th St.",
         "potentialimgmatches": [
             "IMG_20260513_104004_00_029.jpg"
         ]
@@ -194,7 +174,7 @@
         "latitude": "38.94559",
         "longitude": "92.32882",
         "time": "2026:05:13 10:44:00",
-        "description": "MU Logo in front of Jesse Hall. Jesse Hall is the main administration building and a historic campus landmark.",
+        "description": "Jesse Hall is the main administration building and a historic campus landmark. It was built and completed in 1895 to replaced the university's original main building, Academic Hall. Officially renamed Jesse Hall to Honor Dr. Richard Henry Jesse, who guided the school through the aftermath of the devastating fire. Resources: Financial Aid (11 Jesse Hall), Office of Institutional Equity (320 Jesse Hall), Cashiers Office (325 Jesse Hall), and Community Services/Student Resources (230 Jesse Hall). ",
         "potentialimgmatches": [
             "IMG_20260513_104341_00_031.jpg"
         ]
@@ -204,7 +184,7 @@
         "latitude": "38.94663",
         "longitude": "92.32935",
         "time": "2026:05:13 10:50:40",
-        "description": "Shamrock Plaze is a landmark deeply rooted in the history and traditions of the University of Missouri (Mizzou) College of Engineering. ",
+        "description": "Shamrock Plaze is a landmark deeply rooted in the history and traditions of the University of Missouri (Mizzou) College of Engineering. Students in 1903 \"discovered\" that St. Patrick was an engineer and began to celebrate eveery March. An old campus lore said, anyone who steps on the Shamrock Medallion is destined to marry an engineer. ",
         "potentialimgmatches": [
             "IMG_20260513_105017_00_033.jpg"
         ]
@@ -214,17 +194,17 @@
         "latitude": "38.94667",
         "longitude": "92.32920",
         "time": "2026:05:13 10:55:56",
-        "description": "Switzler Hall was originally called Scientific Hall and later used as the Agricultural Building. Renamed in 1909 for Colonel William Franklin Switzler, a prominent Missouri Statesman editor, Boone County historian, and university curator supporter. It houses a three-story silo in its interior.",
+        "description": "Switzler Hall was originally called Scientific Hall and later used as the Agricultural Building. Renamed in 1909 for Colonel William Franklin Switzler, a prominent Missouri Statesman editor, Boone County historian, and university curator supporter. It houses a three-story silo in its interior. Currently house the Department of Communication, the Women's nad Gender Studies Department, and the Speical Degrees Program. ",
         "potentialimgmatches": [
             "IMG_20260513_105543_00_035.jpg"
         ]
-    },
+    },  
     {
         "imgname": "IMG_5997.JPEG",
         "latitude": "38.94716",
         "longitude": "92.32901",
         "time": "2026:05:13 10:59:13",
-        "description": "Geological Sciences Building was built in 1965 to house the expanding department.",
+        "description": "Geological Sciences Building was built in 1965 to house the expanding department. Inside of the building there is a long hallway shelves maintained by students that filled with extensive rock and mineral specimens. ",
         "potentialimgmatches": [
             "IMG_20260513_105858_00_036.jpg"
         ]
@@ -254,11 +234,11 @@
         "latitude": "38.94755",
         "longitude": "92.32832",
         "time": "2026:05:13 11:09:00",
-        "description": "Gannett Hall was designed in 1976. Named after Gannett Company, a major media organization that helped finance the construction of the building.",
+        "description": "Gannett Hall was designed in 1976. Named after Gannett Company, a major media organization that helped finance the construction of the building. It connects with Neff Hall, Walter Williams Hall, and Reynolds Journalism Institute (RJI). MediaBrain Lab is located in 176 Garnnett Hall.",
         "potentialimgmatches": [
             "IMG_20260513_110842_00_039.jpg"
         ]
-    },
+    },  /*done*/
     {
         "imgname": "IMG_6002.JPEG",
         "latitude": "38.94729",
