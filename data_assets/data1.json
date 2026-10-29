@@ -238,13 +238,13 @@
         "potentialimgmatches": [
             "IMG_20260513_110842_00_039.jpg"
         ]
-    },  /*done*/
+    }, 
     {
         "imgname": "IMG_6002.JPEG",
         "latitude": "38.94729",
         "longitude": "92.32820",
         "time": "2026:05:13 11:10:59",
-        "description": "Reynolds Journalism Institute was launched in 2004 using a landmark $31 million grant from the Donald W. Reynolds Foundation.",
+        "description": "Reynolds Journalism Institute was launched in 2004 using a landmark $31 million grant from the Donald W. Reynolds Foundation. Resources: Frank Lee Martin Jouralism Library, Technology-Rich Meeting Rooms, and High-Definition Television Studio.",
         "potentialimgmatches": [
             "IMG_20260513_111040_00_040.jpg"
         ]
@@ -254,7 +254,7 @@
         "latitude": "38.94773",
         "longitude": "92.32799",
         "time": "2026:05:13 11:13:47",
-        "description": "Journalism Archway, connecting corridor by Journalism School.",
+        "description": "Journalism Archway. It connects Neff Hall and Walter Williams Hall, serving as a historic and symbolic gateway to the world's first journalism school. On May, 1931, the Republic of China gifted two massive stone lion statues, that stands five feet tal and weighs around 5,000 pounds, as a symbol of international goodwill and educational ties.  ",
         "potentialimgmatches": [
             "IMG_20260513_111329_00_041.jpg"
         ]
@@ -294,7 +294,7 @@
         "latitude": "38.94629",
         "longitude": "92.32874",
         "time": "2026:05:13 11:28:08",
-        "description": "The Columns. The David R. Francis Quadrangle Historic District—known as The Quad. Built between 1840-1843, it was the university's first and main building. A massive fire destroyed Academic Hall on January 9, 1892.",
+        "description": "The Columns. The David R. Francis Quadrangle Historic District—known as The Quad. Built between 1840-1843, it was the university's first and main building, Academic Hall. A massive fire destroyed Academic Hall on January 9, 1892.",
         "potentialimgmatches": [
             "IMG_20260513_113053_00_046.jpg"
         ]
@@ -304,7 +304,7 @@
         "latitude": "38.94564",
         "longitude": "92.32829",
         "time": "2026:05:13 11:34:41",
-        "description": "Swallow Hall was built in 1893 on the Francis Quadrangle and is named after George Clinton Swallow, the university's first professor of geology, chemistry, and agriculture.",
+        "description": "Swallow Hall was built in 1893 on the Francis Quadrangle and is named after George Clinton Swallow, the university's first professor of geology, chemistry, and agriculture. It houses the Department of Anthropology and the Department of Art History and Archaeology.",
         "potentialimgmatches": [
             "IMG_20260513_113427_00_047.jpg"
         ]
@@ -314,7 +314,7 @@
         "latitude": "38.94549",
         "longitude": "92.32860",
         "time": "2026:05:13 11:36:43",
-        "description": "Francis Memorial, in front of Jesse Hall from the Columns view. It's a deeply historically significant landmark honoring the 27th Governor of Missouri, David R. Francis.",
+        "description": "Francis Memorial, in front of Jesse Hall from the Columns view. It's a deeply historically significant landmark honoring the 27th Governor of Missouri, David R. Francis. The Lucky Nose, A Mizzou student tradition claims that rubbing the bronze nose of the David R. Francies bust will bring you good luck and guarantee an \"A\" on your next exam.",
         "potentialimgmatches": [
             "IMG_20260513_113627_00_048.jpg"
         ]
@@ -324,11 +324,11 @@
         "latitude": "38.94502",
         "longitude": "92.32781",
         "time": "2026:05:13 11:41:16",
-        "description": "Stairs between Jesse Hall and Tate Hall.",
+        "description": "Stairs between Jesse Hall and Tate Hall that lead to Lowry Mall.",
         "potentialimgmatches": [
             "IMG_20260513_114054_00_050.jpg"
         ]
-    },
+    }, /*Done*/
     {
         "imgname": "IMG_6012.JPEG",
         "latitude": "38.94462",
