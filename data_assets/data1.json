@@ -328,13 +328,13 @@
         "potentialimgmatches": [
             "IMG_20260513_114054_00_050.jpg"
         ]
-    }, /*Done*/
+    },
     {
         "imgname": "IMG_6012.JPEG",
         "latitude": "38.94462",
         "longitude": "92.32812",
         "time": "2026:05:13 11:44:57",
-        "description": "Tate Hall was built in 1924-1927 to serve as the permanent home for the MU School of Law. It was named in honor of the donors' son Lee Harry Tate, a 1913 graduate of the MU Law School who died young following his service in the U.S. Navy during WWI.",
+        "description": "Tate Hall was built in 1924-1927 to serve as the permanent home for the MU School of Law. It was named in honor of the donors' son Lee Harry Tate, a 1913 graduate of the MU Law School who died young following his service in the U.S. Navy during WWI. Now, Tate Hall is primarily home to the MU English Department and the Center for Literary Arts.",
         "potentialimgmatches": [
             "IMG_20260513_114435_00_051.jpg"
         ]
@@ -344,7 +344,7 @@
         "latitude": "38.94417",
         "longitude": "92.32760",
         "time": "2026:05:13 11:49:02",
-        "description": "Speaker's Circle is a famous open-air gathering place and designated free-speech zone.",
+        "description": "Speaker's Circle is a famous open-air gathering place and designated free-speech zone. It was originally known as Conley Plaza.",
         "potentialimgmatches": [
             "IMG_20260513_114843_00_053.jpg"
         ]
@@ -354,7 +354,7 @@
         "latitude": "38.94671",
         "longitude": "92.32542",
         "time": "2026:05:13 17:59:13",
-        "description": " Sinquefield Music Center(Fine Aarts Annex) initially served as a Baptist Student Center, then the university acquired to ease space shortages for the music department. In 2018, the Fine Arts Annes was torn down to build the modern Sinquefield Music Center. ",
+        "description": "Sinquefield Music Center(Fine Aarts Annex) initially served as a Baptist Student Center, then the university acquired to ease space shortages for the music department. In 2018, the Fine Arts Annes was torn down to build the modern Sinquefield Music Center. Resources: Rehearsal & Performance Spaces, Recording Studio, Practice Roos, and Educational Hubs.",
         "potentialimgmatches": [
             "IMG_20260513_175854_00_054.jpg"
         ]
@@ -364,11 +364,11 @@
         "latitude": "38.94617",
         "longitude": "92.32443",
         "time": "2026:05:13 18:03:54",
-        "description": "F.B. Mumford Hall was constructed in 1922 and offically dedicated on March 18, 1930. Named after Frederick Blackmar Mumford, a monumental figure who served as the Dean of the MU College of Agriculture from 1909 to 1938 and as Federal Foods Coordinator for Missouri during World War  ",
+        "description": "F.B. Mumford Hall was designed in 1922 and offically dedicated on March 18, 1930. Named after Frederick Blackmar Mumford, a monumental figure who served as the Dean of the MU College of Agriculture from 1909 to 1938 and as Federal Foods Coordinator for Missouri during WWI. It houses the Department of Agricultural and Applied Economices.",
         "potentialimgmatches": [
             "IMG_20260513_180335_00_055.jpg"
         ]
-    },
+    },  /*Done*/
     {
         "imgname": "IMG_6035.JPEG",
         "latitude": "38.94607",
