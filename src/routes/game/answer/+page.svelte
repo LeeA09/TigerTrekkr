@@ -103,7 +103,7 @@
     $effect(() => {
         if(!leaflet_map || !window.L) return;
         const L = window.L;
-        const fs = $derived($font_size)
+        const fs = $font_size
 
         if (guessed_marker) { guessed_marker.remove(); guessed_marker = null; }
         
@@ -258,7 +258,7 @@
     $effect(() => {
         if(!leaflet_map || !window.L || !players || players.length === 0) return;
         const L = window.L;
-        const fs = $derived($font_size);
+        const fs = $font_size;
 
         leaderboard_markers.forEach((marker) => { marker.remove(); });
         leaderboard_markers = [];
@@ -392,22 +392,22 @@
         <aside class="answer-bot-bar">
             <div class="answer-stats-group">
                 <div class="answer-round-stat distance-stat">
-                    <span class="answer-round-stat-label">Distance</span>
+                    <span class="answer-round-stat-label">Distance:</span>
                     <span class="answer-round-stat-value">{guessed_distance} m</span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat time-stat">
-                    <span class="answer-round-stat-label">Time</span>
+                    <span class="answer-round-stat-label">Time:</span>
                     <span class="answer-round-stat-value">{guessed_time_formatted} <span class="answer-round-stat-unit">min</span></span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat difficulty-stat">
-                    <span class="answer-round-stat-label">Difficulty</span>
+                    <span class="answer-round-stat-label">Difficulty:</span>
                     <span class="difficulty-badge difficulty-{$selected_difficulty}">{$selected_difficulty}</span>
                 </div>
             </div>
             <div class="answer-round-score">
-                <span class="answer-round-stat-label">Score</span>
+                <span class="answer-round-stat-label">Score:</span>
                 <span class="answer-round-stat-value">{round_score} / {max_score}</span>
             </div>
             {#if $currentLocIdx < 3}

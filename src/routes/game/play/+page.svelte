@@ -283,7 +283,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <PlayHeader skip={() => submit_guess({ lat: 100, lng: 200 })}/>
+        <PlayHeader skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}

@@ -93,21 +93,21 @@
 				<li><strong style="color: #FFC300;">Easy</strong>: 
 					<ul>
 						<li>Full 360° rotation and zoom</li>
-						<li>1.0× score modifier</li>
+						<!-- <li>1.0× score modifier</li> -->
                         <li>Max possible score of 3000</li>
 					</ul>
 				</li> 
                         	<li><strong style="color: #FFC300;">Medium</strong>:
 					<ul>
 						<li>Rotate 180° and zoom</li>
-						<li>1.1× score modifier</li>
+						<!-- <li>1.1× score modifier</li> -->
                         <li>Max possible score of 4000</li>
 					</ul>
 				</li>
 				<li><strong style="color: #FFC300;">Hard</strong>:
 					<ul>
 						<li>Still image (no rotation) with zoom only</li>
-						<li>1.2× score modifier</li>
+						<!-- <li>1.2× score modifier</li> -->
                         <li>Max possible score of 5000</li>
 					</ul>
 				</li>
