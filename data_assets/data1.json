@@ -368,7 +368,7 @@
         "potentialimgmatches": [
             "IMG_20260513_180335_00_055.jpg"
         ]
-    },  /*Done*/
+    }, 
     {
         "imgname": "IMG_6035.JPEG",
         "latitude": "38.94607",
@@ -554,7 +554,7 @@
         "latitude": "38.94369",
         "longitude": "92.32289",
         "time": "2026:05:13 19:55:21",
-        "description": "Physics Building was designed and constructed in 1964 and officially dedicated in April 1967. And there is telescope on the roof of the building.",
+        "description": "Physics Building was designed and constructed in 1964 and officially dedicated in April 1967. And there is the Laws Observatory on the roof of the building that house a variety of small telescopes. It open every Wednesday night from 8PM-10PM to the public.",
         "potentialimgmatches": [
             "IMG_20260513_195500_00_075.jpg"
         ]
@@ -564,7 +564,7 @@
         "latitude": "38.93289",
         "longitude": "92.33319",
         "time": "2026:05:14 09:23:27",
-        "description": "Mizzou Arena is a 15,061-seat multi-purpose facility that opened in November 2004 as the home of the Tigers' basketball and gymnastics teams.",
+        "description": "Mizzou Arena is a 15,061-seat multi-purpose facility that opened in November 2004 as the home of the Tigers' basketball and gymnastics teams. It was briefly named Paige Sports Arena (after Wal-Mart heiress Elizabeth Paige Laurie) before the naming rights were returned to the university following an academic scandal.",
         "potentialimgmatches": [
             "IMG_20260514_092402_00_077.jpg"
         ]
@@ -574,7 +574,7 @@
         "latitude": "38.93358",
         "longitude": "92.33378",
         "time": "2026:05:14 09:34:48",
-        "description": "Champions Dr.",
+        "description": "Champions Dr. connects Providence Rd. and Mick Deaver Menmorial Dr.",
         "potentialimgmatches": [
             "IMG_20260514_093426_00_078.jpg"
         ]
@@ -584,7 +584,7 @@
         "latitude": "38.93401",
         "longitude": "92.33235",
         "time": "2026:05:14 09:40:33",
-        "description": "Ramp lead to Memorial Stadium.",
+        "description": "Ramp lead to Memorial Stadium. Memorial Stadium was constructed in December 1925, and offically opened on October 2, 1926. It was dedicated as "Memorial Stadium" to honor the 112 Mizzou students and alumni who lost their lives in WWI.",
         "potentialimgmatches": [
             "IMG_20260514_093959_00_079.jpg"
         ]
@@ -594,7 +594,7 @@
         "latitude": "38.93427",
         "longitude": "92.32974",
         "time": "2026:05:14 09:47:11",
-        "description": "Hearnes Center is a 13,611-seat multi-purpose arena that officially opened and was dedicated on August 4, 1972.",
+        "description": "Hearnes Center is a 13,611-seat multi-purpose arena that officially opened and was dedicated on August 4, 1972. Named after Warren E. Hearnes, a 1952 Mizzou alumnus and the 46th Governor of Missouri.",
         "potentialimgmatches": [
             "IMG_20260514_094646_00_080.jpg"
         ]
@@ -604,7 +604,7 @@
         "latitude": "38.93359",
         "longitude": "92.32788",
         "time": "2026:05:14 09:55:40",
-        "description": "Mizzou Softball Field opened in March 2017 after decades at the historic University Field. ",
+        "description": "Mizzou Softball Field opened in March 2017 after decades at the historic University Field.",
         "potentialimgmatches": [
             "IMG_20260514_095524_00_081.jpg"
         ]
@@ -614,7 +614,7 @@
         "latitude": "38.93254",
         "longitude": "92.32913",
         "time": "2026:05:14 10:00:14",
-        "description": "Bus station by Hearnes Center.",
+        "description": "Parking lots and bus station by Hearnes Center. The main Hearnes lots are designated as SG4, SG4M, SG4N, and SG4O. During the semesters, students will be able to purchase parking permit. Students who purchased parking permit in these lots will be asked to move their car to other parking location on campus before football games",
         "potentialimgmatches": [
             "IMG_20260514_095937_00_082.jpg"
         ]
@@ -634,7 +634,7 @@
         "latitude": "38.93877",
         "longitude": "92.33298",
         "time": "2026:05:14 10:21:26",
-        "description": "Mizzou Market-Southwest.",
+        "description": "Southwest village and Mizzou Market-Southwest. Southwest Village is one of the main resdigntial campus neighborhoods, encompassing Bluford, Brooks, Center, North, and South halls. It represent part of Mizzou;s modernized residential expansion aimed to provide contemporary suite-style housing rather than traditional community-style dorms.",
         "potentialimgmatches": [
             "IMG_20260514_102104_00_084.jpg"
         ]
@@ -644,7 +644,7 @@
         "latitude": "38.93894",
         "longitude": "92.33347",
         "time": "2026:05:14 10:23:11",
-        "description": "Center Hall",
+        "description": "Center Hall, one of the modern suite-style residence hall that opened in 2006.",
         "potentialimgmatches": [
             "IMG_20260514_102257_00_085.jpg"
         ]
@@ -654,17 +654,7 @@
         "latitude": "38.93902",
         "longitude": "92.33314",
         "time": "2026:05:14 10:24:49",
-        "description": "[I NEED TO LOOK AT THE PIC FOR THE DESCRIPTION]",
-        "potentialimgmatches": [
-            "IMG_20260514_102433_00_086.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_6077.JPEG",
-        "latitude": "38.93930",
-        "longitude": "92.33323",
-        "time": "2026:05:14 10:24:57",
-        "description": "North Hall was previously home to the Blair Group residence halls (which included Smith Hall, Donnelly Hall, and Blair Commons), originally built in 1961.",
+        "description": "Under pathway of Center Hall, one of the modern suite-style residence hall that opened in 2006.",
         "potentialimgmatches": [
             "IMG_20260514_102433_00_086.jpg"
         ]
@@ -674,7 +664,7 @@
         "latitude": "38.93940",
         "longitude": "92.33166",
         "time": "2026:05:14 10:29:10",
-        "description": "Intersection of Kentucky Blvd and Richmond Ave. Southwest Residence Hall.",
+        "description": "Intersection of Kentucky Blvd and Richmond Ave. Jones Residence Hall.",
         "potentialimgmatches": [
             "IMG_20260514_102845_00_087.jpg"
         ]
@@ -704,7 +694,7 @@
         "latitude": "38.93976",
         "longitude": "92.32941",
         "time": "2026:05:14 10:50:07",
-        "description": "Patient Centered Care Learning Center at the University of Missouri School of Medicine in Columbia, Missouri, is a six-story, 97,000-square-foot educational facility that opened in 2017.",
+        "description": "Patient Centered Care Learning Center at the University of Missouri School of Medicine in Columbia, Missouri, is a six-story, 97,000-square-foot educational facility that opened in 2017. It have Patient-Based Learning (PBL) classrooms, High-Tech Anatomy Lab, and Clinicla Simulation Rooms.",
         "potentialimgmatches": [
             "IMG_20260514_104903_00_090.jpg"
         ]
@@ -724,7 +714,7 @@
         "latitude": "38.94098",
         "longitude": "92.32829",
         "time": "2026:05:14 11:00:44",
-        "description": "Stankowski Volleyball Courts was redesigned in 1996 from historic Rollins Field space into the modern Stankowski Field outdoor complex. ",
+        "description": "Stankowski Volleyball Courts was redesigned in 1996 from historic Rollins Field space into the modern Stankowski Field outdoor complex. It have four full-sozed sand volleyball courts, and student acan checkout free equipmetn at the MizzouRec equipment desk.",
         "potentialimgmatches": [
             "IMG_20260514_105952_00_092.jpg"
         ]
@@ -764,7 +754,7 @@
         "latitude": "38.94157",
         "longitude": "92.32754",
         "time": "2026:05:14 11:24:37",
-        "description": "MizzouRec entrance by Stankowski Volleyball Courts.",
+        "description": "MizzouRec entrance by Stankowski Volleyball Courts. MizzouRec is a massive 300,000 square foot fitness and leisure facility. It have a 50-meter lap pool, Tiger Grotto (lazy river and a sauna), fitness, courts, climbing tower, and  specialized gyms.",
         "potentialimgmatches": [
             "IMG_20260514_112620_00_097.jpg"
         ]
@@ -804,7 +794,7 @@
         "latitude": "38.93948",
         "longitude": "92.32757",
         "time": "2026:05:14 11:44:04",
-        "description": "Ramp by Sinclair School of Nursing",
+        "description": "Sinclair School of Nursing, offically named the Charles and Josie Smith Sinclaire School of Nursing in 1994.",
         "potentialimgmatches": [
             "IMG_20260514_114324_00_102.jpg"
         ]
@@ -824,7 +814,7 @@
         "latitude": "38.94524",
         "longitude": "92.32578",
         "time": "2026:06:14 10:44:21",
-        "description": "Under roof pathway next to Fine Arts Building by Hitt St. ",
+        "description": "Fine Arts Building was constructed in 1958. It was divided into three primary academic and creative disciplines, Art Department (Visual Arts), Music Department, and Theatre and Performance.",
         "potentialimgmatches": [
             "IMG_20260614_104404_00_104.jpg"
         ]
@@ -884,7 +874,7 @@
         "latitude": "38.94587",
         "longitude": "92.32742",
         "time": "2026:06:14 11:08:57",
-        "description": "Bus station by S 9th St. next to Middlebush Hall.",
+        "description": "Bus station by S 9th St. next to Middlebush Hall, across from Reynolds Journalism Institute.",
         "potentialimgmatches": [
             "IMG_20260614_110844_00_110.jpg"
         ]
@@ -894,7 +884,7 @@
         "latitude": "38.94608",
         "longitude": "92.32691",
         "time": "2026:06:14 11:13:27",
-        "description": "Courtyard in Middlebush Hall. Middlebush Hall was designed and constructed in 1958–1959 and formally dedicated in October 1972 in honor of Frederick A. Middlebush",
+        "description": "Courtyard in Middlebush Hall. Middlebush Hall was designed and constructed in 1958–1959 and formally dedicated in October 1972 in honor of Frederick A. Middlebush. It house Department of Statistics and Data Science, and Harry S Truman School of Government and Public Affairs.",
         "potentialimgmatches": [
             "IMG_20260614_111256_00_111.jpg"
         ]
@@ -924,7 +914,7 @@
         "latitude": "38.94503",
         "longitude": "92.32587",
         "time": "2026:06:14 11:24:26",
-        "description": "Lowry Mall was transformed from a busy city street into a pedestrian walkway between 1981 and 1984.",
+        "description": "Lowry Mall was transformed from a busy city street into a pedestrian walkway between 1981 and 1984. The two mins named Lowry, Lowry Mall was named after Thomas Jefferson Lowry, the frist dean of Mizzou's College of Engineering. However, Lowry Hall was named after Benjamin Franklin Lowry, whose family donated $15,000.",
         "potentialimgmatches": [
             "IMG_20260614_112409_00_115.jpg"
         ]
@@ -944,7 +934,7 @@
         "latitude": "38.94479",
         "longitude": "92.32651",
         "time": "2026:06:14 11:31:29",
-        "description": "Ellis Library Lowry Mall Entrance. ",
+        "description": "Ellis Library Lowry Mall Entrance. Elmer Ellis Library is the main research library, it have vast collections, books, and study spaces.",
         "potentialimgmatches": [
             "IMG_20260614_113111_00_117.jpg"
         ]
@@ -964,7 +954,7 @@
         "latitude": "38.94525",
         "longitude": "92.32707",
         "time": "2026:06:14 11:38:01",
-        "description": "Pathway between Lowry Hall and Student Success Center. ",
+        "description": "Pathway between Lowry Hall and Student Success Center. Lowry Hall was designed and completed in 1904 as the private Bible College of Missouri. The University of Missouri formally purchased and acquired Lowry Hall on April 3, 1980. You can find Honors College here.",
         "potentialimgmatches": [
             "IMG_20260614_113737_00_121.jpg"
         ]
@@ -984,7 +974,7 @@
         "latitude": "38.94458",
         "longitude": "92.32713",
         "time": "2026:06:14 11:52:27",
-        "description": "Pathway next to Ellis Library. ",
+        "description": "Pathway next to Ellis Library that connect MU Student Center and Lowry Mall.",
         "potentialimgmatches": [
             "IMG_20260614_115155_00_125.jpg"
         ]
@@ -1018,7 +1008,7 @@
         "potentialimgmatches": [
             "IMG_20260725_100408_00_129.jpg"
         ]
-    },
+    }, /*Done*/
     {
         "imgname": "IMG_8491.JPG",
         "latitude": "38.94397",
