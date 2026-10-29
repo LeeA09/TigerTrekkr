@@ -394,19 +394,9 @@
         "latitude": "38.94593",
         "longitude": "92.32261",
         "time": "2026:05:13 18:11:22",
-        "description": "Stephens Hall was constructed in 1935–1936 with support from the Public Works Administration (PWA). Named after E. Sydney Stephens, a prominent Columbia businessman and key contributor to the creation of the Missouri Conservation Commission.",
+        "description": "Stephens Hall was constructed in 1935–1936 with support from the Public Works Administration (PWA). Named after E. Sydney Stephens, a prominent Columbia businessman and key contributor to the creation of the Missouri Conservation Commission. It currently houses offices for the Department of Biochemistry. Fun fact, Stephens Hall is completely unrelated to Stephens College. People frequently confuse Mizzou's Stephens Hall with the campus of Stephens College.",
         "potentialimgmatches": [
             "IMG_20260513_181102_00_058.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_6039.JPEG",
-        "latitude": "38.94616",
-        "longitude": "92.32241",
-        "time": "2026:05:13 18:12:36",
-        "description": "Wildlife Pond holds a nostalgic place in the memories of longtime Columbia residents. It was historically known for housing a quaint wooden footbridge affectionately dubbed the "kissing bridge" by locals.",
-        "potentialimgmatches": [
-            "IMG_20260513_181222_00_059.jpg"
         ]
     },
     {
@@ -414,7 +404,7 @@
         "latitude": "38.94554",
         "longitude": "92.32266",
         "time": "2026:05:13 18:15:29",
-        "description": "Schweitzer Hall was built in 1912 as the original Agricultural Chemistry Building. Named after Dr. Paul Schweitzer, the first full0time professor of chemistry at MU and the first chairman of the Department of Agricultural Chemistry.",
+        "description": "Schweitzer Hall was built in 1912 as the original Agricultural Chemistry Building. Named after Dr. Paul Schweitzer, the first full time chemistry professor at MU and the first chairman of the Department of Agricultural Chemistry. It houses a state-of the art state-of-the-art 800 MHz Nuclear Magnetic Resonance (NMR) spectrometer, a powerful structural biology tool that serves the entire University of Missouri System",
         "potentialimgmatches": [
             "IMG_20260513_181448_00_060.jpg"
         ]
@@ -434,7 +424,7 @@
         "latitude": "38.94479",
         "longitude": "92.32323",
         "time": "2026:05:13 18:20:24",
-        "description": "Curtis Hall was constructed in 1939 with support from the Public Works Administration (PWA).",
+        "description": "Curtis Hall was constructed in 1939 with support from the Public Works Administration (PWA). Originally known as New Chemistry, then renamed to BioChem bhuilding. Renamed again to honor Winterton C. Curtis, a prominent Professor of Zoology at the university.",
         "potentialimgmatches": [
             "IMG_20260513_182004_00_062.jpg"
         ]
@@ -444,7 +434,7 @@
         "latitude": "38.94512",
         "longitude": "92.32450",
         "time": "2026:05:13 18:23:43",
-        "description": "Courtyard behind Memorial Student Union. ",
+        "description": "Stewart Hall was designed and built in 1912 as the original Physics Building, renamed in honor of Oliver M. Stewart, who served a long tenure as the chair of the Physics Department. Now it primarily hosue the Department of Geogrpahy.",
         "potentialimgmatches": [
             "IMG_20260513_182324_00_063.jpg"
         ]
@@ -454,7 +444,7 @@
         "latitude": "38.94482",
         "longitude": "92.32448",
         "time": "2026:05:13 18:25:44",
-        "description": "Entrance to Stanley Hall. You can find the Office of Financial Success and Department of Aarchitectural Studies. ",
+        "description": "tanley Hall was built in 1958 as the Home Economics Building. It was named in honor of Dr. Louise Stanley, who served as the chairman of Mizzou's Departmnet of Hone Economics, and later became the first chief of the newly established Bureau of Home Economics in the U.S. Department of Agriculture. You can find the Office of Financial Success and Department of Aarchitectural Studies. ",
         "potentialimgmatches": [
             "IMG_20260513_182527_00_064.jpg"
         ]
@@ -474,7 +464,7 @@
         "latitude": "38.94447",
         "longitude": "92.32466",
         "time": "2026:05:13 18:34:59",
-        "description": "Driveway between Gentry Hall and Gwynn Hall.",
+        "description": "Driveway between Gentry Hall and Gwynn Hall that connect Hitt St and parking lot WC5.",
         "potentialimgmatches": [
             "IMG_20260513_183416_00_066.jpg"
         ]
@@ -484,7 +474,7 @@
         "latitude": "38.94392",
         "longitude": "92.32446",
         "time": "2026:05:13 18:37:36",
-        "description": "Tucker Hall Greenhouse.",
+        "description": "Tucker Hall was designed and constructed in 1967, original named Botany Budiling. Then renamed to honor Dr. Clarence M. Tucker, a highly respected professor and the Chairman of the Department of Botany. The Tucker Hall Greenhouse was establishe din 1975, it holds between 500 to 800 plant species.",
         "potentialimgmatches": [
             "IMG_20260513_183714_00_067.jpg"
         ]
@@ -494,7 +484,7 @@
         "latitude": "38.94351",
         "longitude": "92.32546",
         "time": "2026:05:13 18:41:16",
-        "description": "Mary McKee Gym was built in 1922 as a dedicated women’s physical education facility. Now it transitioned away from athletics into use as academic and studio space.",
+        "description": "Mary McKee Gym was built in 1922 as a dedicated women’s physical education facility. Now it transitioned away from athletics into use as academic and studio space. Part of the building were converted into an intimate, black-box styule basement theatre space (Studio 4 MU Theatre) for student-led production, workshops, and performance classes.",
         "potentialimgmatches": [
             "IMG_20260513_184050_00_068.jpg"
         ]
@@ -504,11 +494,11 @@
         "latitude": "38.94267",
         "longitude": "92.32454",
         "time": "2026:05:13 18:46:12",
-        "description": "Woodland & Floral Garden was planned, designed, and built by horticulture students in the late 1970s and officially dedicated in April 1980.",
+        "description": "Woodland & Floral Garden was entirely planned, designed, and built by horticulture students in the late 1970s and officially dedicated in April 1980.",
         "potentialimgmatches": [
             "IMG_20260513_184548_00_069.jpg"
         ]
-    },
+    }, /*Done*/
     {
         "imgname": "IMG_6052.JPEG",
         "latitude": "38.94315",
