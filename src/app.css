@@ -138,15 +138,21 @@ h3 {
 .button-circle-top .utility-button {
     width: calc(var(--font-size) * 2.25);
     height: calc(var(--font-size) * 2.25);
-    /* min-width: 30px;
-    min-height: 30px; */
 }
 
 .button-circle-top .utility-button svg {
     width: calc(var(--font-size) * 1.75);
     height: calc(var(--font-size) * 1.75);
-    /* min-width: 20px;
-    min-height: 20px; */
+}
+
+.game-controls .utility-button {
+    width: calc(var(--font-size) * 2.25);
+    height: calc(var(--font-size) * 2.25);
+}
+
+.game-controls .utility-button svg {
+    width: calc(var(--font-size) * 1.75);
+    height: calc(var(--font-size) * 1.75);
 }
 
 .utility-button {
@@ -202,7 +208,7 @@ h3 {
 }
 
 .home-leaderboard {
-    width: calc(100px + (var(--font-size) * 10));
+    width: calc(100px + (var(--font-size) * 11));
     height: 100vh;
     background: #003566;
     padding: calc(var(--font-size) * 1.25) calc(var(--font-size));
@@ -430,6 +436,32 @@ h3 {
     display: flex; 
     flex-direction: column; 
     gap: calc(var(--font-size) * 0.75);
+}
+
+.game-display {
+    position: absolute;
+    height: calc(var(--font-size) * 7.5);
+    top: calc(var(--font-size) * 0.5);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--font-size) * 0.5);
+    background: #001D3D;
+    border-radius: 15px;
+    padding: calc(var(--font-size) * 0.25) calc(var(--font-size) * 0.25);
+    width: calc(var(--font-size) * 17);
+}
+
+.game-controls {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--font-size) * 0.75);
+    padding: calc(var(--font-size) * 0.9);
 }
 
 .settings-grid {
@@ -1089,7 +1121,7 @@ input:focus {
 .game-display-banner {
     display: flex;
     align-items: center;
-    gap: calc(var(--font-size) * 0.375);
+    gap: calc(var(--font-size) * 0.75);
     color: #FFC300;
     font-weight: 700;
     font-size: calc(var(--font-size) * 1.5);
