@@ -1,11 +1,12 @@
 <script>
-    import { goto, refreshAll } from '$app/navigation';
+    import { goto } from '$app/navigation';
     import { page } from '$app/state'
     import { font_size, lead_is_collapsed } from '$lib/stores/settings'
-    import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
+    import { modal, PlayAsGuest } from '$lib/modals'
     import { onMount } from 'svelte';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
-    import { SettingsIcon, HelpIcon, InfoIcon, BugReporterIcon, LeaderboardIcon, LeadChevronIcon } from '$lib/shared/icons'
+    import { LeaderboardIcon, LeadChevronIcon } from '$lib/shared/icons'
+    import { Utilities } from '$lib/shared/headers';
 
     let { data } = $props();
     let user = $derived(page.data?.user);
@@ -101,18 +102,7 @@
             {/if}
         </div>
         <div class="button-circle">
-            <button class="utility-button" title="Settings" aria-label="Settings" onclick={() => modal.open(Settings)}>
-                <SettingsIcon />
-            </button>
-            <button class="utility-button" title="Help" aria-label="Help" onclick={() => modal.open(Help)}>
-                <HelpIcon />
-            </button>
-            <button class="utility-button" title="Info" aria-label="Info" onclick={() => modal.open(Info)}>
-                <InfoIcon />
-            </button>
-			<button class="utility-button" title="Report Bug" aria-label="BugReporting" onclick={() => {window.open('https://forms.gle/L4X5HsRshrMzSD9k8', '_blank', 'noopener,noreferrer');}}>
-                <BugReporterIcon />                    
-            </button>
+            <Utilities />
         </div>
     </main>
     <aside class="home-leaderboard" class:collapsed={$lead_is_collapsed}>

@@ -5,6 +5,7 @@
     import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
+    import { modal, Quit } from '$lib/modals'
     import { roundResult, currentLocIdx, selected_difficulty, sessionScore } from '$lib/stores/game';
 
     let leaflet_loaded = false;
@@ -351,7 +352,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px; --duck-art-shift: 0px;`}>
     <div class="page-background">
-        <MainHeader />
+        <MainHeader home={() => modal.open(Quit)}/>
         <main class="answer-map">
             <div bind:this={map_container} class="leaflet-map"></div>
             <aside class="answer-description-card">

@@ -2,7 +2,8 @@
     import { goto } from '$app/navigation'
     import { font_size, is_sound_on } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { PlayHeader } from '$lib/shared/headers'
+    import { MainHeader, GameControls } from '$lib/shared/headers'
+    import { modal, Quit } from '$lib/modals'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
 
     // Load Leaflet and OpenStreetMap tiles
@@ -44,7 +45,6 @@
     });
 
     onMount(() => {
-        // CHANGE TIMER BASED ON DIFFICULTY?
         timerSeconds.set(60);
         is_timer_active.set(false);
         getLocation();
@@ -283,12 +283,13 @@
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <PlayHeader skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
+        <MainHeader home={() => modal.open(Quit)}/>
+        <GameControls skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}
         	<div class="loading-overlay">
-                    <p>Loading Panorama...</p>
+                <p>Loading Panorama...</p>
         	</div>
     	    {/if}
 	    <div class="map-container" class:expanded={is_map_expanded}>
