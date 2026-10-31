@@ -1,9 +1,9 @@
 <script>
     import { modal, Pause, Skip } from '$lib/modals'
-    import { timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
+    import { timerSeconds, is_timer_active } from '$lib/stores/game'
     import { PauseIcon, SkipIcon, TimerIcon } from '$lib/shared/icons'
 
-    let { skip, id } = $props()
+    let { skip } = $props()
 
     // Game timer
     let is_timer_paused = $derived(modal.stack.length > 0);
@@ -28,9 +28,6 @@
 </script>
 
 <div class="top-bar-center">
-    <span class="game-display-banner">
-        Round {id}/3
-    </span>
     <button class="utility-button button-pause" onclick={() => modal.open(Pause)} title="Pause" aria-label="Pause">
         <PauseIcon />
     </button>
@@ -41,9 +38,4 @@
     <button class="utility-button button-skip" onclick={() => modal.open(Skip, { skip })} title="Skip" aria-label="Skip">
         <SkipIcon/>
     </button>
-{#if $selected_difficulty}
-    <span class="difficulty-badge difficulty-{$selected_difficulty}">
-        {$selected_difficulty}
-    </span>
-{/if}
 </div>

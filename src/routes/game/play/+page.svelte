@@ -278,13 +278,13 @@
 
     $effect(() => {
         // SUBMIT GUESS WITH TIMER RUNOFF/SKIP IDENTIFIERS
-        if ($timerSeconds === 0) { submit_guess({ lat: 100, lng: 200 }); }
+        if ($timerSeconds === 0) { submit_guess({ lat: 100, lng: 200 }) }
     });
 </script>
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <MainHeader isPlay={true} home={() => modal.open(Quit)} skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
+        <MainHeader isPlay={true} home={() => modal.open(Quit)} skip={() => submit_guess({ lat: 100, lng: 200 })} />
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}
@@ -292,6 +292,16 @@
                     <p>Loading Panorama...</p>
         	</div>
     	    {/if}
+            <div class="bottom-left-hud">
+                <span class="game-display-banner round-counter">
+                    Round {$currentLocIdx}/3
+                </span>
+                {#if $selected_difficulty}
+                <span class="difficulty-badge difficulty-{$selected_difficulty}">
+                    {$selected_difficulty}
+                </span>
+                {/if}
+            </div>
 	        <div class="map-container" class:expanded={is_map_expanded}>
                 <div class="map-buttons">
                     <button class="button-map-expand" onclick={toggle_map_expand}>

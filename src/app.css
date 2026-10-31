@@ -1081,6 +1081,26 @@ input:focus {
     border: 2px solid #557899;
 }
 
+.bottom-left-hud {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--font-size) * 0.75);
+    background: #001D3D;
+    border-radius: 0px calc(var(--font-size) * 2) 0px 0px; 
+    padding: calc(var(--font-size) * 0.75) calc(var(--font-size) * 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.bottom-left-hud .round-counter {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
 .timer-icon {
     width: calc(var(--font-size) * 1.25);
     height: calc(var(--font-size) * 1.25);
@@ -1093,7 +1113,6 @@ input:focus {
     font-weight: 700;
     letter-spacing: calc(var(--font-size) * 0.05);
     text-transform: uppercase;
-    /* border: 1px solid #557899; */
 }
 
 .difficulty-easy { 
