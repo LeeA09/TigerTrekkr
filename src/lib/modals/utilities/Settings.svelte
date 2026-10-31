@@ -10,8 +10,8 @@
     let user = $derived(page.data?.user);
     let user_info = $derived(page.data?.userdata);
 
-    let isPlayPage = $derived(page.url.pathname.startsWith('/play'))
-    let isAnswerPage = $derived(page.url.pathname.startsWith('/answer'))
+    let isPlayPage = $derived(page.url.pathname.startsWith('/game/play'))
+    let isAnswerPage = $derived(page.url.pathname.startsWith('/game/answer'))
 
     // music and sound
     function toggle_music() { 

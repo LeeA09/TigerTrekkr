@@ -2,12 +2,15 @@
     import { page } from '$app/state'
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
+    import { MainHeader } from '$lib/shared/headers'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { goto } from '$app/navigation';
     onMount(() => { animateBackground() })
 </script>
 
 <div class="page" style="--app-font-size: {$font_size}px">
     <div class="page-background">
+        <MainHeader home={() => goto('/')}/>
         <div class="page-body">
             <div class="background-animation"></div>
             <div class="background-overlay"></div>

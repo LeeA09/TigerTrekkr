@@ -2,8 +2,9 @@
     import { goto } from '$app/navigation'
     import { font_size, is_sound_on } from '$lib/stores/settings'
     import { onMount } from 'svelte'
-    import { PlayHeader } from '$lib/shared/headers'
+    import { MainHeader } from '$lib/shared/headers'
     import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
+    import { modal, Quit } from '$lib/modals'
 
     // Load Leaflet and OpenStreetMap tiles
     onMount(() => {
@@ -283,7 +284,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px`}>
     <div class="page-background">
-        <PlayHeader skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
+        <MainHeader isPlay={true} home={() => modal.open(Quit)} skip={() => submit_guess({ lat: 100, lng: 200 })} id={$currentLocIdx}/>
         <div class="play-body">
             <div class="pano" bind:this={panorama_container}></div>
             {#if !$is_timer_active}
@@ -291,7 +292,7 @@
                     <p>Loading Panorama...</p>
         	</div>
     	    {/if}
-	    <div class="map-container" class:expanded={is_map_expanded}>
+	        <div class="map-container" class:expanded={is_map_expanded}>
                 <div class="map-buttons">
                     <button class="button-map-expand" onclick={toggle_map_expand}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

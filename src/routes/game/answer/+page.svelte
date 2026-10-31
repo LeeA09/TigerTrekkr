@@ -1,4 +1,5 @@
 <script>
+    import { modal, Quit } from '$lib/modals'
     import { goto } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
     import { onMount } from 'svelte';
@@ -351,7 +352,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px; --duck-art-shift: 0px;`}>
     <div class="page-background">
-        <MainHeader />
+        <MainHeader home={() => modal.open(Quit)}/>
         <main class="answer-map">
             <div bind:this={map_container} class="leaflet-map"></div>
             <aside class="answer-description-card">
@@ -372,12 +373,6 @@
                                         <span class="leaderboard-player-name placeholder">—</span>
                                     {/if}
                                 </div>
-                                <!-- {#if player}
-                                    <span class="leaderboard-player-score">{player.score}</span>
-                                {:else}
-                                    <span class="leaderboard-player-score placeholder">—</span>
-                                {/if} -->
-
                                 {#if player}
                                     <span class="leaderboard-player-score">{player.distance} m</span>
                                 {:else}

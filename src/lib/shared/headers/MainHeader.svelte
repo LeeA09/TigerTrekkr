@@ -1,13 +1,18 @@
 <script>
-    import { goto } from '\$app/navigation'
-    import Utilities from './Utilities.svelte';
+    import { Utilities, GameControls } from '$lib/shared/headers';
+    let { isPlay = false, home, skip, id } = $props();
 </script>
 
 <header class="top-bar">
-    <button class="top-bar-home-link" onclick={() => goto('/')} title="Return to Home" aria-label="Return to Home">
+    <button class="top-bar-home-link" onclick={home} title="Return to Home" aria-label="Return to Home">
         <span class="top-bar-home-title">TigerTrekkr</span>
     </button>
-    <Utilities />
+    <div class="button-circle-top">
+        {#if isPlay}
+        <GameControls skip={skip} id={id} />
+        {/if}
+        <Utilities />
+    </div>
 </header>
 
 <style>

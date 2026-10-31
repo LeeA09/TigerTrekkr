@@ -51,7 +51,7 @@
 
 <div class="page" style="--app-font-size: {$font_size}px">
     <div class="page-background">
-        <MainHeader />
+        <MainHeader home={() => goto('/')}/>
         <div class="page-body">
             <div class="background-animation"></div>
             <div class="background-overlay"></div>
