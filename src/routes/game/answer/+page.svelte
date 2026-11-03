@@ -34,7 +34,7 @@
             const response = await fetch('/api/game/leaderboard', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ locationId: id })
+                body: JSON.stringify({ locationId: id, userGuess: $roundResult.roundResult, user: user_name })
             });
 
             if (!response.ok) {
@@ -42,7 +42,6 @@
             }
 
             const data = await response.json();
-            // NEED TO INJECT USER GUESS INTO LEADERBOARD IF NEEDED HERE
             players = Array.from({ length: 3 }, (_, i) => data?.leaderboard?.[i] || null);
         } catch (error) {
             console.error('Error fetching leaderboard:', error);
@@ -274,8 +273,6 @@
                 !player.isCurrGuess
             );
 
-        // MODIFY OPACITY OF LEADERBOARD MARKERS HERE
-        // <img class="map-marker-img" style="opacity: 0.7;" src="/mascot.png" alt="" />
         const leaderboardIcon = (rank) =>
             L.divIcon({
                 className: 'map-marker',
