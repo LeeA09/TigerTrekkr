@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
     import { page } from '$app/state'
     import { font_size, lead_is_collapsed } from '$lib/stores/settings'
-    import { modal, Settings, Help, Info, PlayAsGuest } from '$lib/modals'
+    import { modal, PlayAsGuest } from '$lib/modals'
     import { onMount } from 'svelte';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { LeaderboardIcon, LeadChevronIcon } from '$lib/shared/icons'

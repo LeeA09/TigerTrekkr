@@ -12,3 +12,5 @@ export { default as BugReporterIcon } from './utilities/BugReporterIcon.svelte'
 
 export { default as LeaderboardIcon } from './misc/LeaderboardIcon.svelte'
 export { default as LeadChevronIcon } from './misc/LeadChevronIcon.svelte'
+export { default as ShowPasswordIcon } from './misc/ShowPasswordIcon.svelte'
+export { default as HidePasswordIcon } from './misc/HidePasswordIcon.svelte'

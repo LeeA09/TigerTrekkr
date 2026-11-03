@@ -5,6 +5,7 @@
     import { onMount } from 'svelte'
     import { MainHeader } from '$lib/shared/headers'
     import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { ShowPasswordIcon, HidePasswordIcon } from '$lib/shared/icons'
     onMount(() => { animateBackground() })
 
     let isSubmitting = $state(false)
@@ -78,16 +79,11 @@
                             <div class="fill-in-eye">
                                 <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
                                 <button type="button" class="button-eye" onclick={toggle_show_password} aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        {#if showPassword}
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                            <line x1="3" y1="3" x2="21" y2="21"></line>
-                                        {:else}
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        {/if}
-                                    </svg>
+                                    {#if showPassword}
+                                        <HidePasswordIcon />
+                                    {:else}
+                                        <ShowPasswordIcon />
+                                    {/if}
                                 </button>
                             </div>
                         </div>
@@ -96,16 +92,11 @@
                             <div class="fill-in-eye">
                                 <input name="confirmPassword"type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm password" required />
                                 <button type="button" class="button-eye" onclick={toggle_show_confirm_password} aria-label={showConfirmPassword ? 'Hide Password' : 'Show Password'}>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        {#if showConfirmPassword}
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                            <line x1="3" y1="3" x2="21" y2="21"></line>
-                                        {:else}
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        {/if}
-                                    </svg>
+                                    {#if showConfirmPassword}
+                                        <HidePasswordIcon />
+                                    {:else}
+                                        <ShowPasswordIcon />
+                                    {/if}
                                 </button>
                             </div>
                         </div>
