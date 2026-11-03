@@ -149,7 +149,7 @@
                         <span class="settings-label">Username</span>
                         {#if !isPlayPage && !isAnswerPage}
                         {#if isEditingUsername}
-                            <form method="POST" action="/api/account-change/update-account" use:enhance={handle_username_submit} class="settings-input-form">
+                            <form method="POST" action="/api/account/update/username" use:enhance={handle_username_submit} class="settings-input-form">
                                 <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
                                 <button type="submit" class="settings-account-edit-info-button" disabled={isSavingUsername} aria-label="Save Username">✔</button>
                                 <button type="button" class="settings-account-edit-info-button" onclick={cancel_editing_username} disabled={isSavingUsername} aria-label="Cancel Editing">✖</button>
