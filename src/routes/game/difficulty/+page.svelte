@@ -2,7 +2,7 @@
     import { MainHeader } from '$lib/shared/headers'
     import { goto } from '\$app/navigation'
     import { page } from '$app/state'
-    import { selected_difficulty, currentLocIdx, sessionScore } from '$lib/stores/game'
+    import { selected_difficulty, currentLocIdx, sessionScore, sessionResults } from '$lib/stores/game'
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
@@ -13,9 +13,14 @@
 
     onMount(() => { selected_difficulty.set('') })
 
+    function resetGame(){
+        currentLocIdx.set(0);
+        sessionScore.set(0);
+        sessionResults.set([]);
+    }
+
     function startNewGame() {
-        currentLocIdx.set(0)
-        sessionScore.set(0)
+        resetGame()
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/game/play')
     }

@@ -3,12 +3,11 @@ import { json, type RequestHandler } from '@sveltejs/kit'
 export const POST: RequestHandler = async ({ request, locals }) => {
 
     const data = await request.json();
-    const { locationId, roundId } = data
+    const { locationId } = data
 
     const { data: rawLeaderboard, error } = await locals.supabase
         .from('round')
         .select(`
-            roundid,
             user_data(username),
             score,
             distance,
@@ -16,8 +15,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             lng:guessedlong
         `)
         .eq('locationid', locationId)
-        .order('distance', { ascending: true }) //
-        .limit(3); // THIS CAN BE CHANGED IF WE WANT TO LIST MORE THAN 3 LEADERS
+        .order('distance', { ascending: true })
+        .limit(3);
 
     if (error) {
         console.log('Error fetching leaderboard data:', error);
@@ -31,7 +30,6 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         lat: item.lat,
         lng: item.lng,
         distance: Math.round(item.distance),
-        isCurrGuess: item.roundid === roundId
     }));
 
     return json({ success: true, message: 'Leaderboard data retrieved successfully', leaderboard })

@@ -6,9 +6,9 @@
     import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
-    import { roundResult, currentLocIdx, selected_difficulty, sessionScore } from '$lib/stores/game';
+    import { roundResult, currentLocIdx, sessionScore } from '$lib/stores/game';
 
-    let leaflet_loaded = false;
+    // let leaflet_loaded = false;
     let map_container;
     let leaflet_map = $state(null);
 
@@ -18,8 +18,10 @@
     let leaderboard_markers = [];
     let leaderboard_lines = [];
 
-    let is_valid_guess = $derived(($roundResult?.guessedLocation?.lat >= -90) && ($roundResult?.guessedLocation?.lat <= 90));
-    let guessed_location = $roundResult?.guessedLocation ?? { lat: 0, lng: 0 };
+    let roundData = $roundResult.roundResult;
+
+    let is_valid_guess = $derived((roundData?.guessedLocation?.lat >= -90) && (roundData?.guessedLocation?.lat <= 90));
+    let guessed_location = roundData?.guessedLocation ?? { lat: 0, lng: 0 };
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
     let userdata = page.data?.userdata ?? {};
@@ -27,18 +29,12 @@
 
     async function getLeaderboard() {
         try {
-            const id = $roundResult?.locationId ?? 0;
-            const currRoundId = $roundResult?.roundId;
+            const id = roundData?.locationId ?? 0;
 
-            const response = await fetch('/api/game/location-leaderboard', {
+            const response = await fetch('/api/game/leaderboard', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    locationId: id,
-                    roundId: currRoundId
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ locationId: id })
             });
 
             if (!response.ok) {
@@ -46,6 +42,7 @@
             }
 
             const data = await response.json();
+            // NEED TO INJECT USER GUESS INTO LEADERBOARD IF NEEDED HERE
             players = Array.from({ length: 3 }, (_, i) => data?.leaderboard?.[i] || null);
         } catch (error) {
             console.error('Error fetching leaderboard:', error);
@@ -60,9 +57,10 @@
     let user_rank = $state(-1);
 
     let description = $roundResult?.description ?? 'No description available.';
-    let guessed_distance = $roundResult?.distance ?? '∞';
-    let guessed_time_formatted = $roundResult?.seconds ? `${Math.floor($roundResult.seconds / 60)}:${String($roundResult.seconds % 60).padStart(2, '0')}` : "0:00";
-    let round_score = $roundResult?.score ?? 0;
+    let guessed_distance = roundData?.distance ? Math.floor(roundData?.distance) : '∞';
+    let guessed_time_formatted = roundData?.seconds ? `${Math.floor(roundData.seconds / 60)}:${String(roundData.seconds % 60).padStart(2, '0')}` : "0:00";
+    let round_score = roundData?.score ?? 0;
+    let difficulty = roundData?.difficulty;
     
     const max_scores = {
         easy: 3000,
@@ -70,11 +68,11 @@
         hard: 5000
     };
 
-    let max_score = $derived(max_scores[$selected_difficulty]);
+    let max_score = $derived(max_scores[difficulty]);
 
     function loadLeaflet() {
         if (typeof window !== 'undefined' && window.L) {
-            leaflet_loaded = true;
+            // leaflet_loaded = true;
             return window.L;
         }
 
@@ -91,7 +89,7 @@
             script.src =
                 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
             script.onload = () => {
-                leaflet_loaded = true;
+                // leaflet_loaded = true;
                 resolve(window.L);
             };
             script.onerror = () => {
@@ -231,6 +229,8 @@
                     correct_location.lng
                 ];
 
+                if (correct_marker) { correct_marker.remove(); correct_marker = null; }
+
                 correct_marker = L.marker(answer, {
                     icon: pinIcon,
                     keyboard: false,
@@ -333,18 +333,14 @@
         );
     });
 
-    function addScore() {
-        $sessionScore += round_score;
-    }
-
     function nextRound() {
-        addScore()
+        $sessionScore += round_score;
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/game/play')
     }
 
     function goToEnd() {
-        addScore()
+        $sessionScore += round_score;
         document.cookie = "game_played=true; path=/; SameSite=Strict";
         goto('/game/end');
     }
@@ -398,7 +394,7 @@
                 <span class="answer-round-stat-separator">|</span>
                 <div class="answer-round-stat difficulty-stat">
                     <span class="answer-round-stat-label">Difficulty:</span>
-                    <span class="difficulty-badge difficulty-{$selected_difficulty}">{$selected_difficulty}</span>
+                    <span class="difficulty-badge difficulty-{difficulty}">{difficulty}</span>
                 </div>
             </div>
             <div class="answer-round-score">

@@ -3,7 +3,7 @@
     import { font_size, is_sound_on } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { MainHeader } from '$lib/shared/headers'
-    import { currentLocIdx, currentLocation, roundResult, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
+    import { currentLocIdx, currentLocation, roundResult, sessionResults, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
     import { modal, Quit } from '$lib/modals'
 
     // Load Leaflet and OpenStreetMap tiles
@@ -267,6 +267,8 @@
 
             const result = await response.json();
             roundResult.set(result);
+            const saveResult = result.roundResult
+            sessionResults.update(results => [...results, saveResult]);
 
             document.cookie = "from_game=true; path=/; SameSite=Strict";
             goto('/game/answer');

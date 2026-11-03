@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 function haversineDistance(lat1, lon1, lat2, lon2) {
     const earthRadius = 6371000;
@@ -29,8 +29,6 @@ function calculateScore(distance: number, secondsRemaining: number, difficulty: 
     if (!config) {
         throw error(400, 'Invalid difficulty.');
     }
-
-    
 
     const totalTime = 60; // 60 seconds
     const remaining = Math.min(Math.max(secondsRemaining, 0), totalTime); 
@@ -75,7 +73,7 @@ export async function POST({ request, locals }) {
             throw error(404, 'Game location not found.');
         }
 
-        return json({
+        return Response.json({
             locationId: location.locationid,
             guessedLocation: {
                 lat: 100,
@@ -104,11 +102,9 @@ export async function POST({ request, locals }) {
     }
 
     const { data: location, error: locationError } =
-        await locals.supabaseAdmin
+        await locals.supabase
             .from('location_image_info')
-            .select(
-                'locationid, latitude, longitude, description, locationname'
-            )
+            .select('locationid, latitude, longitude, description, locationname')
             .eq('locationid', locationId)
             .single();
 
@@ -123,77 +119,24 @@ export async function POST({ request, locals }) {
         location.longitude
     );
 
-    const score = calculateScore(distance, seconds, difficulty);
-
-    // Only link the round to a registered profile if its ID matches
-    // the authenticated Supabase Auth user's ID.
-    const { user } = await locals.safeGetSession();
-    let roundid = 0;
-    if(user){
-        // GET USER PROFILE
-        const { data: profile, error: userError } = await locals.supabaseAdmin
-            .from('user_data')
-            .select('*')
-            .eq('userid', user.id)
-            .maybeSingle();
-
-        if(!profile || userError){
-            console.error('Failed to find user:', userError);
-            throw error(500, 'Could not find user.');
-        }
-
-        // SAVE NEW ROUND TO DATABASE
-        const { data: round, error: saveError } =
-            await locals.supabaseAdmin
-                .from('round')
-                .insert({
-                    userid: profile.userid,
-                    guessedlat: guessedLat,
-                    guessedlong: guessedLng,
-                    distance,
-                    timetaken: Math.floor(seconds),
-                    difficulty,
-                    score,
-                    locationid: locationId
-                })
-                .select('roundid')
-                .single();
-
-        if (saveError) {
-            console.error('Failed to save round:', saveError);
-            throw error(500, 'Could not save your round.');
-        }
-
-        // UPDATE USER TOTAL SCORE
-        const { error: updateError } =
-            await locals.supabaseAdmin
-                .from('user_data')
-                .update({ totalscore: Number(profile.totalscore) + score })
-                .eq('userid', profile.userid);
-
-        if (updateError) {
-            console.error('Failed to update user total:', updateError);
-        }
-
-        roundid = round.roundid;
-    }    
-
-    return json({
-        roundId: roundid,
+    const roundResult = {
         locationId: location.locationid,
         guessedLocation: {
             lat: guessedLat,
             lng: guessedLng
         },
+        distance: distance,
+        seconds: seconds,
+        difficulty,
+        score: calculateScore(distance, seconds, difficulty)
+    };
+
+    return Response.json({
         correctLocation: {
             lat: location.latitude,
             lng: location.longitude
         },
         description: location.description,
-        locationName: location.locationname,
-        distance: Math.round(distance),
-        seconds: Math.floor(seconds),
-        difficulty,
-        score
+        roundResult
     });
 }

@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { sendEmail } from '$lib/server/mailer'
 
 export async function POST({ locals }) {
@@ -34,5 +34,5 @@ export async function POST({ locals }) {
         return error(500, 'Account username changed, but Gmail deliver failed')
     }
 
-    return json({ success: true });
+    return Response.json({ success: true });
 }

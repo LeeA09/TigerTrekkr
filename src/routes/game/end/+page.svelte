@@ -1,25 +1,57 @@
 <script>
     import { goto } from '\$app/navigation'
-    import { currentLocIdx, sessionScore, selected_difficulty } from '$lib/stores/game';
+    import { currentLocIdx, sessionScore, sessionResults, selected_difficulty } from '$lib/stores/game';
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
+    import { page } from '$app/state';
     import { animateBackground } from '$lib/shared/backgroundAnimation'
     import { MainHeader } from '$lib/shared/headers';
     onMount(() => { animateBackground() })
     
+    onMount(() => {
+        // Only call save if active user
+        if(page.data?.user){
+            saveGameResults()
+        }
+    })
+
+    async function saveGameResults() {
+        try {
+            const response = await fetch('/api/game/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    rounds: $sessionResults,
+                    totalScore: $sessionScore
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Error saving game results:', error);
+        }
+    }
+
     let score = $sessionScore
 
     const max_scores = {
-	easy: 3000,
-	medium: 4000,
-	hard: 5000
+        easy: 9000,
+        medium: 12000,
+        hard: 15000
     };
 
-    let max_score = $derived(max_scores[$selected_difficulty] * 3);
+    let max_score = max_scores[$selected_difficulty];
 
-    function startNewGame() {
+    function resetGame(){
         currentLocIdx.set(0);
         sessionScore.set(0);
+        sessionResults.set([]);
+    }
+
+    function startNewGame() {
+        resetGame()
         document.cookie = "can_play=true; path=/; SameSite=Strict";
         goto('/game/play')
     }
