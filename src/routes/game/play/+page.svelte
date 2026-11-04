@@ -28,7 +28,6 @@
     let marzipano_viewer = null;
     let marzipano_scene = null;
     let image_url = $state(null);
-    let image_loaded = $state(false);
 
     const clickAudio = new Audio('/audiomass-output.mp3'); 
 
@@ -51,28 +50,9 @@
         getLocation();
     });
 
-    $effect(() => {
-        if(!image_url) return;
-
-        image_loaded = false;
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = image_url;
-
-        img.decode()
-            .then(() => {
-                image_loaded = true;
-            })
-            .catch((err) => {
-                console.error('Failed to decode image:', err);
-                // Fallback to onload if decode fails
-                image_loaded = true; 
-            });
-    });
-
     // Initialize / tear down random 360 image display
     $effect(() => {
-        if (marzipano_loaded && image_loaded && panorama_container && !marzipano_viewer && image_url) {
+        if (marzipano_loaded && panorama_container && !marzipano_viewer && image_url) {
             marzipano_viewer = new window.Marzipano.Viewer(panorama_container, {
                 controls: {
                     mouseViewMode: 'drag'
@@ -126,9 +106,11 @@
             });
             marzipano_viewer.switchScene(marzipano_scene, { transitionDuration: 300 }, () => {
                 requestAnimationFrame(() => {
-                    is_timer_active.set(true);
-                });	    
-            })
+                    requestAnimationFrame(() => {
+                        is_timer_active.set(true);
+                    });
+                });
+            });
         }
 
         return () => {
