@@ -345,7 +345,7 @@
 
 <div class="page" style={`--font-size: ${$font_size}px; --duck-art-shift: 0px;`}>
     <div class="page-background">
-        <MainHeader home={() => modal.open(Quit)}/>
+        <MainHeader isAnswer={true} home={() => modal.open(Quit)}/>
         <main class="answer-map">
             <div bind:this={map_container} class="leaflet-map"></div>
             <aside class="answer-description-card">

@@ -10,8 +10,7 @@
     let user = $derived(page.data?.user);
     let user_info = $derived(page.data?.userdata);
 
-    let isPlayPage = $derived(page.url.pathname.startsWith('/game/play'))
-    let isAnswerPage = $derived(page.url.pathname.startsWith('/game/answer'))
+    let { isPlay = false, isAnswer = false } = $props()
 
     // music and sound
     function toggle_music() { 
@@ -43,7 +42,7 @@
         isSavingUsername = true
         usernameError = ''
 
-        return async ({ result, update }) => {
+        return async ({ result }) => {
             isSavingUsername = false
             const data = result.data ?? result
 
@@ -79,12 +78,12 @@
 
     function login_redirect() {
         modal.close();
-        goto('/login');
+        goto('/account/login');
     }
 
     function sign_up_redirect() {
         modal.close();
-        goto('/signup');
+        goto('/account/signup');
     }
 
     function handle_key_down(event) {
@@ -98,7 +97,7 @@
 
 <svelte:window onkeydown={handle_key_down} />
 
-<div class="modal-background" class:utility-backdrop={page.url.pathname === '/play'} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
+<div class="modal-background" class:utility-backdrop={isPlay} role="dialog" aria-modal="true" tabindex="-1" onkeydown={handle_key_down} onclick={handle_backdrop_click} style={`--font-size: ${$font_size}px`}>
     <div class="settings-card page-body-card modal-card">
         <button type="button" class="modal-close-button" onclick={() => modal.close()} aria-label="Close settings">✖</button>
 	<h2>Settings</h2>
@@ -133,7 +132,7 @@
                 <h3>Account Information</h3>
 		        {#if !user}
                 <div class="settings-item settings-account-info">
-                    {#if !isPlayPage && !isAnswerPage}
+                    {#if !isPlay && !isAnswer}
                     <p>You are playing as a guest. Log in to track your score on the leaderboard.</p>
                     <div class="settings-account-buttons">
                         <button class="home-button settings-button" onclick={login_redirect}>Log In</button>
@@ -147,7 +146,7 @@
                 <div class="settings-item settings-account-info">
                     <div class="settings-account-info-row">
                         <span class="settings-label">Username</span>
-                        {#if !isPlayPage && !isAnswerPage}
+                        {#if !isPlay && !isAnswer}
                         {#if isEditingUsername}
                             <form method="POST" action="/api/account/update/username" use:enhance={handle_username_submit} class="settings-input-form">
                                 <input type="text" name="newUsername" bind:value={newUsername} disabled={isSavingUsername} class="settings-input-form input-box"/>
@@ -170,7 +169,7 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Email</span>
                             <span class="settings-account-value">{user.email ?? '-'}</span>
-                            {#if !isPlayPage && !isAnswerPage}
+                            {#if !isPlay && !isAnswer}
                             <button class="settings-account-edit-button fake-button">
                                 ✎
                             </button>
@@ -179,13 +178,13 @@
                         <div class="settings-account-info-row">
                             <span class="settings-label">Password</span>
                             <span class="settings-account-value">••••••••</span>
-                            {#if !isPlayPage && !isAnswerPage}
+                            {#if !isPlay && !isAnswer}
                             <button class="settings-account-edit-button" onclick={open_change_password} aria-label="Change Password">
                                 ✎
                             </button>
                             {/if}
                         </div>
-                        {#if !isPlayPage && !isAnswerPage}
+                        {#if !isPlay && !isAnswer}
                         <div class="settings-account-buttons">
                             <button class="button-secondary settings-delete-button" onclick={open_delete_account}>Delete Account</button>
 			                <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>

@@ -41,7 +41,7 @@
             if (data?.success) {
                 const email = data?.email
                 document.cookie = "sign_up=true; path=/; SameSite=Strict";
-                await goto(`/check-email?email=${encodeURIComponent(email)}`)
+                await goto(`/account/check-email?email=${encodeURIComponent(email)}`)
             } else {
                 errorMessage = 'Error: ' + (data?.error ?? 'An error occurred')
                 console.log(errorMessage)
@@ -60,7 +60,7 @@
                 <div class="page-body-card">
                     <h2 class="page-body-card-title">Sign Up</h2>
                     <p class="page-body-card-description">
-                        Already have an account? Login <a href="/login" class="page-body-card-link">here</a>.
+                        Already have an account? Login <a href="/account/login" class="page-body-card-link">here</a>.
                     </p>
                     <form method="POST" action="/api/account/signup" use:enhance={handle_signup}>
                         {#if errorMessage}

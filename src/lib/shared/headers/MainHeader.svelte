@@ -1,6 +1,6 @@
 <script>
     import { Utilities, GameControls } from '$lib/shared/headers';
-    let { isPlay = false, home, skip, id } = $props();
+    let { isPlay = false, isAnswer = false, home, skip, id } = $props();
 </script>
 
 <header class="top-bar">
@@ -11,7 +11,7 @@
         {#if isPlay}
         <GameControls skip={skip} id={id} />
         {/if}
-        <Utilities />
+        <Utilities isPlay={isPlay} isAnswer={isAnswer} />
     </div>
 </header>
 

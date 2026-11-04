@@ -46,7 +46,7 @@
             <div class="page-body-card">
                 <h2 class="page-body-card-title">Log In</h2>
                 <p class="page-body-card-description">
-                    Don't have an account? Sign up <a href="/signup" class="page-body-card-link">here</a>.
+                    Don't have an account? Sign up <a href="/account/signup" class="page-body-card-link">here</a>.
                 </p>
                 <form method="POST" action="/api/account/login" use:enhance={handle_login}>
                     {#if errorMessage}
