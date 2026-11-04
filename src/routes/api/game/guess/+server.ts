@@ -73,19 +73,18 @@ export async function POST({ request, locals }) {
             throw error(404, 'Game location not found.');
         }
 
-        return Response.json({
+        const skipResult = {
             locationId: location.locationid,
-            guessedLocation: {
-                lat: 100,
-                lng: 200
-            },
+            difficulty
+        };
+
+        return Response.json({
             correctLocation: {
                 lat: location.latitude,
                 lng: location.longitude
             },
             description: location.description,
-            locationName: location.locationname,
-            difficulty,
+            roundResult: skipResult
         });
     }
 

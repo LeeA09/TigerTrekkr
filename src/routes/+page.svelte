@@ -84,10 +84,10 @@
                     Play as Guest
                 </button>
                 <div class="account-button">
-                    <button class="home-button" title="Log In" onclick={() => goto('/login')}>
+                    <button class="home-button" title="Log In" onclick={() => goto('/account/login')}>
                         Log in
                     </button>
-                    <button class="home-button" title="Sign Up" onclick={() => goto('/signup')}>
+                    <button class="home-button" title="Sign Up" onclick={() => goto('/account/signup')}>
                         Sign up
                     </button>
                 </div>

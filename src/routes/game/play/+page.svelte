@@ -268,8 +268,10 @@
             const result = await response.json();
             roundResult.set(result);
             const saveResult = result.roundResult
-            sessionResults.update(results => [...results, saveResult]);
-
+            if(saveResult.score) {
+                sessionResults.update(results => [...results, saveResult]);
+            }
+            
             document.cookie = "from_game=true; path=/; SameSite=Strict";
             goto('/game/answer');
         } catch (err) {
