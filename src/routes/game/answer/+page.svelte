@@ -357,7 +357,7 @@
                     <h2>Leaderboard</h2>
                     <div class="leaderboard-players">
                         {#each players as player, i}
-                            <div class="leaderboard-player" class:empty={!player}>
+                            <div class="leaderboard-player" class:empty={!player} class:is-current-user={player?.isCurrGuess}>
                                 <div class="leaderboard-player-info">
                                     <span class="leaderboard-player-rank">{i + 1}</span>
                                     {#if player}
