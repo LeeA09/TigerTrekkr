@@ -20,7 +20,8 @@ export async function GET({ url }) {
         return new Response(blob, {
             headers: {
                 'Content-Type': response.headers.get('Content-Type') || 'image/jpeg',
-                'Cache-Control': 'public, max-age=86400'
+                'Cache-Control': 'public, max-age=86400',
+                'Access-Control-Allow-Origin': '*'
             }
         });
     } catch (err) {

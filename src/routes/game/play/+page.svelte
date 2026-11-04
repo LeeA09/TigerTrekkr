@@ -56,6 +56,7 @@
 
         image_loaded = false;
         const img = new Image();
+        img.crossOrigin = 'anonymous';
         img.src = image_url;
 
         img.decode()
