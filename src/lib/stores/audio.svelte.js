@@ -1,6 +1,6 @@
-import { SvelteSet } from 'svelte/reactivity';
+import { get } from 'svelte/store';
+import { is_music_on } from '$lib/stores/settings';
 
-// Using a simple reactive state or class for global control
 class AudioManager {
   audio = null;
   isPlaying = $state(true);
@@ -14,15 +14,24 @@ class AudioManager {
         this.isPlaying = false;
       });
     }
-
-    this.toggle();
   }
 
   async play() {
     if (!this.audio) return;
+    if(!get(is_music_on)) return;
+
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/game/play' && currentPath !== '/game/answer' && currentPath !== '/game/end') {
+      this.pause();
+      return;
+    }
+
     try {
-      await this.audio.play();
-      this.isPlaying = true;
+      const playPromise = this.audio.play();
+      if (playPromise !== undefined) {
+        await playPromise;
+        this.isPlaying = true;
+      }
     } catch (err) {
       // Browser blocked autoplay due to lack of user interaction
       console.warn("Autoplay prevented:", err);
@@ -36,13 +45,6 @@ class AudioManager {
     this.isPlaying = false;
   }
 
-  toggle() {
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
-    }
-  }
 }
 
 export const backgroundMusic = new AudioManager();

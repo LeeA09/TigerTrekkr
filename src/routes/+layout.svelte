@@ -1,9 +1,10 @@
 <script lang="ts">
     import '../app.css'
-    import { font_size } from '$lib/stores/settings'
+    import { font_size, is_music_on } from '$lib/stores/settings'
     import ModalHost from '$lib/modals/ModalHost.svelte'
     import { invalidate } from '$app/navigation'
     import { onMount } from 'svelte'
+    import { page } from '$app/state'
     import { backgroundMusic } from '$lib/stores/audio.svelte'
 
     let { data, children } = $props();
@@ -19,6 +20,17 @@
         
         return () => subscription.unsubscribe()
     })
+
+    $effect(() => {
+        const path = page.url?.pathname;
+        const isGamePage = path === '/game/play' || path === '/game/answer' || path === '/game/end';
+        
+        if (isGamePage && $is_music_on) {
+            backgroundMusic.play();
+        } else {
+            backgroundMusic.pause();
+        }
+    });
 </script>
 
 <svelte:head>

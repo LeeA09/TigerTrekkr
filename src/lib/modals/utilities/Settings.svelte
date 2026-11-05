@@ -15,7 +15,7 @@
     // music and sound
     function toggle_music() { 
         is_music_on.update(value => !value);
-        backgroundMusic.toggle();
+        // backgroundMusic.toggle();
     }
     function toggle_sound() { is_sound_on.update(value => !value); }
 
@@ -190,7 +190,7 @@
 			                <button class="button-secondary settings-button" onclick={handle_logout}>Log Out</button>
 			            </div>
                         {:else}
-                            <p>You cannot delete or edit your account, or log out while playing.</p>
+                            <p>You cannot delete, edit, or log out of your account while playing.</p>
                         {/if}
                     </div>
                 {/if}
