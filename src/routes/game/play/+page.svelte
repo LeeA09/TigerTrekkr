@@ -58,9 +58,18 @@
                     mouseViewMode: 'drag'
                 }
             });
-            // REPLACE inside fromstringbelow with $currentLocation.imageURL when ready to use random images
-            const source = window.Marzipano.ImageUrlSource.fromString(image_url);   
-            const geometry = new window.Marzipano.EquirectGeometry([{ width: 12288 }]);
+
+            const levels = [
+                { tileSize: 512, size: 512 },
+                { tileSize: 512, size: 1024 },
+                { tileSize: 512, size: 2048 },
+                { tileSize: 512, size: 4096 },
+                { tileSize: 512, size: 8192 },
+                { tileSize: 512, size: 16384 }
+            ];
+
+            const geometry = new window.Marzipano.CubeGeometry(levels)
+            const source = window.Marzipano.ImageUrlSource.fromString(image_url)
 
             // Keep the existing zoom limits for every difficulty.
             const traditionalLimiter =
@@ -204,7 +213,7 @@
     async function getLocation() {
         if($currentLocIdx <= 0){ await setUpGame() }
         currentLocation.set($sessionLocations[$currentLocIdx++])
-        image_url = $currentLocation.image_url
+        image_url = $currentLocation.tile_url_template
     }
 
     async function setUpGame() {

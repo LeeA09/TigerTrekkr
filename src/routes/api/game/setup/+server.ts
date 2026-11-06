@@ -19,30 +19,20 @@ export async function GET({ locals }) {
     const formattedLocations = locations.map((loc) => {
         const { data } = locals.supabase
             .storage
-            .from('location_images')
+            .from('image_tiles')
             .getPublicUrl(loc.imageurl);
 
         // USE IF ON LOCAL SERVER
-        const trueUrl = data.publicUrl;
+        const trueUrl = `${data.publicUrl}/{z}/{f}/{y}/{x}.jpg`;
 
         // USE IF ON PROD SERVER
         // const trueUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
         
         return {
             image_id: loc.locationid,
-            image_url: trueUrl
+            tile_url_template: trueUrl
         }
     })
 
-    return json({ success: true, locations: formattedLocations });
+    return Response.json({ success: true, locations: formattedLocations });
 }
-
-// SHUFFLE FUNCTION MOVED FROM PLAY PAGE
-// function fisher_yates_shuffle(locations) {
-//     const shuffled = [...locations];
-//     for (let i = shuffled.length - 1; i > 0; i--) {
-//         const j = Math.floor(Math.random() * (i + 1));
-//         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-//     }
-//     return shuffled;
-// }

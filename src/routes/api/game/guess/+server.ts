@@ -103,7 +103,7 @@ export async function POST({ request, locals }) {
     const { data: location, error: locationError } =
         await locals.supabase
             .from('location_image_info')
-            .select('locationid, latitude, longitude, description, locationname')
+            .select('locationid, latitude, longitude, description')
             .eq('locationid', locationId)
             .single();
 
