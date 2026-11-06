@@ -14,7 +14,7 @@
         "latitude": "38.94374",
         "longitude": "92.32671",
         "time": "2026:05:12 11:00:07",
-        "description": "Kuhlman Court is the grassy area between Ellis Library and the MU Student Center where many events are held.  It used to have multiple residential homes which were eventually turned into offices and workspaces, before the remaining structures were torn down in 1984.",
+        "description": "Kuhlman Court is the grassy area between Ellis Library and the MU Student Center where many events are held. It used to have multiple residential homes which were eventually turned into offices and workspaces, before the remaining structures were torn down in 1984.",
         "potentialimgmatches": [
             "IMG_20260512_105938_00_010.jpg"
         ]
@@ -74,7 +74,7 @@
         "latitude": "38.94720",
         "longitude": "92.33053",
         "time": "2026:05:13 09:55:39",
-        "description": "At the time this photo was taken, this field was the former site of Parker Hall, Noyes Hall, and the Old Student Health Building.  It is the future site of the Payne Energy Innovation Center, which is currently under construction and projected to be completed in 2028.",
+        "description": "At the time this photo was taken, this field was the former site of Parker Hall, Noyes Hall, and the Old Student Health Building. It is the future site of the Payne Energy Innovation Center, which is currently under construction and projected to be completed in 2028.",
         "potentialimgmatches": [
             "IMG_20260513_095514_00_020.jpg"
         ]
@@ -254,7 +254,7 @@
         "latitude": "38.94773",
         "longitude": "92.32799",
         "time": "2026:05:13 11:13:47",
-        "description": "Journalism Archway. It connects Neff Hall and Walter Williams Hall, serving as a historic and symbolic gateway to the world's first journalism school. On May, 1931, the Republic of China gifted two massive stone lion statues, that stands five feet tal and weighs around 5,000 pounds, as a symbol of international goodwill and educational ties.  ",
+        "description": "Journalism Archway. It connects Neff Hall and Walter Williams Hall, serving as a historic and symbolic gateway to the world's first journalism school. On May, 1931, the Republic of China gifted two massive stone lion statues, that stands five feet tal and weighs around 5,000 pounds, as a symbol of international goodwill and educational ties.",
         "potentialimgmatches": [
             "IMG_20260513_111329_00_041.jpg"
         ]
@@ -368,7 +368,7 @@
         "potentialimgmatches": [
             "IMG_20260513_180335_00_055.jpg"
         ]
-    },  /*Done*/
+    }, 
     {
         "imgname": "IMG_6035.JPEG",
         "latitude": "38.94607",
@@ -384,7 +384,7 @@
         "latitude": "38.94619",
         "longitude": "92.32243",
         "time": "2026:05:13 18:09:36",
-        "description": "Wildlife Pond holds a nostalgic place in the memories of longtime Columbia residents. It was historically known for housing a quaint wooden footbridge affectionately dubbed the "kissing bridge" by locals.",
+        "description": "Wildlife Pond holds a nostalgic place in the memories of longtime Columbia residents. It was historically known for housing a quaint wooden footbridge affectionately dubbed the \"kissing bridge\" by locals.",
         "potentialimgmatches": [
             "IMG_20260513_180919_00_057.jpg"
         ]
@@ -394,19 +394,9 @@
         "latitude": "38.94593",
         "longitude": "92.32261",
         "time": "2026:05:13 18:11:22",
-        "description": "Stephens Hall was constructed in 1935–1936 with support from the Public Works Administration (PWA). Named after E. Sydney Stephens, a prominent Columbia businessman and key contributor to the creation of the Missouri Conservation Commission.",
+        "description": "Stephens Hall was constructed in 1935–1936 with support from the Public Works Administration (PWA). Named after E. Sydney Stephens, a prominent Columbia businessman and key contributor to the creation of the Missouri Conservation Commission. It currently houses offices for the Department of Biochemistry. Fun fact, Stephens Hall is completely unrelated to Stephens College. People frequently confuse Mizzou's Stephens Hall with the campus of Stephens College.",
         "potentialimgmatches": [
             "IMG_20260513_181102_00_058.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_6039.JPEG",
-        "latitude": "38.94616",
-        "longitude": "92.32241",
-        "time": "2026:05:13 18:12:36",
-        "description": "Wildlife Pond holds a nostalgic place in the memories of longtime Columbia residents. It was historically known for housing a quaint wooden footbridge affectionately dubbed the "kissing bridge" by locals.",
-        "potentialimgmatches": [
-            "IMG_20260513_181222_00_059.jpg"
         ]
     },
     {
@@ -414,7 +404,7 @@
         "latitude": "38.94554",
         "longitude": "92.32266",
         "time": "2026:05:13 18:15:29",
-        "description": "Schweitzer Hall was built in 1912 as the original Agricultural Chemistry Building. Named after Dr. Paul Schweitzer, the first full0time professor of chemistry at MU and the first chairman of the Department of Agricultural Chemistry.",
+        "description": "Schweitzer Hall was built in 1912 as the original Agricultural Chemistry Building. Named after Dr. Paul Schweitzer, the first full time chemistry professor at MU and the first chairman of the Department of Agricultural Chemistry. It houses a state-of the art state-of-the-art 800 MHz Nuclear Magnetic Resonance (NMR) spectrometer, a powerful structural biology tool that serves the entire University of Missouri System",
         "potentialimgmatches": [
             "IMG_20260513_181448_00_060.jpg"
         ]
@@ -434,7 +424,7 @@
         "latitude": "38.94479",
         "longitude": "92.32323",
         "time": "2026:05:13 18:20:24",
-        "description": "Curtis Hall was constructed in 1939 with support from the Public Works Administration (PWA).",
+        "description": "Curtis Hall was constructed in 1939 with support from the Public Works Administration (PWA). Originally known as New Chemistry, then renamed to BioChem bhuilding. Renamed again to honor Winterton C. Curtis, a prominent Professor of Zoology at the university.",
         "potentialimgmatches": [
             "IMG_20260513_182004_00_062.jpg"
         ]
@@ -444,7 +434,7 @@
         "latitude": "38.94512",
         "longitude": "92.32450",
         "time": "2026:05:13 18:23:43",
-        "description": "Courtyard behind Memorial Student Union. ",
+        "description": "Stewart Hall was designed and built in 1912 as the original Physics Building, renamed in honor of Oliver M. Stewart, who served a long tenure as the chair of the Physics Department. Now it primarily hosue the Department of Geogrpahy.",
         "potentialimgmatches": [
             "IMG_20260513_182324_00_063.jpg"
         ]
@@ -454,7 +444,7 @@
         "latitude": "38.94482",
         "longitude": "92.32448",
         "time": "2026:05:13 18:25:44",
-        "description": "Entrance to Stanley Hall. You can find the Office of Financial Success and Department of Aarchitectural Studies. ",
+        "description": "tanley Hall was built in 1958 as the Home Economics Building. It was named in honor of Dr. Louise Stanley, who served as the chairman of Mizzou's Departmnet of Hone Economics, and later became the first chief of the newly established Bureau of Home Economics in the U.S. Department of Agriculture. You can find the Office of Financial Success and Department of Aarchitectural Studies. ",
         "potentialimgmatches": [
             "IMG_20260513_182527_00_064.jpg"
         ]
@@ -474,7 +464,7 @@
         "latitude": "38.94447",
         "longitude": "92.32466",
         "time": "2026:05:13 18:34:59",
-        "description": "Driveway between Gentry Hall and Gwynn Hall.",
+        "description": "Driveway between Gentry Hall and Gwynn Hall that connect Hitt St and parking lot WC5.",
         "potentialimgmatches": [
             "IMG_20260513_183416_00_066.jpg"
         ]
@@ -484,7 +474,7 @@
         "latitude": "38.94392",
         "longitude": "92.32446",
         "time": "2026:05:13 18:37:36",
-        "description": "Tucker Hall Greenhouse.",
+        "description": "Tucker Hall was designed and constructed in 1967, original named Botany Budiling. Then renamed to honor Dr. Clarence M. Tucker, a highly respected professor and the Chairman of the Department of Botany. The Tucker Hall Greenhouse was establishe din 1975, it holds between 500 to 800 plant species.",
         "potentialimgmatches": [
             "IMG_20260513_183714_00_067.jpg"
         ]
@@ -494,7 +484,7 @@
         "latitude": "38.94351",
         "longitude": "92.32546",
         "time": "2026:05:13 18:41:16",
-        "description": "Mary McKee Gym was built in 1922 as a dedicated women’s physical education facility. Now it transitioned away from athletics into use as academic and studio space.",
+        "description": "Mary McKee Gym was built in 1922 as a dedicated women’s physical education facility. Now it transitioned away from athletics into use as academic and studio space. Part of the building were converted into an intimate, black-box styule basement theatre space (Studio 4 MU Theatre) for student-led production, workshops, and performance classes.",
         "potentialimgmatches": [
             "IMG_20260513_184050_00_068.jpg"
         ]
@@ -504,11 +494,11 @@
         "latitude": "38.94267",
         "longitude": "92.32454",
         "time": "2026:05:13 18:46:12",
-        "description": "Woodland & Floral Garden was planned, designed, and built by horticulture students in the late 1970s and officially dedicated in April 1980.",
+        "description": "Woodland & Floral Garden was entirely planned, designed, and built by horticulture students in the late 1970s and officially dedicated in April 1980.",
         "potentialimgmatches": [
             "IMG_20260513_184548_00_069.jpg"
         ]
-    },
+    }, 
     {
         "imgname": "IMG_6052.JPEG",
         "latitude": "38.94315",
@@ -564,7 +554,7 @@
         "latitude": "38.94369",
         "longitude": "92.32289",
         "time": "2026:05:13 19:55:21",
-        "description": "Physics Building was designed and constructed in 1964 and officially dedicated in April 1967. And there is telescope on the roof of the building.",
+        "description": "Physics Building was designed and constructed in 1964 and officially dedicated in April 1967. And there is the Laws Observatory on the roof of the building that house a variety of small telescopes. It open every Wednesday night from 8PM-10PM to the public.",
         "potentialimgmatches": [
             "IMG_20260513_195500_00_075.jpg"
         ]
@@ -574,7 +564,7 @@
         "latitude": "38.93289",
         "longitude": "92.33319",
         "time": "2026:05:14 09:23:27",
-        "description": "Mizzou Arena is a 15,061-seat multi-purpose facility that opened in November 2004 as the home of the Tigers' basketball and gymnastics teams.",
+        "description": "Mizzou Arena is a 15,061-seat multi-purpose facility that opened in November 2004 as the home of the Tigers' basketball and gymnastics teams. It was briefly named Paige Sports Arena (after Wal-Mart heiress Elizabeth Paige Laurie) before the naming rights were returned to the university following an academic scandal.",
         "potentialimgmatches": [
             "IMG_20260514_092402_00_077.jpg"
         ]
@@ -584,7 +574,7 @@
         "latitude": "38.93358",
         "longitude": "92.33378",
         "time": "2026:05:14 09:34:48",
-        "description": "Champions Dr.",
+        "description": "Champions Dr. connects Providence Rd. and Mick Deaver Menmorial Dr.",
         "potentialimgmatches": [
             "IMG_20260514_093426_00_078.jpg"
         ]
@@ -594,7 +584,7 @@
         "latitude": "38.93401",
         "longitude": "92.33235",
         "time": "2026:05:14 09:40:33",
-        "description": "Ramp lead to Memorial Stadium.",
+        "description": "Ramp lead to Memorial Stadium. Memorial Stadium was constructed in December 1925, and offically opened on October 2, 1926. It was dedicated as \"Memorial Stadium\" to honor the 112 Mizzou students and alumni who lost their lives in WWI.",
         "potentialimgmatches": [
             "IMG_20260514_093959_00_079.jpg"
         ]
@@ -604,7 +594,7 @@
         "latitude": "38.93427",
         "longitude": "92.32974",
         "time": "2026:05:14 09:47:11",
-        "description": "Hearnes Center is a 13,611-seat multi-purpose arena that officially opened and was dedicated on August 4, 1972.",
+        "description": "Hearnes Center is a 13,611-seat multi-purpose arena that officially opened and was dedicated on August 4, 1972. Named after Warren E. Hearnes, a 1952 Mizzou alumnus and the 46th Governor of Missouri.",
         "potentialimgmatches": [
             "IMG_20260514_094646_00_080.jpg"
         ]
@@ -614,7 +604,7 @@
         "latitude": "38.93359",
         "longitude": "92.32788",
         "time": "2026:05:14 09:55:40",
-        "description": "Mizzou Softball Field opened in March 2017 after decades at the historic University Field. ",
+        "description": "Mizzou Softball Field opened in March 2017 after decades at the historic University Field.",
         "potentialimgmatches": [
             "IMG_20260514_095524_00_081.jpg"
         ]
@@ -624,7 +614,7 @@
         "latitude": "38.93254",
         "longitude": "92.32913",
         "time": "2026:05:14 10:00:14",
-        "description": "Bus station by Hearnes Center.",
+        "description": "Parking lots and bus station by Hearnes Center. The main Hearnes lots are designated as SG4, SG4M, SG4N, and SG4O. During the semesters, students will be able to purchase parking permit. Students who purchased parking permit in these lots will be asked to move their car to other parking location on campus before football games",
         "potentialimgmatches": [
             "IMG_20260514_095937_00_082.jpg"
         ]
@@ -644,7 +634,7 @@
         "latitude": "38.93877",
         "longitude": "92.33298",
         "time": "2026:05:14 10:21:26",
-        "description": "Mizzou Market-Southwest.",
+        "description": "Southwest village and Mizzou Market-Southwest. Southwest Village is one of the main resdigntial campus neighborhoods, encompassing Bluford, Brooks, Center, North, and South halls. It represent part of Mizzou;s modernized residential expansion aimed to provide contemporary suite-style housing rather than traditional community-style dorms.",
         "potentialimgmatches": [
             "IMG_20260514_102104_00_084.jpg"
         ]
@@ -654,7 +644,7 @@
         "latitude": "38.93894",
         "longitude": "92.33347",
         "time": "2026:05:14 10:23:11",
-        "description": "Center Hall",
+        "description": "Center Hall, one of the modern suite-style residence hall that opened in 2006.",
         "potentialimgmatches": [
             "IMG_20260514_102257_00_085.jpg"
         ]
@@ -664,17 +654,7 @@
         "latitude": "38.93902",
         "longitude": "92.33314",
         "time": "2026:05:14 10:24:49",
-        "description": "[I NEED TO LOOK AT THE PIC FOR THE DESCRIPTION]",
-        "potentialimgmatches": [
-            "IMG_20260514_102433_00_086.jpg"
-        ]
-    },
-    {
-        "imgname": "IMG_6077.JPEG",
-        "latitude": "38.93930",
-        "longitude": "92.33323",
-        "time": "2026:05:14 10:24:57",
-        "description": "North Hall was previously home to the Blair Group residence halls (which included Smith Hall, Donnelly Hall, and Blair Commons), originally built in 1961.",
+        "description": "Under pathway of Center Hall, one of the modern suite-style residence hall that opened in 2006.",
         "potentialimgmatches": [
             "IMG_20260514_102433_00_086.jpg"
         ]
@@ -684,7 +664,7 @@
         "latitude": "38.93940",
         "longitude": "92.33166",
         "time": "2026:05:14 10:29:10",
-        "description": "Intersection of Kentucky Blvd and Richmond Ave. Southwest Residence Hall.",
+        "description": "Intersection of Kentucky Blvd and Richmond Ave. Jones Residence Hall.",
         "potentialimgmatches": [
             "IMG_20260514_102845_00_087.jpg"
         ]
@@ -714,7 +694,7 @@
         "latitude": "38.93976",
         "longitude": "92.32941",
         "time": "2026:05:14 10:50:07",
-        "description": "Patient Centered Care Learning Center at the University of Missouri School of Medicine in Columbia, Missouri, is a six-story, 97,000-square-foot educational facility that opened in 2017.",
+        "description": "Patient Centered Care Learning Center at the University of Missouri School of Medicine in Columbia, Missouri, is a six-story, 97,000-square-foot educational facility that opened in 2017. It have Patient-Based Learning (PBL) classrooms, High-Tech Anatomy Lab, and Clinicla Simulation Rooms.",
         "potentialimgmatches": [
             "IMG_20260514_104903_00_090.jpg"
         ]
@@ -734,7 +714,7 @@
         "latitude": "38.94098",
         "longitude": "92.32829",
         "time": "2026:05:14 11:00:44",
-        "description": "Stankowski Volleyball Courts was redesigned in 1996 from historic Rollins Field space into the modern Stankowski Field outdoor complex. ",
+        "description": "Stankowski Volleyball Courts was redesigned in 1996 from historic Rollins Field space into the modern Stankowski Field outdoor complex. It have four full-sozed sand volleyball courts, and student acan checkout free equipmetn at the MizzouRec equipment desk.",
         "potentialimgmatches": [
             "IMG_20260514_105952_00_092.jpg"
         ]
@@ -774,7 +754,7 @@
         "latitude": "38.94157",
         "longitude": "92.32754",
         "time": "2026:05:14 11:24:37",
-        "description": "MizzouRec entrance by Stankowski Volleyball Courts.",
+        "description": "MizzouRec entrance by Stankowski Volleyball Courts. MizzouRec is a massive 300,000 square foot fitness and leisure facility. It have a 50-meter lap pool, Tiger Grotto (lazy river and a sauna), fitness, courts, climbing tower, and  specialized gyms.",
         "potentialimgmatches": [
             "IMG_20260514_112620_00_097.jpg"
         ]
@@ -814,7 +794,7 @@
         "latitude": "38.93948",
         "longitude": "92.32757",
         "time": "2026:05:14 11:44:04",
-        "description": "Ramp by Sinclair School of Nursing",
+        "description": "Sinclair School of Nursing, offically named the Charles and Josie Smith Sinclaire School of Nursing in 1994.",
         "potentialimgmatches": [
             "IMG_20260514_114324_00_102.jpg"
         ]
@@ -834,7 +814,7 @@
         "latitude": "38.94524",
         "longitude": "92.32578",
         "time": "2026:06:14 10:44:21",
-        "description": "Under roof pathway next to Fine Arts Building by Hitt St. ",
+        "description": "Fine Arts Building was constructed in 1958. It was divided into three primary academic and creative disciplines, Art Department (Visual Arts), Music Department, and Theatre and Performance.",
         "potentialimgmatches": [
             "IMG_20260614_104404_00_104.jpg"
         ]
@@ -894,7 +874,7 @@
         "latitude": "38.94587",
         "longitude": "92.32742",
         "time": "2026:06:14 11:08:57",
-        "description": "Bus station by S 9th St. next to Middlebush Hall.",
+        "description": "Bus station by S 9th St. next to Middlebush Hall, across from Reynolds Journalism Institute.",
         "potentialimgmatches": [
             "IMG_20260614_110844_00_110.jpg"
         ]
@@ -904,7 +884,7 @@
         "latitude": "38.94608",
         "longitude": "92.32691",
         "time": "2026:06:14 11:13:27",
-        "description": "Courtyard in Middlebush Hall. Middlebush Hall was designed and constructed in 1958–1959 and formally dedicated in October 1972 in honor of Frederick A. Middlebush",
+        "description": "Courtyard in Middlebush Hall. Middlebush Hall was designed and constructed in 1958–1959 and formally dedicated in October 1972 in honor of Frederick A. Middlebush. It house Department of Statistics and Data Science, and Harry S Truman School of Government and Public Affairs.",
         "potentialimgmatches": [
             "IMG_20260614_111256_00_111.jpg"
         ]
@@ -934,7 +914,7 @@
         "latitude": "38.94503",
         "longitude": "92.32587",
         "time": "2026:06:14 11:24:26",
-        "description": "Lowry Mall was transformed from a busy city street into a pedestrian walkway between 1981 and 1984.",
+        "description": "Lowry Mall was transformed from a busy city street into a pedestrian walkway between 1981 and 1984. The two mins named Lowry, Lowry Mall was named after Thomas Jefferson Lowry, the frist dean of Mizzou's College of Engineering. However, Lowry Hall was named after Benjamin Franklin Lowry, whose family donated $15,000.",
         "potentialimgmatches": [
             "IMG_20260614_112409_00_115.jpg"
         ]
@@ -954,7 +934,7 @@
         "latitude": "38.94479",
         "longitude": "92.32651",
         "time": "2026:06:14 11:31:29",
-        "description": "Ellis Library Lowry Mall Entrance. ",
+        "description": "Ellis Library Lowry Mall Entrance. Elmer Ellis Library is the main research library, it have vast collections, books, and study spaces.",
         "potentialimgmatches": [
             "IMG_20260614_113111_00_117.jpg"
         ]
@@ -964,7 +944,7 @@
         "latitude": "38.94504",
         "longitude": "92.32657",
         "time": "2026:06:14 11:32:57",
-        "description": "Student Success Center is housed in a building originally constructed in 1923 that operated as the privately owned Missouri Bookstore for 90 years. This is also where you will find the writing center and career success center.  ",
+        "description": "Student Success Center is housed in a building originally constructed in 1923 that operated as the privately owned Missouri Bookstore for 90 years. This is also where you will find the writing center and career success center.",
         "potentialimgmatches": [
             "IMG_20260614_113236_00_118.jpg"
         ]
@@ -974,7 +954,7 @@
         "latitude": "38.94525",
         "longitude": "92.32707",
         "time": "2026:06:14 11:38:01",
-        "description": "Pathway between Lowry Hall and Student Success Center. ",
+        "description": "Pathway between Lowry Hall and Student Success Center. Lowry Hall was designed and completed in 1904 as the private Bible College of Missouri. The University of Missouri formally purchased and acquired Lowry Hall on April 3, 1980. You can find Honors College here.",
         "potentialimgmatches": [
             "IMG_20260614_113737_00_121.jpg"
         ]
@@ -994,7 +974,7 @@
         "latitude": "38.94458",
         "longitude": "92.32713",
         "time": "2026:06:14 11:52:27",
-        "description": "Pathway next to Ellis Library. ",
+        "description": "Pathway next to Ellis Library that connect MU Student Center and Lowry Mall.",
         "potentialimgmatches": [
             "IMG_20260614_115155_00_125.jpg"
         ]
@@ -1028,13 +1008,13 @@
         "potentialimgmatches": [
             "IMG_20260725_100408_00_129.jpg"
         ]
-    },
+    }, 
     {
         "imgname": "IMG_8491.JPG",
         "latitude": "38.94397",
         "longitude": "92.32984",
         "time": "2026:07:25 10:10:46",
-        "description": "Front of the Alumni Center. The Mizzou Alumni Association (MAA), founded in 1853. ",
+        "description": "Donald W. Reynolds Alumni and Visitor Center. It was conected in 1992, named after alumnus Donald W. Reynolds. It now house the Mizzou Alumni Association (MAA), founded in 1853. ",
         "potentialimgmatches": [
             "IMG_20260725_101026_00_131.jpg"
         ]
@@ -1044,7 +1024,7 @@
         "latitude": "38.94351",
         "longitude": "92.32980",
         "time": "2026:07:25 10:12:42",
-        "description": "Loading and trash area behind the Alumni Center.",
+        "description": "Intersection of Tiger Ave. and Turner Ave. Loading and trash area behind the Alumni Center.",
         "potentialimgmatches": [
             "IMG_20260725_101226_00_132.jpg"
         ]
@@ -1054,7 +1034,7 @@
         "latitude": "38.94253",
         "longitude": "92.32973",
         "time": "2026:07:25 10:16:24",
-        "description": "Entrance to Cornell Hall from Rollins St. This building cost $28,050,000 to construct and equip",
+        "description": "Cornell Hall was designed and built 1999, and offically opened on September 7, 2002. This building cost $28,050,000 to construct and equip. Named after Harry M. Cornell, Jr. a 1950 Mizzou business alumnus and long-time CEO/Chairman of Leggett & Platt.",
         "potentialimgmatches": [
             "IMG_20260725_101609_00_133.jpg"
         ]
@@ -1074,7 +1054,7 @@
         "latitude": "38.94245",
         "longitude": "92.32895",
         "time": "2026:07:25 10:21:05",
-        "description": "Tiger Plaza is a central campus landmark symbolizing school pride and alumni connections, highlighted by a 1,200-pound bronze Bengal tiger statue. ",
+        "description": "Tiger Plaza is a central campus landmark symbolizing school pride and alumni connections, highlighted by a 1,200-pound bronze Bengal tiger statue. It was officially opened on Octerober 25, 2002 during the university;s Homecoming celebration.",
         "potentialimgmatches": [
             "IMG_20260725_102053_00_136.jpg"
         ]
@@ -1114,7 +1094,7 @@
         "latitude": "38.94358",
         "longitude": "92.32936",
         "time": "2026:07:25 10:34:31",
-        "description": "Pathway to the back of the Alumni building.",
+        "description": "Patio in the back of the Alumni building.",
         "potentialimgmatches": [
             "IMG_20260725_103405_00_140.jpg"
         ]
@@ -1124,7 +1104,7 @@
         "latitude": "38.94402",
         "longitude": "92.32926",
         "time": "2026:07:25 10:37:02",
-        "description": "Outside of the Alumni building that have the huge MU logo.",
+        "description": "Outside of the Alumni building that have the huge MIZ logo.",
         "potentialimgmatches": [
             "IMG_20260725_103638_00_141.jpg"
         ]
@@ -1134,7 +1114,7 @@
         "latitude": "38.94409",
         "longitude": "92.32887",
         "time": "2026:07:25 10:39:34",
-        "description": "Open area by Traditions Plaza. ",
+        "description": "Traditions Plaza was dedicated on October 24, 2014, to celebrate the university's 175th anniversary.",
         "potentialimgmatches": [
             "IMG_20260725_103919_00_142.jpg"
         ]
@@ -1154,7 +1134,7 @@
         "latitude": "38.94405",
         "longitude": "92.32829",
         "time": "2026:07:25 10:47:00",
-        "description": "Intersection of Conley Ave and Missouri Ave. ",
+        "description": "Intersection of Conley Ave and Missouri Ave. Open area next to the Law School ",
         "potentialimgmatches": [
             "IMG_20260725_104629_00_144.jpg"
         ]
@@ -1164,7 +1144,7 @@
         "latitude": "38.94384",
         "longitude": "92.32841",
         "time": "2026:07:25 10:48:40",
-        "description": "Covered walkway by Law school.",
+        "description": "Covered walkway by Law school. School of Law was founded in 1872, making it the one of the oldest law schools west of Mississippi River.",
         "potentialimgmatches": [
             "IMG_20260725_104818_00_145.jpg"
         ]
@@ -1184,7 +1164,7 @@
         "latitude": "38.94382",
         "longitude": "92.32806",
         "time": "2026:07:25 10:57:51",
-        "description": "This is a staircase outside the auditorium in John K. Hulston Hall.",
+        "description": "John K. Hulston Hall is the home of School of Law, constructed in 1988. Named after John K. Hulston, a prominent attorney, banker, author, and WWII veteran. Inside it have the Law Library, Mock Courtrooms, and offices.",
         "potentialimgmatches": [
             "IMG_20260725_105728_00_149.jpg"
         ]
@@ -1194,7 +1174,7 @@
         "latitude": "38.94367",
         "longitude": "92.32786",
         "time": "2026:07:25 11:02:26",
-        "description": "Open area outside of Law School (John K. Hulston Hall)",
+        "description": "This is a staircase outside the auditorium in John K. Hulston Hall.",
         "potentialimgmatches": [
             "IMG_20260725_105934_00_merged.jpg"
         ]
@@ -1214,7 +1194,7 @@
         "latitude": "38.94340",
         "longitude": "92.32748",
         "time": "2026:07:25 11:06:31",
-        "description": "Arts & Science Building opened in 1960-1961. ",
+        "description": "Arts & Science Building opened in 1960-1961. It houses School of Languages, Literatures, and Cultures. ",
         "potentialimgmatches": [
             "IMG_20260725_110607_00_155.jpg"
         ]
@@ -1224,7 +1204,7 @@
         "latitude": "38.94336",
         "longitude": "92.32670",
         "time": "2026:07:25 11:10:11",
-        "description": "Kuhlman Court. In 1922, Kuhlman Court was originally developed as a residential housing area. ",
+        "description": "Kuhlman Court. In 1922, Kuhlman Court was originally developed as a residential housing area. It was razed in 1984, and build space for the University Bookstore and Ellis Library.",
         "potentialimgmatches": [
             "IMG_20260725_110939_00_156.jpg"
         ]
@@ -1244,7 +1224,7 @@
         "latitude": "38.94290",
         "longitude": "92.32719",
         "time": "2026:07:25 11:39:37",
-        "description": "Entrance to MU Student Center from Arts & Science. ",
+        "description": "Entrance to MU Student Center from Arts & Science with some patio seating area. MU Student Center was built between 1961 and 1963, originally opened as Brady Commons. Then it was updated in 1981, 1985, and 1997.",
         "potentialimgmatches": [
             "IMG_20260725_113909_00_158.jpg"
         ]
@@ -1284,7 +1264,7 @@
         "latitude": "38.94228",
         "longitude": "92.32787",
         "time": "2026:07:25 11:48:03",
-        "description": "Ramp next to Strickland Hall. ",
+        "description": "Ramp next to Strickland Hall. LeeAnn used to use these ramps with her hoverboard.",
         "potentialimgmatches": [
             "IMG_20260725_114726_00_162.jpg"
         ]
@@ -1304,7 +1284,7 @@
         "latitude": "38.94220",
         "longitude": "92.32648",
         "time": "2026:07:25 11:52:27",
-        "description": "Rollins St. Bus Station. ",
+        "description": "Bike parking area outside of Student Center by Rollins St.",
         "potentialimgmatches": [
             "IMG_20260725_115211_00_164.jpg"
         ]
@@ -1314,7 +1294,7 @@
         "latitude": "38.94231",
         "longitude": "92.32600",
         "time": "2026:07:25 11:54:12",
-        "description": "The Mizzou Store and Tiger Tech.",
+        "description": "The Mizzou Store and TigerTech. TigerTech was established in 1983  as a full-service technology reseller to handle the booming demand for personal computing and software on campus.",
         "potentialimgmatches": [
             "IMG_20260725_115351_00_165.jpg"
         ]
@@ -1324,7 +1304,7 @@
         "latitude": "38.94170",
         "longitude": "92.32574",
         "time": "2026:07:25 11:56:29",
-        "description": "Gideon F. Rothwell Gymnasium. This building is named after a former U.S. Congressman and President of the University of Missouri Board of Curators. he is famously remembered for protesting the destruction of and helping save the iconic Mizzou Columns after the devastating Academic Hall fire in 1892.",
+        "description": "Gideon F. Rothwell Gymnasium. This building is named after a former U.S. Congressman and President of the University of Missouri Board of Curators. He is famously remembered for protesting the destruction of and helping save the iconic Mizzou Columns after the devastating Academic Hall fire in 1892.",
         "potentialimgmatches": [
             "IMG_20260725_115612_00_166.jpg"
         ]
@@ -1344,7 +1324,7 @@
         "latitude": "38.93971",
         "longitude": "92.32604",
         "time": "2026:07:26 08:22:53",
-        "description": "Student Health Center by Pershing/Hitt St.  Located in Pershing Hall, this used to be the location of a Mizzou Market and Subway.",
+        "description": "Student Health Center by Pershing/Hitt St. Located in Pershing Hall, this used to be the location of a Mizzou Market and Subway. Some resources in here, primary medical care, immunization & travel medicine, and well-being network (Conselling Center, Wellness Resource Center, and Relationship and Sexual Violence Prevention (RSVP).",
         "potentialimgmatches": [
             "IMG_20260726_082235_00_168.jpg"
         ]
@@ -1364,7 +1344,7 @@
         "latitude": "38.94044",
         "longitude": "92.32600",
         "time": "2026:07:26 08:30:10",
-        "description": "Underpass below Defoe-Graham.  Defoe-Graham used to be two separate buildings.  Luther \"Daddy\" Defoe was a professor of math at Mizzou and Robert McGhee Graham was a Mizzou graduate who was killed in WW1.",
+        "description": "Underpass below Defoe-Graham. Defoe-Graham used to be two separate buildings. Luther \"Daddy\" Defoe was a professor of math at Mizzou and Robert McGhee Graham was a Mizzou graduate who was killed in WW1.",
         "potentialimgmatches": [
             "IMG_20260726_082745_00_170.jpg"
         ]
@@ -1394,7 +1374,7 @@
         "latitude": "38.94034",
         "longitude": "92.32703",
         "time": "2026:07:26 08:36:51",
-        "description": "Pathway in between HawLeWood",
+        "description": "Pathway in between HawLeWood with some bike parking area.",
         "potentialimgmatches": [
             "IMG_20260726_083627_00_177.jpg"
         ]
@@ -1424,7 +1404,7 @@
         "latitude": "38.94092",
         "longitude": "92.32568",
         "time": "2026:07:26 08:46:27",
-        "description": "Mizzou Student Recreation Center",
+        "description": "Mizzou Student Recreation Center. MizzouRec is a massive 300,000 square foot fitness and leisure facility. It have a 50-meter lap pool, Tiger Grotto (lazy river and a sauna), fitness, courts, climbing tower, and  specialized gyms.",
         "potentialimgmatches": [
             "IMG_20260726_084607_00_180.jpg"
         ]
@@ -1454,7 +1434,7 @@
         "latitude": "38.94192",
         "longitude": "92.32336",
         "time": "2026:07:26 08:54:45",
-        "description": "Entrance to Rollins Commons and Rollins Dinning Hall.",
+        "description": "Rollins Commons and Rollins Dinning Hall. Rollins Commons and Hudson hall underwent massive renovation and reopened for the Fall 2010 semester. Named after James S. Rollins, a piovtal figure widely recognized as the \"Father of the University of Missouri\". It have DoIT Computer Lab and community dining space.",
         "potentialimgmatches": [
             "IMG_20260726_085429_00_183.jpg"
         ]
@@ -1474,7 +1454,7 @@
         "latitude": "38.94227",
         "longitude": "92.32185",
         "time": "2026:07:26 09:00:45",
-        "description": "Sanborn Field dates back to 1888, named after J.W. Sanborn, the Dean and Director of the College of Agriculture from 1882-89.  It was recognized as a Registered National Historic Landmark in 1935.",
+        "description": "Sanborn Field dates back to 1888, named after J.W. Sanborn, the Dean and Director of the College of Agriculture from 1882-89. It was recognized as a Registered National Historic Landmark in 1935.",
         "potentialimgmatches": [
             "IMG_20260726_090030_00_186.jpg"
         ]
@@ -1494,7 +1474,7 @@
         "latitude": "38.94209",
         "longitude": "92.32053",
         "time": "2026:07:26 09:05:05",
-        "description": "Between Sanborn Field and Eckles Hall.",
+        "description": "Rollins st. Between Sanborn Field and Eckles Hall.",
         "potentialimgmatches": [
             "IMG_20260726_090448_00_188.jpg"
         ]
@@ -1504,7 +1484,7 @@
         "latitude": "38.94183",
         "longitude": "92.32001",
         "time": "2026:07:26 09:07:14",
-        "description": "Eckles Hall.  It was constructed in 1901 as the Dairy Building, home to the first collegiate dairy husbandry department in Missouri, with ~100 cows and bulls grazing across the street in the area that is now the vetrinary school. Eckles is now home to the College of Agriculture, Food, and Natural Resouces.  It also houses the Mizzou Meat Market and Buck's Ice Cream Shop.",
+        "description": "Eckles Hall. It was constructed in 1901 as the Dairy Building, home to the first collegiate dairy husbandry department in Missouri, with ~100 cows and bulls grazing across the street in the area that is now the vetrinary school. Eckles is now home to the College of Agriculture, Food, and Natural Resouces. It also houses the Mizzou Meat Market and Buck's Ice Cream Shop.",
         "potentialimgmatches": [
             "IMG_20260726_090652_00_189.jpg"
         ]
@@ -1514,7 +1494,7 @@
         "latitude": "38.94142",
         "longitude": "92.32020",
         "time": "2026:07:26 09:12:02",
-        "description": "Buck's Ice Cream Shop. Located in Eckles Hall, it was named after MU graduates Wendell and Ruth Arbuckle.  Buck's is known for their Tiger Stripe ice cream, a French vanilla ice cream with a dark Dutch chocolate swirl, which every freshman recieves a cup of after participating in the annual Tiger Walk tradition.",
+        "description": "Buck's Ice Cream Shop. Located in Eckles Hall, it was named after MU graduates Wendell and Ruth Arbuckle. Buck's is known for their Tiger Stripe ice cream, a French vanilla ice cream with a dark Dutch chocolate swirl, which every freshman recieves a cup of after participating in the annual Tiger Walk tradition.",
         "potentialimgmatches": [
             "IMG_20260726_091140_00_190.jpg"
         ]
@@ -1524,7 +1504,7 @@
         "latitude": "38.94123",
         "longitude": "92.31930",
         "time": "2026:07:26 09:14:36",
-        "description": "Agricultural Engineering Building.",
+        "description": "Agricultural Engineering Building opened in 1987. It serves as home to the Division of Food Systems and bioengineering.",
         "potentialimgmatches": [
             "IMG_20260726_091415_00_191.jpg"
         ]
@@ -1534,7 +1514,7 @@
         "latitude": "38.94103",
         "longitude": "92.32074",
         "time": "2026:07:26 09:17:51",
-        "description": "This sculpture is located by Hatch and College Avenue Halls.  It was made by a ______ (information is on plaque on statue).",
+        "description": "This sculpture is located by Hatch and College Avenue Halls.",
         "potentialimgmatches": [
             "IMG_20260726_091733_00_192.jpg"
         ]
@@ -1634,7 +1614,7 @@
         "latitude": "38.93888",
         "longitude": "92.32314",
         "time": "2026:07:26 09:42:40",
-        "description": "Gateway Residence Hall with a little garden.",
+        "description": "Gateway Residence Hall with a little garden and biking parking.",
         "potentialimgmatches": [
             "IMG_20260726_094225_00_202.jpg"
         ]
@@ -1654,7 +1634,7 @@
         "latitude": "38.94067",
         "longitude": "92.32356",
         "time": "2026:07:26 09:50:12",
-        "description": "This pathway gets you to several key spots on campus.  To the north is Rollins Street.  To the south, the values residence halls.  To the east, Plaza 900 dining hall.  To the west, the Black Culture Center.",
+        "description": "This pathway gets you to several key spots on campus. To the north is Rollins Street. To the south, the values residence halls. To the east, Plaza 900 dining hall. To the west, the Black Culture Center.",
         "potentialimgmatches": [
             "IMG_20260726_094956_00_204.jpg"
         ]
@@ -1714,7 +1694,7 @@
         "latitude": "38.94310",
         "longitude": "92.33292",
         "time": "2026:07:26 10:26:51",
-        "description": "Clark Hall",
+        "description": "Inside Clark Hall there is the Robert G. Combs Language Preschool. Established in fall 2000, this clinical program serves children ages 2 to 5 years with speech and language difficulties.",
         "potentialimgmatches": [
             "IMG_20260726_102624_00_211.jpg"
         ]
