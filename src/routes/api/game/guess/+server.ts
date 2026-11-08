@@ -58,6 +58,10 @@ export async function POST({ request, locals }) {
     const seconds = Number(body.seconds);
     const difficulty = String(body.difficulty ?? '').toLowerCase();
 
+    if (!Number.isInteger(locationId)) {
+        throw error(400, 'Invalid location.');
+    }
+    
     // USE LAT=100 AND LONG=200 AS IDENTIFIER FOR INCOMPLETE SUBMISSION/TIMER RAN OUT
     if(guessedLat == 100 || guessedLng == 200){
         const { data: location, error: locationError } =
