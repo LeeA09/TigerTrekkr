@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 export async function GET({ locals }) {
     const { data: locations, error: dbError } = await locals.supabase
@@ -24,9 +24,6 @@ export async function GET({ locals }) {
 
         // USE IF ON LOCAL SERVER
         const trueUrl = `${data.publicUrl}/{z}/{f}/{y}/{x}.jpg`;
-
-        // USE IF ON PROD SERVER
-        // const trueUrl = `/api/game/image?url=${encodeURIComponent(data.publicUrl)}`
         
         return {
             image_id: loc.locationid,

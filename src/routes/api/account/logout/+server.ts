@@ -1,4 +1,4 @@
-import { json, error, type RequestHandler } from '@sveltejs/kit'
+import { error, type RequestHandler } from '@sveltejs/kit'
 
 export const POST: RequestHandler = async ({ locals }) => {
 
@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ locals }) => {
 	if (!session) { throw error(401, 'Unauthorized') }
 
 	const { error } = await locals.supabase.auth.signOut()
-	if (error){ return json({ error: 'Error logging out' }, { status: 400 }) }
+	if (error){ return Response.json({ error: 'Error logging out' }, { status: 400 }) }
 
-	return json({ success: true })
+	return Response.json({ success: true })
 }

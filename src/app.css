@@ -1039,6 +1039,8 @@ input:focus {
     width: calc(var(--font-size) * 21);
 }
 
+.button-guess:disabled,
+.confirm-delete-button.button-secondary:disabled,
 .home-button:disabled { 
     /* opacity: 0.5;  */
     cursor: not-allowed; 

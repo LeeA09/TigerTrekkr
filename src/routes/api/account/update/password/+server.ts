@@ -1,4 +1,4 @@
-import { json, error, type RequestHandler } from '@sveltejs/kit'
+import { error, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals, url }) => {
@@ -12,26 +12,26 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 	const confirmNewPassword = formData.get('confirmNewPassword')?.toString().trim()
 
 	if (!currentPassword || !newPassword || !confirmNewPassword) {
-		return json({ error: 'Fields cannot be empty' }, { status: 200 });
+		return Response.json({ error: 'Fields cannot be empty' }, { status: 200 });
 	}
 
 	if (newPassword !== confirmNewPassword){
-		return json({ error: 'New passwords do not match' }, { status: 200 })
+		return Response.json({ error: 'New passwords do not match' }, { status: 200 })
 	}
 
 	const { data: { user }, error: userError } = await locals.supabase.auth.getUser();
 	if (userError || !user) {
-		return json({ success: false, error: 'Unauthorized user session.' }, { status: 401 })
+		return Response.json({ success: false, error: 'Unauthorized user session.' }, { status: 401 })
 	}
 
 	const { error: signInError } = await locals.supabase.auth.signInWithPassword({ email: user.email, password: currentPassword })
 	if (signInError) {
-		return json({ success: false, error: 'Incorrect current password.' }, { status: 200 })
+		return Response.json({ success: false, error: 'Incorrect current password.' }, { status: 200 })
 	}
 
 	const { error: updateError } = await locals.supabase.auth.updateUser({ password: newPassword })
 	if (updateError) {
-		return json({ success: false, error: updateError.message }, { status: 200 })
+		return Response.json({ success: false, error: updateError.message }, { status: 200 })
 	}
 
 	const username = userdata?.username || 'user'
@@ -52,7 +52,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 		})
 	} catch (mailError) {
 		console.error('Mail error:', mailError)
-		return error(500, 'Account password changed, but Gmail deliver failed')
+		return Response.json({ success: false, error: 'Account password changed, but Gmail deliver failed' }, { status: 500 })
 	}
-	return json({ success: true, message: 'Password updated successfully.' });
+	return Response.json({ success: true, message: 'Password updated successfully.' });
 };

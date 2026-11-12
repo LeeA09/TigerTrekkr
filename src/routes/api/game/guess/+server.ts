@@ -65,10 +65,10 @@ export async function POST({ request, locals }) {
     // USE LAT=100 AND LONG=200 AS IDENTIFIER FOR INCOMPLETE SUBMISSION/TIMER RAN OUT
     if(guessedLat == 100 || guessedLng == 200){
         const { data: location, error: locationError } =
-            await locals.supabaseAdmin
+            await locals.supabase
                 .from('location_image_info')
                 .select(
-                    'locationid, latitude, longitude, description, locationname'
+                    'locationid, latitude, longitude, description'
                 )
                 .eq('locationid', locationId)
                 .single();

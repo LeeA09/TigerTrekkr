@@ -1,4 +1,4 @@
-import { json, error, type RequestHandler } from '@sveltejs/kit'
+import { error, type RequestHandler } from '@sveltejs/kit'
 import { sendEmail } from '$lib/server/mailer'
 
 export const POST: RequestHandler = async ({ request, locals }) => {
@@ -11,7 +11,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     const username = formData.get('newUsername')?.toString().trim()
 
     if (!username) {
-        return json({ error: 'Username cannot be empty' }, { status: 200 });
+        return Response.json({ error: 'Username cannot be empty' }, { status: 200 });
     }
 
     const oldUsername = authUser?.userdata.username
@@ -22,11 +22,11 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         .eq('userid', authUser.user.id);
 
     if(error?.code === '23505' || error?.message.toLowerCase().includes('unique')) {
-        return json({ error: 'Username already exists.' }, { status: 200 });
+        return Response.json({ error: 'Username already exists.' }, { status: 200 });
     }
 
     if (error) {
-        return json({ error: error.message }, { status: 200 });
+        return Response.json({ error: error.message }, { status: 200 });
     }
 
     try {
@@ -46,8 +46,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         })
     } catch (mailError) {
         console.error('Mail error:', mailError)
-        return error(500, 'Account username changed, but Gmail deliver failed')
+        return Response.json({ success: false, error: 'Account username changed, but Gmail deliver failed' }, { status: 500 })
     }
 
-    return json({ success: true });
+    return Response.json({ success: true });
 };

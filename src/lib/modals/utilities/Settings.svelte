@@ -3,9 +3,7 @@
     import { goto, refreshAll } from '$app/navigation'
     import { enhance } from '$app/forms'
     import { page } from '$app/state'
-    import { modal } from '$lib/modals'
-    import { DeleteAccount, UpdatePassword } from '$lib/modals'
-    import { backgroundMusic } from '$lib/stores/audio.svelte'
+    import { modal, DeleteAccount, UpdatePassword } from '$lib/modals'
     
     let user = $derived(page.data?.user);
     let user_info = $derived(page.data?.userdata);
@@ -15,7 +13,6 @@
     // music and sound
     function toggle_music() { 
         is_music_on.update(value => !value);
-        // backgroundMusic.toggle();
     }
     function toggle_sound() { is_sound_on.update(value => !value); }
 
@@ -62,8 +59,6 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             })
-
-            const result = await response.json()
 
             if(response.ok) {
                 await refreshAll();

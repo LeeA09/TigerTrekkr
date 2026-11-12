@@ -9,6 +9,7 @@ export async function POST({ locals }) {
     const userId = authUser.user.id;
     const username = authUser.userdata.username;
 
+    // Delete the user from the Supabase authentication system and associated data is also deleted with database ruleset
     const { error: deleteError } = await locals.supabaseAdmin.auth.admin.deleteUser(userId);
 
     if (deleteError) { throw error(500, deleteError.message); }
