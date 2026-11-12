@@ -5,7 +5,7 @@
     import { selected_difficulty, currentLocIdx, sessionScore, sessionResults } from '$lib/stores/game'
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte';
-    import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { animateBackground } from '$lib/shared/scripts'
     onMount(() => { animateBackground() })
     
     let user_info = $derived(page.data?.userdata);

@@ -4,7 +4,7 @@
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { MainHeader } from '$lib/shared/headers'
-    import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { animateBackground } from '$lib/shared/scripts'
     import { ShowPasswordIcon, HidePasswordIcon } from '$lib/shared/icons'
     onMount(() => { animateBackground() })
 

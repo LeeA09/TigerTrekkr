@@ -3,14 +3,15 @@
     import { goto } from '$app/navigation';
     import { font_size } from '$lib/stores/settings';
     import { onMount } from 'svelte';
-    import { get } from 'svelte/store';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
     import { roundResult, currentLocIdx, sessionScore } from '$lib/stores/game';
+    import { setupLeafletMap, renderUserGuessMarker, renderCorrectMarker, renderLeaderboardMarkers } from '$lib/shared/scripts';
 
     // let leaflet_loaded = false;
     let map_container;
     let leaflet_map = $state(null);
+    let L_instance = null;
 
     let guessed_marker;
     let correct_marker;
@@ -19,13 +20,13 @@
     let leaderboard_lines = [];
 
     let roundData = $roundResult.roundResult;
-
     let is_valid_guess = $derived((roundData?.guessedLocation?.lat >= -90) && (roundData?.guessedLocation?.lat <= 90));
     let guessed_location = roundData?.guessedLocation ?? { lat: 0, lng: 0 };
     let correct_location = $roundResult?.correctLocation ?? { lat: 38.9353, lng: -92.3300 };
 
     let userdata = page.data?.userdata ?? {};
     let user_name = userdata.username ?? 'Guest';
+    let players = $state([]);
 
     async function getLeaderboard() {
         try {
@@ -48,12 +49,74 @@
         }
     }
 
+    onMount(() => getLeaderboard());
+
     onMount(() => {
-        getLeaderboard();
+        let mapCleanup;
+
+        setupLeafletMap({
+            container: map_container,
+            initialCenter: [correct_location.lat, correct_location.lng],
+            zoomControlPosition: 'bottomright',
+            onMapReady: (map, L) => {
+                leaflet_map = map;
+                L_instance = L;
+                const fs = $font_size;
+                correct_marker = renderCorrectMarker(map, L, correct_location, fs);
+            }
+        }).then((res) => {
+            if (res) mapCleanup = res.cleanup;
+        });
+
+        return () => {
+            if (mapCleanup) mapCleanup();
+        };
     });
 
-    let players = $state([]);
-    let user_rank = $state(-1);
+    $effect(() => {
+        if(!leaflet_map || !L_instance || !is_valid_guess) return;
+        const fs = $font_size;
+
+        if (guessed_marker) { guessed_marker.remove(); guessed_marker = null; }
+        if (answer_line) { answer_line.remove(); answer_line = null; }
+
+        const user_rank = players.findIndex(p => p?.isCurrGuess === true);
+        const rendered = renderUserGuessMarker(
+            leaflet_map, 
+            L_instance, 
+            guessed_location, 
+            correct_location.lat,
+            correct_location.lng,
+            user_name,
+            user_rank,
+            fs,
+        );
+
+        guessed_marker = rendered.marker;
+        answer_line = rendered.line;
+    });
+
+    $effect(() => {
+        if(!leaflet_map || !L_instance || !players || players.length === 0) return;
+        const fs = $font_size;
+
+        leaderboard_markers.forEach(marker => marker.remove());
+        leaderboard_lines.forEach(line => line.remove());
+
+        const rendered = renderLeaderboardMarkers(
+            leaflet_map,
+            L_instance,
+            players,
+            correct_location.lat,
+            correct_location.lng,
+            guessed_location,
+            is_valid_guess,
+            fs
+        );
+
+        leaderboard_markers = rendered.markers;
+        leaderboard_lines = rendered.lines;
+    });
 
     let description = $roundResult?.description ?? 'No description available.';
     let guessed_distance = roundData?.distance ? Math.floor(roundData?.distance) : '∞';
@@ -68,267 +131,6 @@
     };
 
     let max_score = $derived(max_scores[difficulty]);
-
-    function loadLeaflet() {
-        if (typeof window !== 'undefined' && window.L) {
-            // leaflet_loaded = true;
-            return window.L;
-        }
-
-        return new Promise((resolve, reject) => {
-            if(!document.querySelector('link[href*="leaflet.css"]')) {
-                const css_link = document.createElement('link');
-                css_link.rel = 'stylesheet';
-                css_link.href =
-                    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-                document.head.appendChild(css_link);
-            }
-
-            const script = document.createElement('script');
-            script.src =
-                'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            script.onload = () => {
-                // leaflet_loaded = true;
-                resolve(window.L);
-            };
-            script.onerror = () => {
-                reject(new Error('Failed to load Leaflet'));
-            };
-            document.head.appendChild(script);
-        })
-    }
-
-    $effect(() => {
-        if(!leaflet_map || !window.L) return;
-        const L = window.L;
-        const fs = $font_size
-
-        if (guessed_marker) { guessed_marker.remove(); guessed_marker = null; }
-        
-        user_rank = players.findIndex(p => p?.isCurrGuess === true);
-        const hasRank = user_rank !== -1;
-        const rankDisplay = hasRank
-            ? `<span class="map-marker-label--rank"><span class="map-marker-rank-num">${user_rank + 1}</span></span>`
-            : '';
-
-        const usernameWidth = user_name.length * (fs * 0.5)
-        const basePadding = fs * 2
-        const rankWidth = hasRank ? (fs * 1.5 + 6) : 0; // Rank badge width plus padding gap
-
-        const totalWidth = usernameWidth + basePadding + rankWidth;
-        const totalHeight = fs * 1.75;
-
-        const guessIcon = L.divIcon({
-            className: 'map-marker',
-            html:  `<div class="map-marker-wrapper">
-                        <img class="map-marker-img" src="/mascot.png" alt="" />
-                        <span class="map-marker-label map-marker-label--you">
-                            ${rankDisplay}
-                            <span class="map-marker-username">${user_name}</span>
-                        </span>
-                    </div>`,
-            iconAnchor: [totalWidth / 16, totalHeight]
-        });
-
-        const answer = [
-            correct_location.lat,
-            correct_location.lng
-        ];
-
-        // IF SUBMITTED ANSWER WAS BECAUSE OF A TIMER RUNOUT
-        if(is_valid_guess){
-            const guess = [
-                guessed_location.lat,
-                guessed_location.lng
-            ];
-
-            guessed_marker = L.marker(guess, {
-                icon: guessIcon,
-                keyboard: false,
-                zIndexOffset: 1000
-            }).addTo(leaflet_map);
-
-            if(answer_line){ answer_line.remove() }
-
-            answer_line = L.polyline([guess, answer], {
-                color: '#ffc300',
-                weight: 3,
-                opacity: 1,
-                dashArray: '8, 8'
-            }).addTo(leaflet_map);
-        }
-    })
-
-    onMount(() => {
-        function cleanup() {
-            const resizeObserver = new ResizeObserver(() => {
-                leaflet_map?.invalidateSize();
-            });
-            resizeObserver.disconnect();
-            leaflet_map?.remove();
-            leaflet_map = null;
-            leaderboard_markers = [];
-            leaderboard_lines = [];
-        }
-        
-        void (async () => {
-            try {
-                const L = await loadLeaflet();
-                if (!map_container || !L) return;
-
-                const fs = get(font_size);
-
-                const mizzouBounds = L.latLngBounds(
-                    [38.949697, -92.314951],
-                    [38.927023, -92.346998]
-                );
-
-                leaflet_map = L.map(map_container, {
-                    zoomControl: false,
-                    attributionControl: true,
-                    fadeAnimation: false,
-                    maxBounds: mizzouBounds,
-                    maxBoundsViscosity: 1.0,
-                    minZoom: 15
-                }).setView([38.9353, -92.3300], 16);
-
-                L.tileLayer(
-                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    {
-                        maxZoom: 19,
-                        minZoom: 15,
-                        keepBuffer: 8,
-                        updateWhenIdle: false,
-                        updateWhenZooming: false,
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }
-                ).addTo(leaflet_map);
-
-                L.control.zoom({ position: 'bottomright' }).addTo(leaflet_map);
-
-                const pin_w = fs * 1.75;
-                const pin_h = fs * 2.375;
-                const pinIcon = L.divIcon({
-                    className: 'map-marker',
-                    html: `
-                        <svg class="map-marker-pin" width="${pin_w}" height="${pin_h}" viewBox="0 0 28 38"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14 37 C11 29 2 20 2 13
-                                A12 12 0 1 1 26 13 C26 20 17 29 14 37Z"
-                                fill="#ffc300" stroke="#001D3D" stroke-width="0.5"/>
-                            <circle cx="14" cy="13" r="4.5" fill="#001D3D"/>
-                        </svg>
-                    `,
-                    //iconSize: [pin_w, pin_h + label_h],
-                    iconAnchor: [pin_w / 2, pin_h * (37 / 38)]
-                });
-
-                const answer = [
-                    correct_location.lat,
-                    correct_location.lng
-                ];
-
-                if (correct_marker) { correct_marker.remove(); correct_marker = null; }
-
-                correct_marker = L.marker(answer, {
-                    icon: pinIcon,
-                    keyboard: false,
-                    zIndexOffset: 500
-                }).addTo(leaflet_map);
-
-                document.fonts
-                    ?.load(`700 ${fs}px "Actor"`, '12345')
-                    .catch(() => {})
-
-                const resizeObserver = new ResizeObserver(() => {
-                    leaflet_map?.invalidateSize();
-                });
-
-                resizeObserver.observe(map_container);
-            } catch (error) {
-                console.error('Error loading Leaflet:', error);
-            }
-        })();
-
-        return () => {
-            cleanup?.();
-        };
-    });
-
-    $effect(() => {
-        if(!leaflet_map || !window.L || !players || players.length === 0) return;
-        const L = window.L;
-        const fs = $font_size;
-
-        leaderboard_markers.forEach((marker) => { marker.remove(); });
-        leaderboard_markers = [];
-
-        leaderboard_lines.forEach((line) => { line.remove(); });
-        leaderboard_lines = [];
-
-        const filteredPlayers = players
-            .map((player, index) => ({ player, rank: index + 1 }))
-            .filter(({ player }) => 
-                player && 
-                !player.isCurrGuess
-            );
-
-        const leaderboardIcon = (rank) =>
-            L.divIcon({
-                className: 'map-marker',
-                html:  `<div class="map-marker-wrapper">
-                            <span class="map-marker-label map-marker-label--rank">
-                                <span class="map-marker-rank-num">${rank}</span>
-                            </span>
-                        </div>`,
-                iconAnchor: [fs * 0.75, fs * 0.75]
-            });
-
-        const answer = [
-            correct_location.lat,
-            correct_location.lng
-        ];
-
-        leaderboard_markers = filteredPlayers.map((player) => {
-            const playerLatLng = [player.player.lat, player.player.lng];
-            
-            const marker = L.marker(playerLatLng, {
-                icon: leaderboardIcon(player.rank),
-                keyboard: false
-            }).addTo(leaflet_map);
-
-            const line = L.polyline([playerLatLng, answer], {
-                color: '#003566',
-                weight: 2,
-                opacity: 0.7,
-                dashArray: '6, 6'
-            }).addTo(leaflet_map);
-
-            leaderboard_lines.push(line);
-
-            return marker;
-        });
-
-        const boundsPoints = [answer, ...filteredPlayers.map((p) => [p.player.lat, p.player.lng])];
-
-        if(is_valid_guess){
-            const guess = [
-                guessed_location.lat,
-                guessed_location.lng
-            ];
-
-            boundsPoints.push(guess)
-        }
-
-        leaflet_map.fitBounds(
-            L.latLngBounds(boundsPoints),
-            {
-                paddingTopLeft: [fs * 21, fs * 4],
-                paddingBottomRight: [fs * 19, fs * 6],
-                maxZoom: 18
-            }
-        );
-    });
 
     function nextRound() {
         $sessionScore += round_score;

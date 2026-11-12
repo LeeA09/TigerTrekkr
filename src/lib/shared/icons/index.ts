@@ -1,6 +1,7 @@
 export { default as PauseIcon } from './game/PauseIcon.svelte'
 export { default as SkipIcon } from './game/SkipIcon.svelte'
 export { default as TimerIcon } from './game/TimerIcon.svelte'
+export { default as MapExpandIcon } from './game/MapExpandIcon.svelte'
 export { default as QuitIcon } from './game/QuitIcon.svelte'
 
 export { default as SettingsIcon } from './utilities/SettingsIcon.svelte'

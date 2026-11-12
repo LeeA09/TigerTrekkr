@@ -3,7 +3,7 @@
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { MainHeader } from '$lib/shared/headers'
-    import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { animateBackground } from '$lib/shared/scripts'
     import { goto } from '$app/navigation';
     onMount(() => { animateBackground() })
 </script>

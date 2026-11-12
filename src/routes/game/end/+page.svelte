@@ -4,7 +4,7 @@
     import { font_size } from '$lib/stores/settings'
     import { onMount } from 'svelte'
     import { page } from '$app/state';
-    import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { animateBackground } from '$lib/shared/scripts'
     import { MainHeader } from '$lib/shared/headers';
     onMount(() => { animateBackground() })
     

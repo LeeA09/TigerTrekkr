@@ -4,7 +4,7 @@
     import { font_size, lead_is_collapsed } from '$lib/stores/settings'
     import { modal, PlayAsGuest } from '$lib/modals'
     import { onMount } from 'svelte';
-    import { animateBackground } from '$lib/shared/backgroundAnimation'
+    import { animateBackground } from '$lib/shared/scripts'
     import { LeaderboardIcon, LeadChevronIcon } from '$lib/shared/icons'
     import { Utilities } from '$lib/shared/headers'
 
