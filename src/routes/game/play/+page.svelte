@@ -4,7 +4,14 @@
     import { onMount } from 'svelte'
     import { MainHeader } from '$lib/shared/headers'
     import { MapExpandIcon } from '$lib/shared/icons'
-    import { currentLocIdx, currentLocation, roundResult, sessionResults, sessionLocations, timerSeconds, is_timer_active, selected_difficulty } from '$lib/stores/game'
+    import { currentLocIdx, 
+             currentLocation, 
+             roundResult, 
+             sessionResults, 
+             sessionLocations, 
+             timerSeconds, 
+             is_timer_active, 
+             selected_difficulty } from '$lib/stores/game'
     import { modal, Quit } from '$lib/modals'
     import { setupPanorama, setupLeafletMap } from '$lib/shared/scripts'
 

@@ -14,7 +14,7 @@
     let user_info = $derived(data?.userdata);
     let userOnLeaderboard = $derived(user_info && data.leaderboard?.some(player => player.username === user_info.username));
 
-    const leaderboard = Array.from({ length: 10}, (_, i) => data.leaderboard[i] || null);
+    const leaderboard = $derived(Array.from({ length: 10}, (_, i) => data.leaderboard[i] || null));
 
     // random splash texts for logged-in
     const splashTexts = [

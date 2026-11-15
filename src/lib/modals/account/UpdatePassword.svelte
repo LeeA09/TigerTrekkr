@@ -84,7 +84,14 @@
                     </button>
                 </div>
             </div>
-		    <button class="home-button" disabled={isSubmitting}>Save</button>
+		    <button class="home-button" disabled={isSubmitting}>
+                {#if isSubmitting}
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span>Updating...</span>
+                {:else}
+                    Save
+                {/if}
+            </button>
 		</form>
         
     </div>

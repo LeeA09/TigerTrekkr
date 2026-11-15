@@ -1,7 +1,7 @@
 <script>
-    import { goto } from '$app/navigation'
+    import { goto, refreshAll } from '$app/navigation'
     import { font_size } from '$lib/stores/settings'
-    import { modal } from '$lib/modals'
+    import { modal, DeleteSuccess } from '$lib/modals'
     import { DeleteIcon } from '$lib/shared/icons'
 
     let isDeleting = $state(false)
@@ -30,8 +30,12 @@
                 throw new Error(errorData.message || 'Failed to delete account.')
             }
 
-            await goto('/', { invalidateAll: true })
+            await goto('/')
+            await refreshAll()
+
             modal.close()
+            modal.close()
+            modal.open(DeleteSuccess, {})
         } catch (error) {
             errorMessage = error.message
         } finally {
@@ -53,9 +57,19 @@
         <p class="modal-confirm-body">
             Are you sure you want to delete your account? This action cannot be undone.
         </p>
+        {#if errorMessage}
+            <div class="error-banner" role="alert">
+                <p>{errorMessage}</p>
+            </div>
+        {/if}
         <div class="modal-confirm-buttons">
             <button class="button-secondary confirm-delete-button" onclick={handle_delete} disabled={isDeleting}>
-                Delete
+                {#if isDeleting}
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span>Deleting...</span>
+                {:else}
+                    Delete
+                {/if}
             </button>
             <button class="button-secondary" onclick={() => modal.close()} disabled={isDeleting}>
                 Cancel

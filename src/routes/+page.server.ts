@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
-    const { session, user, userdata } = await locals.safeGetSession();
+    const { userdata } = await locals.safeGetSession();
     
     const { data: leaderboard, error } = await locals.supabase
         .from('user_data')

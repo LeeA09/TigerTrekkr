@@ -29,7 +29,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     if(userGuess.score) {
         leaderboard = [
             ...(rawLeaderboard || []).map(item => ({
-                username: item.user_data?.username ?? 'Anonymous', 
+                username: item.user_data?.username ?? '[deleted]', 
                 score: item.score,
                 lat: item.lat,
                 lng: item.lng,
@@ -53,7 +53,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         }))
     } else {
         leaderboard = (rawLeaderboard || []).map(item => ({
-            username: item.user_data?.username ?? 'Anonymous', 
+            username: item.user_data?.username ?? '[deleted]',
             score: item.score,
             lat: item.lat,
             lng: item.lng,

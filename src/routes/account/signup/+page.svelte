@@ -35,7 +35,6 @@
 
         // Return the callback for handling the server response
         return async ({ result }) => {
-            isSubmitting = false
             const data = result.data ?? result
 
             if (data?.success) {
@@ -46,6 +45,7 @@
                 errorMessage = 'Error: ' + (data?.error ?? 'An error occurred')
                 console.log(errorMessage)
             }
+            isSubmitting = false
         }
     }
 </script>
@@ -100,7 +100,14 @@
                                 </button>
                             </div>
                         </div>
-                        <button type="submit" class="home-button" disabled={isSubmitting}>Submit</button>
+                        <button type="submit" class="home-button" disabled={isSubmitting}>
+                            {#if isSubmitting}
+                                <span class="spinner" aria-hidden="true"></span>
+                                <span>Submitting...</span>
+                            {:else}
+                                Submit
+                            {/if}
+                        </button>
                     </form>
                 </div>
             </div>

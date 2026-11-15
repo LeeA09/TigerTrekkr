@@ -9,11 +9,23 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
     const username = formData.get('username')?.toString().trim()
 
     if (!email || !password || !confirmPassword || !username) { return Response.json({ success: false, error: 'All fields are required.' }, { status: 200 }) }
+    if (username === '[deleted]') { return Response.json({ success: false, error: 'Username is reserved.' }, { status: 200 }) }
 
     if (password !== confirmPassword) { return Response.json({ success: false, error: 'Passwords do not match.' }, { status: 200 }) }
 
     const { supabaseAdmin } = locals
     if (!supabaseAdmin) { return Response.json({ success: false, error: "Server misconfiguration: Database client not found." }, { status: 200 }) }
+
+    // check if the username already exists in the database
+    const { data: existingUser, error: existingUserError } = await supabaseAdmin
+        .from('user_data')
+        .select('username')
+        .eq('username', username)
+        .single();
+
+    if (existingUser) {
+        return Response.json({ success: false, error: 'Username already exists.' }, { status: 200 });
+    }
 
     // Call your local self-hosted Supabase Auth engine
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.generateLink({ 
@@ -22,6 +34,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         password: password,
         options: {
             redirectTo: `${url.origin}/auth/callback`,
+            data: { username: username }
         }
     })
     
@@ -30,24 +43,6 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 
     if (authError || !user || !hashedToken) {
         return Response.json({ success: false, error: authError?.message || 'Failed to generate security token' }, { status: 200 });
-    }
-
-    const { error: dbError } = await supabaseAdmin
-        .from('user_data')
-        .insert({
-            userid: user.id,          
-            username: username,
-        });
-
-    if (dbError) {
-        let dbErrorMessage = dbError.message || 'Failed to create user profile record.';
-        await supabaseAdmin.auth.admin.deleteUser(user.id);
-
-        if (dbError.code === '23505' || dbError.message.toLowerCase().includes('unique')) {
-            dbErrorMessage = 'Username already exists.';
-        }
-        console.error(dbError);
-        return Response.json({ success: false, error: dbErrorMessage }, { status: 200 });
     }
 
     const verificationLink = `${url.origin}/auth/callback?token_hash=${hashedToken}&type=signup`;
@@ -69,6 +64,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         })
     } catch (mailError) {
         console.error('Mail Error:', mailError)
+        await supabaseAdmin.auth.admin.deleteUser(user.id);
         return Response.json({ success: false, error: 'Account initialized, but Gmail deliver failed.' }, { status: 200 })
     }
 

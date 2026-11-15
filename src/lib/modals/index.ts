@@ -7,6 +7,7 @@ export { default as Settings } from './utilities/Settings.svelte'
 
 export { default as DeleteAccount } from './account/DeleteAccount.svelte'
 export { default as UpdatePassword } from './account/UpdatePassword.svelte'
+export { default as DeleteSuccess } from './account/DeleteSuccess.svelte'
 
 export { default as Quit } from './game/Quit.svelte'
 export { default as Pause } from './game/Pause.svelte'
