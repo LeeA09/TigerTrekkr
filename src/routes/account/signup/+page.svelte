@@ -18,6 +18,7 @@
     function toggle_show_confirm_password() { showConfirmPassword = !showConfirmPassword }
 
     const handle_signup = ({ formData, cancel }) => {
+        const username = formData.get('username')
         const password = formData.get('password')
         const confirmPassword = formData.get('confirmPassword')
 
@@ -26,6 +27,14 @@
             cancel() // Stops the form submission completely
             isSubmitting = false
             errorMessage = 'Error: Passwords do not match.'
+            console.log(errorMessage)
+            return
+        }
+
+        if (username === '[deleted]' || username === 'Guest') {
+            cancel() // Stops the form submission completely
+            isSubmitting = false
+            errorMessage = 'Error: Username is reserved.'
             console.log(errorMessage)
             return
         }

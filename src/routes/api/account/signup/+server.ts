@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
     const username = formData.get('username')?.toString().trim()
 
     if (!email || !password || !confirmPassword || !username) { return Response.json({ success: false, error: 'All fields are required.' }, { status: 200 }) }
-    if (username === '[deleted]') { return Response.json({ success: false, error: 'Username is reserved.' }, { status: 200 }) }
+    if (username === '[deleted]' || username === 'Guest') { return Response.json({ success: false, error: 'Username is reserved.' }, { status: 200 }) }
 
     if (password !== confirmPassword) { return Response.json({ success: false, error: 'Passwords do not match.' }, { status: 200 }) }
 
