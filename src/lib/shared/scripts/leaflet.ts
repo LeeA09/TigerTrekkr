@@ -51,11 +51,13 @@ export async function setupLeafletMap({
             fadeAnimation: false,
             maxBounds: mizzouBounds,
             maxBoundsViscosity: 1.0,
-            minZoom: 15
+            minZoom: 15,
+            maxZoom: 20
         }).setView(initialCenter, initialZoom);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+            maxNativeZoom: 19,
+            maxZoom: 20,
             minZoom: 15,
             keepBuffer: 8,
             updateWhenIdle: false,
@@ -121,14 +123,15 @@ export function renderUserGuessMarker(map, L, { lat, lng }, correctLat, correctL
 
     const guessIcon = L.divIcon({
         className: 'map-marker',
-        html: `<div class="map-marker-wrapper">
+        html: `<div class="map-marker-wrapper" style="transform: translate(-1.25em, -50%);">
                     <img class="map-marker-img" src="${iconUrl}" alt="" />
                     <span class="map-marker-label map-marker-label--you">
                         ${rankDisplay}
                         <span class="map-marker-username">${userName}</span>
                     </span>
                 </div>`,
-        iconAnchor: [totalWidth / 16, totalHeight]
+        iconAnchor: [0,0],
+        iconSize: [0,0]
     });
 
     const guessCoords = [lat, lng];
@@ -174,7 +177,7 @@ export function renderCorrectMarker(map, L, { lat, lng }, fontSize) {
     }).addTo(map);
 }
 
-export function renderLeaderboardMarkers(map, L, players, correctLat, correctLng, guessedLocation, isValidGuess, fontSize) {
+export function renderLeaderboardMarkers(map, L, players, correctLat, correctLng, guessedLocation, isValidGuess, fontSize, animate = false) {
     const markers = [];
     const lines = [];
 
@@ -182,6 +185,7 @@ export function renderLeaderboardMarkers(map, L, players, correctLat, correctLng
         .map((player, index) => ({ player, rank: index + 1 }))
         .filter(({ player }) => player && !player.isCurrGuess);
 
+    const badgeSize = fontSize * 1.5;
     const leaderboardIcon = (rank) =>
         L.divIcon({
             className: 'map-marker',
@@ -190,7 +194,8 @@ export function renderLeaderboardMarkers(map, L, players, correctLat, correctLng
                             <span class="map-marker-rank-num">${rank}</span>
                         </span>
                     </div>`,
-            iconAnchor: [fontSize * 0.75, fontSize * 0.75]
+            iconAnchor: [badgeSize / 2, badgeSize / 2],
+            iconSize: [badgeSize, badgeSize]
         });
 
     const answer = [correctLat, correctLng];
@@ -220,14 +225,23 @@ export function renderLeaderboardMarkers(map, L, players, correctLat, correctLng
         boundsPoints.push([guessedLocation.lat, guessedLocation.lng]);
     }
 
-    map.fitBounds(
-        L.latLngBounds(boundsPoints),
-        {
-            paddingTopLeft: [fontSize * 21, fontSize * 4],
-            paddingBottomRight: [fontSize * 19, fontSize * 6],
-            maxZoom: 18
-        }
-    );
+    const bounds = L.latLngBounds(boundsPoints);
+    const paddingOptions = {
+        paddingTopLeft: [fontSize * 10, fontSize * 4],
+        paddingBottomRight: [fontSize * 10, fontSize * 6],
+        maxZoom: 20
+    }
+
+    if (animate) {
+        map.flyToBounds(bounds,
+            {
+                ...paddingOptions,
+                duration: 0.5,
+                easeLinearity: 0.25
+            });
+    } else {
+        map.fitBounds(bounds, paddingOptions);
+    }
 
     return { markers, lines };
 }

@@ -35,6 +35,9 @@
     let user_name = userdata.username ?? 'Guest';
     let players = $state([]);
 
+    let leaderboard_loaded = $state(false);
+    let has_animated_bounds = false;
+
     // MarzipanoPanorama Effect
     $effect(() => {
         if (panorama_container && image_url) {
@@ -72,6 +75,8 @@
             players = Array.from({ length: 3 }, (_, i) => data?.leaderboard?.[i] || null);
         } catch (error) {
             console.error('Error fetching leaderboard:', error);
+        } finally {
+            leaderboard_loaded = true;
         }
     }
 
@@ -81,9 +86,14 @@
     onMount(() => {
         let mapCleanup;
 
+        const startCenter = is_valid_guess
+            ? [guessed_location.lat, guessed_location.lng]
+            : [correct_location.lat, correct_location.lng];
+
         setupLeafletMap({
             container: map_container,
-            initialCenter: [correct_location.lat, correct_location.lng],
+            initialCenter: startCenter,
+            initialZoom: 20,
             zoomControlPosition: 'bottomright',
             onMapReady: (map, L) => {
                 leaflet_map = map;
@@ -126,25 +136,34 @@
 
     // Render leaderboard markers and lines on the map
     $effect(() => {
-        if(!leaflet_map || !L_instance || !players || players.length === 0) return;
+        if(!leaflet_map || !L_instance || !leaderboard_loaded) return;
         const fs = $font_size;
 
         leaderboard_markers.forEach(marker => marker.remove());
         leaderboard_lines.forEach(line => line.remove());
 
-        const rendered = renderLeaderboardMarkers(
-            leaflet_map,
-            L_instance,
-            players,
-            correct_location.lat,
-            correct_location.lng,
-            guessed_location,
-            is_valid_guess,
-            fs
-        );
-
-        leaderboard_markers = rendered.markers;
-        leaderboard_lines = rendered.lines;
+        if(!has_animated_bounds) {
+            has_animated_bounds = true;
+            const timer = setTimeout(() => {
+                if(!leaflet_map) return;
+                const rendered = renderLeaderboardMarkers(
+                    leaflet_map, L_instance, players,
+                    correct_location.lat, correct_location.lng,
+                    guessed_location, is_valid_guess, fs, true
+                );
+                leaderboard_markers = rendered.markers;
+                leaderboard_lines = rendered.lines;
+            }, 600);
+            return () => clearTimeout(timer);
+        } else {
+            const rendered = renderLeaderboardMarkers(
+                leaflet_map, L_instance, players,
+                correct_location.lat, correct_location.lng,
+                guessed_location, is_valid_guess, fs, false
+            );
+            leaderboard_markers = rendered.markers;
+            leaderboard_lines = rendered.lines;
+        }
     });
 
     $effect(() => {
