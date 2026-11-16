@@ -57,7 +57,7 @@
             <div class="background-animation"></div>
             <div class="background-overlay"></div>
             <div class="page-body">
-                <div class="page-body-card">
+                <div class="page-body-card signup-card">
                     <h2 class="page-body-card-title">Sign Up</h2>
                     <p class="page-body-card-description">
                         Already have an account? Login <a href="/account/login" class="page-body-card-link">here</a>.
@@ -66,38 +66,45 @@
                         {#if errorMessage}
                             <p class="error-message">{errorMessage}</p>
                         {/if}
-                        <div class="fill-in">
-                            <label for="signup-username">Username</label>
-                            <input name="username" type="text" placeholder="Enter username" required />
-                        </div>
-                        <div class="fill-in">
-                            <label for="signup-email">Email</label>
-                            <input name="email" type="email" placeholder="Enter email" autocomplete="email" required />
-                        </div>
-                        <div class="fill-in">
-                            <label for="signup-password">Password</label>
-                            <div class="fill-in-eye">
-                                <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
-                                <button type="button" class="button-eye" onclick={toggle_show_password} aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
-                                    {#if showPassword}
-                                        <HidePasswordIcon />
-                                    {:else}
-                                        <ShowPasswordIcon />
-                                    {/if}
-                                </button>
+
+                        <div class="signup-columns">
+                            <div class="signup-column">
+                                <div class="fill-in">
+                                    <label for="signup-username">Username</label>
+                                    <input id="signup-username" name="username" type="text" placeholder="Enter username" autocomplete="username" required />
+                                </div>
+                                <div class="fill-in">
+                                    <label for="signup-email">Email</label>
+                                    <input id="signup-email" name="email" type="email" placeholder="Enter email" autocomplete="email" required />
+                                </div>
                             </div>
-                        </div>
-                        <div class="fill-in">
-                            <label for="signup-confirm-password">Confirm password</label>
-                            <div class="fill-in-eye">
-                                <input name="confirmPassword"type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm password" required />
-                                <button type="button" class="button-eye" onclick={toggle_show_confirm_password} aria-label={showConfirmPassword ? 'Hide Password' : 'Show Password'}>
-                                    {#if showConfirmPassword}
-                                        <HidePasswordIcon />
-                                    {:else}
-                                        <ShowPasswordIcon />
-                                    {/if}
-                                </button>
+                            <div class="signup-column">
+                                <div class="fill-in">
+                                    <label for="signup-password">Password</label>
+                                    <div class="fill-in-eye">
+                                        <input id="signup-password" name="password" type={showPassword ? 'text' : 'password'} placeholder="Enter password" autocomplete="new-password" required />
+                                        <button type="button" class="button-eye" onclick={toggle_show_password} aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
+                                            {#if showPassword}
+                                                <HidePasswordIcon />
+                                            {:else}
+                                                <ShowPasswordIcon />
+                                            {/if}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="fill-in">
+                                    <label for="signup-confirm-password">Confirm password</label>
+                                    <div class="fill-in-eye">
+                                        <input id="signup-confirm-password" name="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm password" autocomplete="new-password" required />
+                                        <button type="button" class="button-eye" onclick={toggle_show_confirm_password} aria-label={showConfirmPassword ? 'Hide Password' : 'Show Password'}>
+                                            {#if showConfirmPassword}
+                                                <HidePasswordIcon />
+                                            {:else}
+                                                <ShowPasswordIcon />
+                                            {/if}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="home-button" disabled={isSubmitting}>

@@ -874,6 +874,35 @@ h3 {
     text-align: center; 
 }
 
+.page-body-card.signup-card {
+    width: calc(var(--font-size) * 40);
+    max-width: 90vw;
+}
+
+.signup-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--font-size) * 1.5);
+    width: 100%;
+    margin-bottom: calc(var(--font-size) * 0.5);
+}
+
+.signup-column {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--font-size) * 0.75);
+    align-items: center;
+}
+
+.signup-card .fill-in {
+    width: calc(var(--font-size) * 17);
+}
+
+.signup-card .home-button {
+    width: 50%;
+    margin-top: calc(var(--font-size) * 0.5);
+}
+
 .page-body-title-card {
     background: #002b51;
     backdrop-filter: blur(8px);
@@ -1695,4 +1724,14 @@ input:focus {
 .view-tab.active {
     background: #dc562e;
     color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .signup-columns {
+        grid-template-columns: 1fr;
+    }
+    .signup-card .fill-in,
+    .signup-card .home-button {
+        width: 100%;
+    }
 }
