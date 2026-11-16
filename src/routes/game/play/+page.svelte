@@ -18,7 +18,7 @@
     let panorama_container = $state();
     let map_container = $state();
     let image_url = $state(null);
-    let leaflet_map = null;
+    let leaflet_map = $state(null);
     let is_map_expanded = $state(false);
 
     let guess_placed = $state(false);
@@ -45,9 +45,6 @@
                 container: panorama_container,
                 imageUrl: image_url,
                 difficulty: $selected_difficulty,
-                onLoading: (isLoading) => {
-                    // Handle loading state here
-                },
                 onReady: () => {
                     is_timer_active.set(true);
                 }

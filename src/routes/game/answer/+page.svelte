@@ -5,11 +5,12 @@
     import { onMount } from 'svelte';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
-    import { roundResult, currentLocIdx, sessionScore } from '$lib/stores/game';
-    import { setupLeafletMap, renderUserGuessMarker, renderCorrectMarker, renderLeaderboardMarkers } from '$lib/shared/scripts';
+    import { roundResult, currentLocation, currentLocIdx, sessionScore } from '$lib/stores/game';
+    import { setupLeafletMap, setupPanorama, renderUserGuessMarker, renderCorrectMarker, renderLeaderboardMarkers } from '$lib/shared/scripts';
 
-    // let leaflet_loaded = false;
-    let map_container;
+    let panorama_container = $state();
+    let map_container = $state();
+    let image_url = $currentLocation.tile_url_template;
     let leaflet_map = $state(null);
     let L_instance = null;
 
@@ -19,6 +20,12 @@
     let leaderboard_markers = [];
     let leaderboard_lines = [];
 
+    // let map_view = $state(true);
+    // function toggle_answer_view() { map_view = !map_view; }
+
+    let map_view = $state(true);
+    function select_view(isMap) { map_view = isMap; }
+
     let roundData = $roundResult.roundResult;
     let is_valid_guess = $derived((roundData?.guessedLocation?.lat >= -90) && (roundData?.guessedLocation?.lat <= 90));
     let guessed_location = roundData?.guessedLocation ?? { lat: 0, lng: 0 };
@@ -27,6 +34,25 @@
     let userdata = page.data?.userdata ?? {};
     let user_name = userdata.username ?? 'Guest';
     let players = $state([]);
+
+    // MarzipanoPanorama Effect
+    $effect(() => {
+        if (panorama_container && image_url) {
+            let cleanupFn;
+
+            setupPanorama({
+                container: panorama_container,
+                imageUrl: image_url,
+                difficulty: 'easy',
+            }).then((destroy) => {
+                cleanupFn = destroy;
+            });
+
+            return () => {
+                if (cleanupFn) cleanupFn();
+            };
+        }
+    });
 
     async function getLeaderboard() {
         try {
@@ -51,6 +77,7 @@
 
     onMount(() => getLeaderboard());
 
+    // Initialize the map on component mount
     onMount(() => {
         let mapCleanup;
 
@@ -73,6 +100,7 @@
         };
     });
 
+    // Render user guess marker and answer line on the map
     $effect(() => {
         if(!leaflet_map || !L_instance || !is_valid_guess) return;
         const fs = $font_size;
@@ -96,6 +124,7 @@
         answer_line = rendered.line;
     });
 
+    // Render leaderboard markers and lines on the map
     $effect(() => {
         if(!leaflet_map || !L_instance || !players || players.length === 0) return;
         const fs = $font_size;
@@ -116,6 +145,10 @@
 
         leaderboard_markers = rendered.markers;
         leaderboard_lines = rendered.lines;
+    });
+
+    $effect(() => {
+        if (map_view && leaflet_map) { leaflet_map.invalidateSize(); }
     });
 
     let description = $roundResult?.description ?? 'No description available.';
@@ -149,12 +182,23 @@
     <div class="page-background">
         <MainHeader isAnswer={true} home={() => modal.open(Quit)}/>
         <main class="answer-map">
-            <div bind:this={map_container} class="leaflet-map"></div>
-            <aside class="answer-description-card">
+            <div class="answer-map-or-pano">
+                <div class="view-tabs" role="tablist" aria-label="Answer view">
+                    <button type="button" role="tab" class="view-tab" class:active={map_view} aria-selected={map_view} onclick={() => select_view(true)}>
+                        Map
+                    </button>
+                    <button type="button" role="tab" class="view-tab" class:active={!map_view} aria-selected={!map_view} onclick={() => select_view(false)}>
+                        Image
+                    </button>
+                </div>
+                <div bind:this={map_container} class="leaflet-map" class:hidden={!map_view}></div>
+                <div bind:this={panorama_container} class="answer-pano" class:hidden={map_view}></div>
+            </div>
+            <div class="answer-description-card">
                 <h2>Information</h2>
                 <p>{description}</p>
-            </aside>
-            <aside class="answer-leaderboard-card">
+            </div>
+            <div class="answer-leaderboard-card">
                 <div class="leaderboard-content">
                     <h2>Leaderboard</h2>
                     <div class="leaderboard-players">
@@ -177,7 +221,7 @@
                         {/each}
                     </div>
                 </div>
-            </aside>
+            </div>
         </main>
         <aside class="answer-bot-bar">
             <div class="answer-stats-group">
