@@ -20,9 +20,6 @@
     let leaderboard_markers = [];
     let leaderboard_lines = [];
 
-    // let map_view = $state(true);
-    // function toggle_answer_view() { map_view = !map_view; }
-
     let map_view = $state(true);
     function select_view(isMap) { map_view = isMap; }
 

@@ -149,8 +149,9 @@
             goto('/game/answer');
         } catch (err) {
             console.error('Error submitting guess:', err);
+        } finally {
+            is_submitting = false;
         }
-	    is_submitting = false;
     }
 
     $effect(() => {
