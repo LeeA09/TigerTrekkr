@@ -230,7 +230,7 @@
                                 </div>
                                 {#if player}
                                     <span class="leaderboard-player-score">{player.distance} m</span>
-                                    <span class="leaderboard-difficulty" <!--style="background:{}"-->></span>
+                                    <span class="leaderboard-difficulty" style="">{difficulty}</span>
                                 {:else}
                                     <span class="leaderboard-player-score placeholder">—</span>
                                 {/if}
