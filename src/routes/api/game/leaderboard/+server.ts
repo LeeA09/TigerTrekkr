@@ -12,7 +12,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             score,
             distance,
             lat:guessedlat,
-            lng:guessedlong
+            lng:guessedlong,
+            difficulty
         `)
         .eq('locationid', locationId)
         .order('distance', { ascending: true })
@@ -34,6 +35,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
                 lat: item.lat,
                 lng: item.lng,
                 distance: item.distance,
+                difficulty: item.difficulty,
                 isCurrGuess: false,
             })),
             {
@@ -42,6 +44,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
                 lat: userGuess?.lat ?? 0,
                 lng: userGuess?.lng ?? 0,
                 distance: userGuess?.distance ?? 0,
+                difficulty: userGuess?.difficulty ?? null,
                 isCurrGuess: true,
             }
         ]
@@ -58,6 +61,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             lat: item.lat,
             lng: item.lng,
             distance: Math.floor(item.distance),
+            difficulty: item.difficulty,
             isCurrGuess: false,
         }))
     }

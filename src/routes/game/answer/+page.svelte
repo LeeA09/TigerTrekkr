@@ -229,8 +229,8 @@
                                     {/if}
                                 </div>
                                 {#if player}
-                                    <span class="leaderboard-player-score">{player.distance} m</span>
-                                    <span class="leaderboard-difficulty" style="">{difficulty}</span>
+                                    <!-- <span class="leaderboard-player-score">{player.distance} m</span> -->
+                                    <span class="difficulty-badge difficulty-{player.difficulty}" style="text-transform: none;">{player.distance} m</span>
                                 {:else}
                                     <span class="leaderboard-player-score placeholder">—</span>
                                 {/if}
