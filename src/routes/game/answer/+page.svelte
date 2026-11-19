@@ -83,6 +83,7 @@
     // Initialize the map on component mount
     onMount(() => {
         let mapCleanup;
+        let resizeObserver;
 
         const startCenter = is_valid_guess
             ? [guessed_location.lat, guessed_location.lng]
@@ -98,12 +99,18 @@
                 L_instance = L;
                 const fs = $font_size;
                 correct_marker = renderCorrectMarker(map, L, correct_location, fs);
+
+                resizeObserver = new ResizeObserver(() => {
+                    map.invalidateSize();
+                });
+                resizeObserver.observe(map_container);
             }
         }).then((res) => {
             if (res) mapCleanup = res.cleanup;
         });
 
         return () => {
+            if (resizeObserver) resizeObserver.disconnect();
             if (mapCleanup) mapCleanup();
         };
     });
@@ -211,55 +218,59 @@
                 <div bind:this={map_container} class="leaflet-map" class:hidden={!map_view}></div>
                 <div bind:this={panorama_container} class="answer-pano" class:hidden={map_view}></div>
             </div>
-            <div class="answer-description-card">
-                <h2>Information</h2>
-                <p>{description}</p>
-            </div>
-            <div class="answer-leaderboard-card">
-                <div class="leaderboard-content">
-                    <h2>Leaderboard</h2>
-                    <div class="leaderboard-players">
-                        {#each players as player, i}
-                            <div class="leaderboard-player" class:empty={!player} class:is-current-user={player?.isCurrGuess}>
-                                <div class="leaderboard-player-info">
-                                    <span class="leaderboard-player-rank">{i + 1}</span>
+            <div class="answer-sidebar">
+                <div class="answer-description-card">
+                    <h2>Information</h2>
+                    <p>{description}</p>
+                </div>
+                <div class="answer-leaderboard-card">
+                    <div class="leaderboard-content">
+                        <h2>Leaderboard</h2>
+                        <div class="leaderboard-players">
+                            {#each players as player, i}
+                                <div class="leaderboard-player" class:empty={!player} class:is-current-user={player?.isCurrGuess}>
+                                    <div class="leaderboard-player-info">
+                                        <span class="leaderboard-player-rank">{i + 1}</span>
+                                        {#if player}
+                                            <span class="leaderboard-player-name">{player.username}</span>
+                                        {:else}
+                                            <span class="leaderboard-player-name placeholder">—</span>
+                                        {/if}
+                                    </div>
                                     {#if player}
-                                        <span class="leaderboard-player-name">{player.username}</span>
+                                        <span class="leaderboard-player-score">{player.distance} m</span>
+                                        <!-- <span class="difficulty-badge difficulty-{player.difficulty}">H</span> -->
                                     {:else}
-                                        <span class="leaderboard-player-name placeholder">—</span>
+                                        <span class="leaderboard-player-score placeholder">—</span>
                                     {/if}
                                 </div>
-                                {#if player}
-                                    <span class="difficulty-badge difficulty-{player.difficulty}" style="text-transform: none;">{player.distance} m</span>
-                                {:else}
-                                    <span class="leaderboard-player-score placeholder">—</span>
-                                {/if}
-                            </div>
-                        {/each}
+                            {/each}
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
         <aside class="answer-bot-bar">
             <div class="answer-stats-group">
-                <div class="answer-round-stat distance-stat">
+                <div class="answer-round-stat">
                     <span class="answer-round-stat-label">Distance:</span>
                     <span class="answer-round-stat-value">{guessed_distance} m</span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
-                <div class="answer-round-stat time-stat">
+                <div class="answer-round-stat">
                     <span class="answer-round-stat-label">Time:</span>
                     <span class="answer-round-stat-value">{guessed_time_formatted} <span class="answer-round-stat-unit">min</span></span>
                 </div>
                 <span class="answer-round-stat-separator">|</span>
-                <div class="answer-round-stat difficulty-stat">
+                <div class="answer-round-stat">
                     <span class="answer-round-stat-label">Difficulty:</span>
                     <span class="difficulty-badge difficulty-{difficulty}">{difficulty}</span>
                 </div>
-            </div>
-            <div class="answer-round-score">
-                <span class="answer-round-stat-label">Score:</span>
-                <span class="answer-round-stat-value">{round_score} / {max_score}</span>
+                <span class="answer-round-stat-separator">|</span>
+                <div class="answer-round-stat">
+                    <span class="answer-round-stat-label score-label">Score:</span>
+                    <span class="answer-round-stat-value score-value">{round_score} / {max_score}</span>
+                </div>
             </div>
             {#if $currentLocIdx < 3}
             <button type="button" class="home-button" onclick={nextRound}>
