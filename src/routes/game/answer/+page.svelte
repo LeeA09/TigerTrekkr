@@ -5,7 +5,7 @@
     import { onMount } from 'svelte';
     import { page } from '$app/state';
     import { MainHeader } from '$lib/shared/headers';
-    import { roundResult, currentLocation, currentLocIdx, sessionScore } from '$lib/stores/game';
+    import { roundResult, currentLocation, currentLocIdx, sessionScore, initialPanoView } from '$lib/stores/game';
     import { setupLeafletMap, setupPanorama, renderUserGuessMarker, renderCorrectMarker, renderLeaderboardMarkers } from '$lib/shared/scripts';
 
     let panorama_container = $state();
@@ -44,6 +44,7 @@
                 container: panorama_container,
                 imageUrl: image_url,
                 difficulty: 'easy',
+                initialView: $initialPanoView
             }).then((destroy) => {
                 cleanupFn = destroy;
             });
@@ -229,7 +230,6 @@
                                     {/if}
                                 </div>
                                 {#if player}
-                                    <!-- <span class="leaderboard-player-score">{player.distance} m</span> -->
                                     <span class="difficulty-badge difficulty-{player.difficulty}" style="text-transform: none;">{player.distance} m</span>
                                 {:else}
                                     <span class="leaderboard-player-score placeholder">—</span>

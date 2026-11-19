@@ -11,7 +11,9 @@
              sessionLocations, 
              timerSeconds, 
              is_timer_active, 
-             selected_difficulty } from '$lib/stores/game'
+             selected_difficulty,
+             initialPanoView
+            } from '$lib/stores/game'
     import { modal, Quit } from '$lib/modals'
     import { setupPanorama, setupLeafletMap } from '$lib/shared/scripts'
 
@@ -45,8 +47,12 @@
                 container: panorama_container,
                 imageUrl: image_url,
                 difficulty: $selected_difficulty,
-                onReady: () => {
+                onReady: ({ view }) => {
                     is_timer_active.set(true);
+
+                    if (view) {
+                        initialPanoView.set(view.parameters());
+                    }
                 }
             }).then((destroy) => {
                 cleanupFn = destroy;

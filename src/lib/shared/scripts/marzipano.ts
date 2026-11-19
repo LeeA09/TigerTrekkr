@@ -20,7 +20,7 @@ function loadMarzipanoScript() {
     return marzipanoScriptPromise;
 }
 
-export async function setupPanorama({ container, imageUrl, difficulty, onLoading, onReady }) {
+export async function setupPanorama({ container, imageUrl, difficulty, initialView, onLoading, onReady }) {
     if (!container || !imageUrl) return () => {};
 
     if (onLoading) onLoading(true);
@@ -52,30 +52,36 @@ export async function setupPanorama({ container, imageUrl, difficulty, onLoading
         );
 
         let limiter;
-        let startView = (Math.random() * 360 - 180) * Math.PI / 180;
+        let startView;
 
-        if (difficulty === 'easy') {
+        if(initialView){
+            startView = initialView;
             limiter = traditionalLimiter;
-        } else if (difficulty === 'medium') {
-            startView = (Math.random() * 270 - 135) * Math.PI / 180;
-            let minYaw = startView - (45 * Math.PI / 180);
-            let maxYaw = startView + (45 * Math.PI / 180);
-            limiter = Marzipano.util.compose(
-                traditionalLimiter,
-                Marzipano.RectilinearView.limit.yaw(minYaw, maxYaw)
-            );
         } else {
-            limiter = Marzipano.util.compose(
-                traditionalLimiter,
-                Marzipano.RectilinearView.limit.yaw(startView, startView),
-                Marzipano.RectilinearView.limit.pitch(0, 0)
-            );
+            let randomYaw = (Math.random() * 360 - 180) * Math.PI / 180;
+            if (difficulty === 'easy') {
+                limiter = traditionalLimiter;
+                startView = { yaw: randomYaw, pitch: 0, fov: 90 * Math.PI / 180 };
+            } else if (difficulty === 'medium') {
+                randomYaw = (Math.random() * 270 - 135) * Math.PI / 180;
+                let minYaw = randomYaw - (45 * Math.PI / 180);
+                let maxYaw = randomYaw + (45 * Math.PI / 180);
+                limiter = Marzipano.util.compose(
+                    traditionalLimiter,
+                    Marzipano.RectilinearView.limit.yaw(minYaw, maxYaw)
+                );
+                startView = { yaw: randomYaw, pitch: 0, fov: 90 * Math.PI / 180 };
+            } else {
+                limiter = Marzipano.util.compose(
+                    traditionalLimiter,
+                    Marzipano.RectilinearView.limit.yaw(startView, startView),
+                    Marzipano.RectilinearView.limit.pitch(0, 0)
+                );
+                startView = { yaw: randomYaw, pitch: 0, fov: 90 * Math.PI / 180 };
+            }
         }
 
-        const view = new Marzipano.RectilinearView(
-            { yaw: startView, pitch: 0, fov: 90 * Math.PI / 180 },
-            limiter
-        );
+        const view = new Marzipano.RectilinearView(startView, limiter);
 
         const scene = viewer.createScene({
             source,
@@ -88,7 +94,7 @@ export async function setupPanorama({ container, imageUrl, difficulty, onLoading
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     if (onLoading) onLoading(false);
-                    if (onReady) onReady();
+                    if (onReady) onReady({ viewer, view });
                 });
             });
         });
