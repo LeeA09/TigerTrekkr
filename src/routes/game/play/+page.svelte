@@ -19,7 +19,7 @@
 
     let panorama_container = $state();
     let map_container = $state();
-    let image_url = $state(null);
+    let image_url = $state($currentLocation?.tile_url_template);
     let leaflet_map = $state(null);
     let is_map_expanded = $state(false);
 
@@ -104,7 +104,6 @@
     async function getLocation() {
         if($currentLocIdx <= 0){ await setUpGame() }
         currentLocation.set($sessionLocations[$currentLocIdx++])
-        image_url = $currentLocation.tile_url_template
     }
 
     async function setUpGame() {

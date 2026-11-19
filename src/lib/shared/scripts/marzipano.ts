@@ -54,16 +54,18 @@ export async function setupPanorama({ container, imageUrl, difficulty, initialVi
         let limiter;
         let startView;
 
+        let randomYaw = (Math.random() * 360 - 180) * Math.PI / 180;
+
         if(initialView){
             startView = initialView;
             limiter = traditionalLimiter;
         } else {
-            let randomYaw = (Math.random() * 360 - 180) * Math.PI / 180;
             if (difficulty === 'easy') {
                 limiter = traditionalLimiter;
                 startView = { yaw: randomYaw, pitch: 0, fov: 90 * Math.PI / 180 };
             } else if (difficulty === 'medium') {
-                randomYaw = (Math.random() * 270 - 135) * Math.PI / 180;
+                // // Wierd quirks with how marzipano wraps the image, but maybe its doable with the tiling now
+                // randomYaw = (Math.random() * 270 - 135) * Math.PI / 180;
                 let minYaw = randomYaw - (45 * Math.PI / 180);
                 let maxYaw = randomYaw + (45 * Math.PI / 180);
                 limiter = Marzipano.util.compose(
@@ -74,8 +76,8 @@ export async function setupPanorama({ container, imageUrl, difficulty, initialVi
             } else {
                 limiter = Marzipano.util.compose(
                     traditionalLimiter,
-                    Marzipano.RectilinearView.limit.yaw(startView, startView),
-                    Marzipano.RectilinearView.limit.pitch(0, 0)
+                    Marzipano.RectilinearView.limit.yaw(randomYaw, randomYaw),
+                    Marzipano.RectilinearView.limit.pitch(0,0)
                 );
                 startView = { yaw: randomYaw, pitch: 0, fov: 90 * Math.PI / 180 };
             }
