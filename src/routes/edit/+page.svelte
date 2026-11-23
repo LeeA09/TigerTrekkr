@@ -219,8 +219,8 @@
 <div class="page" style={`--font-size: ${$font_size}px; --duck-art-shift: 0px;`}>
     <div class="page-background">
         <MainHeader home={() => goto('/')}/>
-        <main class="answer-map">
-            <div class="answer-map-or-pano">
+        <main class="edit-map">
+            <div class="edit-map-or-pano">
                 <div class="view-tabs" role="tablist" aria-label="Answer view">
                     <button type="button" role="tab" class="view-tab" class:active={map_view} aria-selected={map_view} onclick={() => select_view(true)}>
                         Map
@@ -232,67 +232,69 @@
                 <div bind:this={map_container} class="leaflet-map" class:hidden={!map_view}></div>
                 <div bind:this={panorama_container} class="answer-pano" class:hidden={map_view}></div>
             </div>
-            <div class="location-selector-card">
-                <label for="location-select">Select Location</label>
-                <select id="location-select" bind:value={selected_index} class="location-dropdown">
-                    {#each locations as loc, index}
-                        <option value={index}>
-                            {loc.locationID ?? `Location ${index + 1}`}
-                        </option>
-                    {/each}
-                </select>
-            </div>
-            <div class="answer-description-card">
-                <div class="card-inner">
-                    <h2>Information</h2>
-                    {#if descriptionError}
-                        <p class="error-message">{descriptionError}</p>
-                    {/if}
-                    {#if isEditingDescription}
-                    <form method="POST" action="/api/db/update/description" use:enhance={handle_description_update} class="description-update-form">
-                        <input type="hidden" name="locationID" value={current_location?.locationID} />
-                        <textarea name="newDescription" bind:value={newDescription} disabled={isSavingUpdate} class="description-input-form input-box"></textarea>
-                        <button type="submit" class="description-edit-info-button" disabled={isSavingUpdate} aria-label="Save Description">✔</button>
-                        <button type="button" class="description-cancel-edit-button" onclick={cancel_editing_description} disabled={isSavingUpdate} aria-label="Cancel Editing">✖</button>
-                    </form>
-                    {:else}                            
-                        <span class="description-value">{description}</span>
-                        <button class="description-edit-button" onclick={start_editing_description} aria-label="Edit Description">
-                            ✎
-                        </button>
-                    {/if}
+            <div class="edit-sidebar">
+                <div class="location-selector-card">
+                    <label for="location-select">Select Location</label>
+                    <select id="location-select" bind:value={selected_index} class="location-dropdown">
+                        {#each locations as loc, index}
+                            <option value={index}>
+                                {loc.locationID ?? `Location ${index + 1}`}
+                            </option>
+                        {/each}
+                    </select>
                 </div>
-            </div>
-            <div class="answer-leaderboard-card">
-                <div class="card-inner leaderboard-content">
-                    <h2>Coordinates</h2>
-                    {#if coordinateError}
-                        <p class="error-message">{coordinateError}</p>
-                    {/if}
-                    {#if isEditingLatLng}
-                        <form method="POST" action="/api/db/update/coordinates" use:enhance={handle_coordinates_update} class="coordinates-update-form">
+                <div class="edit-description-card">
+                    <div class="card-inner">
+                        <h2>Information</h2>
+                        {#if descriptionError}
+                            <p class="error-message">{descriptionError}</p>
+                        {/if}
+                        {#if isEditingDescription}
+                        <form method="POST" action="/api/db/update/description" use:enhance={handle_description_update} class="description-update-form">
                             <input type="hidden" name="locationID" value={current_location?.locationID} />
-                            <input type="hidden" name="newLat" value={draftLat} />
-                            <input type="hidden" name="newLng" value={draftLng} />
-
-                            <!-- <p class="edit-instruction">Click map or drag pin:</p> -->
-                            <div style="font-size: calc(var(--font-size)*1.5);">
-                                <p>LATITUDE: {draftLat}</p>
-                                <p>LONGITUDE: {draftLng}</p>
-                            </div>
-
-                            <button type="submit" class="coordinates-edit-info-button" disabled={isSavingUpdate} aria-label="Save Coordinates">✔</button>
-                            <button type="button" class="coordinates-cancel-edit-button" onclick={cancel_editing_coordinates} disabled={isSavingUpdate} aria-label="Cancel Editing">✖</button>
+                            <textarea name="newDescription" bind:value={newDescription} disabled={isSavingUpdate} class="description-input-form input-box"></textarea>
+                            <button type="submit" class="description-edit-info-button" disabled={isSavingUpdate} aria-label="Save Description">✔</button>
+                            <button type="button" class="description-cancel-edit-button" onclick={cancel_editing_description} disabled={isSavingUpdate} aria-label="Cancel Editing">✖</button>
                         </form>
-                    {:else}
-                        <div style="font-size: calc(var(--font-size)*1.5);">
-                            <p>LATITUDE: {correct_location.lat}</p>
-                            <p>LONGITUDE: {correct_location.lng}</p>
-                        </div>
-                        <button class="coordinates-edit-button" onclick={start_editing_coordinates} aria-label="Edit Coordinates">
-                            ✎
-                        </button>
-                    {/if}
+                        {:else}                            
+                            <span class="description-value">{description}</span>
+                            <button class="description-edit-button" onclick={start_editing_description} aria-label="Edit Description">
+                                ✎
+                            </button>
+                        {/if}
+                    </div>
+                </div>
+                <div class="edit-leaderboard-card">
+                    <div class="card-inner leaderboard-content">
+                        <h2>Coordinates</h2>
+                        {#if coordinateError}
+                            <p class="error-message">{coordinateError}</p>
+                        {/if}
+                        {#if isEditingLatLng}
+                            <form method="POST" action="/api/db/update/coordinates" use:enhance={handle_coordinates_update} class="coordinates-update-form">
+                                <input type="hidden" name="locationID" value={current_location?.locationID} />
+                                <input type="hidden" name="newLat" value={draftLat} />
+                                <input type="hidden" name="newLng" value={draftLng} />
+
+                                <!-- <p class="edit-instruction">Click map or drag pin:</p> -->
+                                <div style="font-size: calc(var(--font-size)*1.5);">
+                                    <p>LATITUDE: {draftLat}</p>
+                                    <p>LONGITUDE: {draftLng}</p>
+                                </div>
+
+                                <button type="submit" class="coordinates-edit-info-button" disabled={isSavingUpdate} aria-label="Save Coordinates">✔</button>
+                                <button type="button" class="coordinates-cancel-edit-button" onclick={cancel_editing_coordinates} disabled={isSavingUpdate} aria-label="Cancel Editing">✖</button>
+                            </form>
+                        {:else}
+                            <div style="font-size: calc(var(--font-size)*1.5);">
+                                <p>LATITUDE: {correct_location.lat}</p>
+                                <p>LONGITUDE: {correct_location.lng}</p>
+                            </div>
+                            <button class="coordinates-edit-button" onclick={start_editing_coordinates} aria-label="Edit Coordinates">
+                                ✎
+                            </button>
+                        {/if}
+                    </div>
                 </div>
             </div>
         </main>
@@ -300,22 +302,6 @@
 </div>
 
 <style>
-    .location-selector-card {
-        position: absolute;
-        top: calc(var(--font-size) * 0.5);
-        right: calc(var(--font-size) * 1.5);
-        width: calc(var(--font-size) * 20);
-        box-sizing: border-box;
-        background: #003566;
-        border: 2px solid #557899;
-        border-radius: 6px;
-        padding: calc(var(--font-size) * 1) calc(var(--font-size) * 1.5);
-        z-index: 10;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        display: flex;
-        flex-direction: column;
-        gap: calc(var(--font-size) * 0.125);
-    }
 
     .location-selector-card label {
         color: #FFC300;
@@ -349,18 +335,6 @@
     .location-dropdown option {
         background: #001D3D;
         color: #ffffff;
-    }
-
-    .answer-description-card {
-        top: calc(var(--font-size) * 7);
-        height: calc(100% - var(--font-size) * 18);
-        padding: 20px;
-    }
-
-    .answer-leaderboard-card {
-        height: calc(var(--font-size) * 10);
-        color: #ffffff;
-        padding: 20px;
     }
 
     .card-inner {
@@ -475,4 +449,85 @@
         background: #002952;
         border-color: #FFC300;
     }
+
+    .edit-map {
+        flex: 1 1 0;
+        min-height: 0;
+        position: relative;
+        width: 100%;
+        background-color: #001D3D;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: calc(var(--font-size) * 1.5);
+        padding: calc(var(--font-size) * 0.75) calc(var(--font-size) * 1.5);
+        box-sizing: border-box;
+    }
+
+    .edit-map-or-pano {
+        position: relative;
+        flex: 1;
+        height: 100%;
+        min-width: 0;
+        border-radius: 6px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        background: #003566;
+        overflow: hidden;
+    }   
+
+    .edit-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--font-size) * 0.75);
+        width: calc(var(--font-size) * 21);
+        flex-shrink: 0;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .location-selector-card {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        box-sizing: border-box;
+        background: #003566;
+        border: 2px solid #557899;
+        border-radius: 6px;
+        padding: calc(var(--font-size) * 0.75) calc(var(--font-size) * 1.25);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--font-size) * 0.125);
+    }
+
+    .edit-description-card {
+        position: relative;
+        width: 100%;
+        flex: 1 1 auto;
+        min-height: 8rem;
+        background: #DC562E;
+        color: #001D3D;
+        border-radius: 6px;
+        padding: calc(var(--font-size) * 0.75);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .edit-leaderboard-card {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        background: #DC562E;
+        color: #001D3D;
+        border-radius: 6px;
+        padding: calc(var(--font-size) * 0.75);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>
