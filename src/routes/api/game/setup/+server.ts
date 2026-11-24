@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { PUBLIC_SUPABASE_URL } from '$app/env/public';
 
 export async function GET({ locals }) {
     const { data: locations, error: dbError } = await locals.supabase
@@ -17,13 +18,7 @@ export async function GET({ locals }) {
     }
 
     const formattedLocations = locations.map((loc) => {
-        const { data } = locals.supabase
-            .storage
-            .from('image_tiles')
-            .getPublicUrl(loc.imageurl);
-
-        // USE IF ON LOCAL SERVER
-        const trueUrl = `${data.publicUrl}/{z}/{f}/{y}/{x}.jpg`;
+        const trueUrl = `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/image_tiles/${loc.imageurl}/{z}/{f}/{y}/{x}.jpg`;
         
         return {
             image_id: loc.locationid,
